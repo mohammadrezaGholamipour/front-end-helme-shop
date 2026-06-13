@@ -1,0 +1,35 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+* {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    scroll-behavior: smooth;
+    -webkit-user-drag: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    font-family: KalamehWeb;
+    user-select: none;
+    direction: rtl;
+    padding: 0;
+    margin: 0;
+}
+
+.product-card {
+    @apply rounded-md bg-white p-2 border flex flex-col justify-center items-center gap-2;
+}
+
+.product-card>P {
+    @apply text-2xl font-bold;
+}
+
+.product-card>div {
+    @apply flex items-center gap-2;
+}
+
+.product-card>button{
+    @apply flex
+}
