@@ -1,26 +1,40 @@
 <script setup lang="ts">
-// const { request } = useApi();
-// const categories = await request("/category/me?application_id=1");
-import product from "~/assets/images/product.png";
+import { onMounted, ref } from "vue";
+
+const isDark = ref(false);
+
+onMounted(() => {
+  // بررسی وضعیت قبلی از localStorage در زمان لود شدن صفحه
+  if (
+    localStorage.getItem("theme") === "dark" ||
+    (!localStorage.getItem("theme") &&
+      window.matchMedia("(prefers-color-scheme: dark)").matches)
+  ) {
+    document.documentElement.classList.add("dark");
+    isDark.value = true;
+  }
+});
+
+const toggleTheme = () => {
+  isDark.value = !isDark.value;
+  if (isDark.value) {
+    document.documentElement.classList.add("dark");
+    localStorage.setItem("theme", "dark");
+  } else {
+    document.documentElement.classList.remove("dark");
+    localStorage.setItem("theme", "light");
+  }
+};
 </script>
+
 <template>
-  <div>
-    <div class="product-card">
-      <img :src="product" width="200" alt="product" />
-      <p>سوهان باقلوایی</p>
-      <div>
-        <Icon name="tabler:businessplan" class="w-6 h-6" />
-        <p>550 گرم</p>
-      </div>
-      <div>
-        <Icon name="tabler:receipt-2" class="w-6 h-6" />
-        <p>756 تومان</p>
-      </div>
-      <button>
-        <p>مشاهده محصول</p>
-        <Icon name="tabler:shopping-cart" class="w-6 h-6" />
-      </button>
-    </div>
-    <NuxtRouteAnnouncer />
-  </div>
+  <NuxtRouteAnnouncer />
+  <CardProduct />
+  <CardCategory />
+  <button
+    @click="toggleTheme"
+    class="fixed top-4 left-4 rounded-lg bg-[var(--gold-two)] px-4 py-2 font-bold text-white shadow-lg z-50"
+  >
+    {{ isDark ? "حالت روز" : "حالت شب" }}
+  </button>
 </template>

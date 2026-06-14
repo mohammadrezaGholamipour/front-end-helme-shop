@@ -1,35 +1,34 @@
+@import './card-category.css';
+@import './card-product.css';
+@import './header.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 
+
 * {
     -webkit-touch-callout: none;
+    transition: all 0.5s ease;
     -webkit-user-select: none;
     -khtml-user-select: none;
     scroll-behavior: smooth;
     -webkit-user-drag: none;
+    font-family: KalamehWeb;
     -moz-user-select: none;
     -ms-user-select: none;
-    font-family: KalamehWeb;
     user-select: none;
     direction: rtl;
     padding: 0;
     margin: 0;
 }
 
-.product-card {
-    @apply rounded-md bg-white p-2 border flex flex-col justify-center items-center gap-2;
+body {
+    @apply bg-white dark:bg-black
 }
 
-.product-card>P {
-    @apply text-2xl font-bold;
-}
-
-.product-card>div {
-    @apply flex items-center gap-2;
-}
-
-.product-card>button{
-    @apply flex
+:root {
+    --gold-one: #D6B46C;
+    --gold-two: #E7BC4C;
 }
