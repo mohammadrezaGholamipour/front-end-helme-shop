@@ -1,21 +1,7 @@
-.product-card {
-    @apply rounded-2xl bg-white dark:bg-black dark:text-white text-xl p-5 border-2 shadow-md border-[var(--gold-two)] flex flex-col justify-center items-center gap-5 max-w-[300px] mx-auto mt-5;
+.header {
+    @apply w-full rounded-lg shadow-md bg-[var(--gold-one)] flex justify-between text-white p-4 mt-5 items-center;
 }
 
-.product-card>img {
-    @apply border-2 rounded-xl border-[var(--gold-two)] shadow-md;
-    aspect-ratio: 4/3;
-    object-fit: fill;
-}
-
-.product-card>P {
-    @apply text-2xl font-bold;
-}
-
-.product-card>div {
-    @apply flex items-center gap-2;
-}
-
-.product-card>button {
-    @apply flex p-3 w-full justify-center rounded-xl items-center gap-2 text-2xl font-bold bg-[var(--gold-two)] text-white shadow-md;
+.header>button {
+    @apply flex rounded-md bg-white text-[var(--gold-one)] p-2 gap-2 font-bold text-xl shadow-md border-2 border-[var(--gold-two)];
 }

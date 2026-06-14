@@ -1,5 +1,6 @@
 @import './card-category.css';
 @import './card-product.css';
+@import './color-mood.css';
 @import './header.css';
 
 @tailwind base;
