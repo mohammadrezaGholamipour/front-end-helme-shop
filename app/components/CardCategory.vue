@@ -8,7 +8,7 @@ import product from "~/assets/images/product.png";
     
     <button>
       <p>مشاهده بیشتر</p>
-      <Icon name="tabler:basket-filled" class="w-6 h-6" />
+      <Icon name="tabler:dots-filled" class="w-6 h-6" />
     </button>
   </div>
 </template>

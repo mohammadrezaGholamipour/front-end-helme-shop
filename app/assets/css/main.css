@@ -1,13 +1,18 @@
 @import './card-category.css';
 @import './card-product.css';
 @import './color-mood.css';
-@import './header.css';
+@import './header-one.css';
+@import './header-two.css';
+@import './font.css';
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-
+:root {
+    --gold-one: #D6B46C;
+    --gold-two: #E7BC4C;
+}
 
 * {
     -webkit-touch-callout: none;
@@ -16,10 +21,10 @@
     -khtml-user-select: none;
     scroll-behavior: smooth;
     -webkit-user-drag: none;
-    font-family: KalamehWeb;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+    font-family: ravi;
     direction: rtl;
     padding: 0;
     margin: 0;
@@ -29,7 +34,6 @@ body {
     @apply bg-white dark:bg-black
 }
 
-:root {
-    --gold-one: #D6B46C;
-    --gold-two: #E7BC4C;
+.parent-project {
+    @apply p-4 flex flex-col items-center justify-center gap-4
 }

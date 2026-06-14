@@ -1,5 +1,5 @@
 <template>
-  <div class="header">
+  <div class="header-two">
     <button>
       <p>مشاهده فیلتر ها</p>
       <Icon name="tabler:adjustments-horizontal-filled" class="w-6 h-6" />

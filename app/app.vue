@@ -1,6 +1,9 @@
 <template>
-  <NuxtRouteAnnouncer />
-  <Header />
-  <CardProduct />
-  <CardCategory />
+  <div class="parent-project">
+    <NuxtRouteAnnouncer />
+    <HeaderOne />
+    <HeaderTwo />
+    <CardProduct />
+    <CardCategory />
+  </div>
 </template>

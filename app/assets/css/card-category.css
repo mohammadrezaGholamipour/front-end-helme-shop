@@ -1,5 +1,5 @@
 .category-card {
-    @apply rounded-2xl bg-white dark:bg-black dark:text-white text-xl p-5 border-2 shadow-md border-[var(--gold-two)] flex flex-col justify-center items-center gap-7 max-w-[300px] mx-auto mt-5;
+    @apply rounded-2xl bg-white dark:bg-black dark:text-white text-xl p-5 border-2 shadow-md border-[var(--gold-two)] flex flex-col justify-center items-center gap-7 max-w-[300px] mx-auto;
 }
 
 .category-card>img {

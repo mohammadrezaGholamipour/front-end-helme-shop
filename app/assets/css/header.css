@@ -1,7 +1,0 @@
-.header {
-    @apply w-full rounded-lg shadow-md bg-[var(--gold-one)] flex justify-between text-white p-4 mt-5 items-center;
-}
-
-.header>button {
-    @apply flex rounded-md bg-white text-[var(--gold-one)] p-2 gap-2 font-bold text-xl shadow-md border-2 border-[var(--gold-two)];
-}

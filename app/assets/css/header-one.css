@@ -1,0 +1,14 @@
+.header-one {
+    @apply flex w-full justify-between items-center 
+}
+
+.header-one>section:first-of-type {
+    @apply flex items-center justify-center gap-10 text-black dark:text-white text-xl font-bold
+}
+.header-one>section:last-of-type{
+    @apply flex items-center justify-center gap-4 text-black dark:text-white 
+}
+
+.header-one>section:last-of-type button{
+    @apply flex items-center gap-3 border p-3 border-[var(--gold-one)] rounded-xl text-[var(--gold-one)] font-bold text-xl
+}
