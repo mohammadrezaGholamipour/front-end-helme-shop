@@ -1,11 +1,18 @@
 <template>
   <div class="header-one">
     <section>
-      <p>صفحه اصلی</p>
-      |
-      <p>وبلاگ</p>
-      |
-      <p>ارتباط باما</p>
+      <button>
+        <p>صفحه اصلی</p>
+        <Icon name="tabler:home-filled" class="w-6 h-6" />
+      </button>
+      <button>
+        <p>ارتباط باما</p>
+        <Icon name="tabler:phone-filled" class="w-6 h-6" />
+      </button>
+      <button>
+        <p>وبلاگ</p>
+        <Icon name="tabler:library-filled" class="w-6 h-6" />
+      </button>
     </section>
     <img src="../assets/images/helma-logo.png" width="200" />
     <section>

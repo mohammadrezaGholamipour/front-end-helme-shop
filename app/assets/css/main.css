@@ -3,6 +3,7 @@
 @import './color-mood.css';
 @import './header-one.css';
 @import './header-two.css';
+@import './footer.css';
 @import './font.css';
 
 @tailwind base;
@@ -25,6 +26,7 @@
     -ms-user-select: none;
     user-select: none;
     font-family: ravi;
+    text-wrap: nowrap;
     direction: rtl;
     padding: 0;
     margin: 0;

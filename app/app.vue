@@ -5,5 +5,6 @@
     <HeaderTwo />
     <CardProduct />
     <CardCategory />
+    <Footer />
   </div>
 </template>

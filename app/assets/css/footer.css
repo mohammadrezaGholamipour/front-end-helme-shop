@@ -1,0 +1,43 @@
+.footer {
+    @apply w-full flex flex-wrap bg-[var(--gold-one)] gap-4 p-4 px-10 rounded-md shadow-md text-white justify-between items-center
+}
+
+
+.footer>section:first-of-type {
+    @apply flex flex-col justify-start items-start gap-4
+}
+
+.footer>section:first-of-type>div {
+    @apply flex flex-row-reverse gap-3
+}
+
+.footer>section:last-of-type {
+    /* @apply flex gap-5 flex-wrap justify-center items-center text-lg */
+    display: grid; /* تبدیل به گرید */
+    grid-template-columns: repeat(3, 1fr); /* دو ستونه */
+    gap: 1.25rem; /* معادل gap-5 در Tailwind */
+    justify-items: start; /* هم‌ترازی افقی */
+    align-items: start; /* هم‌ترازی عمودی */
+    column-gap: 50px;
+    /* flex-wrap و justify-center و text-lg باید در HTML اعمال شوند */
+}
+
+.footer>section:last-of-type>button {
+    /* @apply flex gap-3 justify-center items-center cursor-pointer */
+    display: flex; /* همچنان فلکس برای دکمه‌ها */
+    gap: 0.75rem; /* معادل gap-3 در Tailwind */
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    width: 120px;
+}
+
+.footer>section:last-of-type img {
+    @apply drop-shadow-xl; /* کلاس Tailwind */
+    /* filter: brightness(0) invert(1); */
+    filter: brightness(0) invert(100%); /* معادل Tailwind */
+    min-width: 2.5rem; /* معادل min-width: 40px */
+    max-width: 2.5rem; /* معادل max-width: 40px */
+    width: 100%; /* برای پر کردن سلول گرید */
+    height: auto; /* حفظ نسبت ابعاد */
+}
