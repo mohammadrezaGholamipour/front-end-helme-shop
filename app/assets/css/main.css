@@ -10,9 +10,15 @@
 @tailwind components;
 @tailwind utilities;
 
+
+html {
+    font-size: clamp(12px, 4vw, 17px);
+}
+
 :root {
     --gold-one: #D6B46C;
     --gold-two: #E7BC4C;
+    --gold-gradiant:linear-gradient(137.49deg, #d8bb64 0%, #E7BC4C 50.32%, #d8bb64 96.01%);
 }
 
 * {
@@ -33,9 +39,22 @@
 }
 
 body {
-    @apply bg-white dark:bg-black
+    @apply bg-white dark:bg-black h-screen
+}
+
+body::before {
+    @apply mt-72 lg:mt-32;
+    background-image: url("../images/pattern.jpg");
+    background-repeat: repeat;
+    background-size: 200px;
+    pointer-events: none;
+    position: fixed;
+    opacity: 0.027;
+    z-index: -1;
+    content: "";
+    inset: 0;
 }
 
 .parent-project {
-    @apply p-4 flex flex-col items-center justify-center gap-4
+    @apply p-1 pt-3 md:p-4 flex flex-col items-center justify-center gap-4;
 }

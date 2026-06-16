@@ -1,6 +1,35 @@
 .header-one {
-    @apply grid w-full items-center;
     grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    display: grid;
+    width: 100%;
+}
+
+@media (max-width: 1300px) {
+    .header-one {
+        @apply text-sm;
+        grid-template-columns: 1fr;
+        gap: 1rem;
+
+    }
+
+    .header-one>* {
+        justify-self: center !important;
+    }
+
+    .header-one>section:first-of-type {
+        @apply px-2 justify-start md:justify-center;
+   
+        order: 1 !important;
+        overflow-x: auto;
+        width: 100%;
+
+    }
+}
+
+.header-one>img {
+    min-width: 200px;
+    width: 200px;
 }
 
 .header-one>section:first-of-type {
@@ -21,5 +50,5 @@
 }
 
 .header-one button {
-    @apply flex items-center gap-3 border p-3 px-5 border-[var(--gold-one)] rounded-2xl text-[var(--gold-one)] font-bold text-lg;
+    @apply flex items-center gap-3 border p-3 px-5 border-[var(--gold-one)] rounded-2xl text-[var(--gold-one)] font-bold;
 }

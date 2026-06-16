@@ -14,7 +14,7 @@
         <Icon name="tabler:library-filled" class="w-6 h-6" />
       </button>
     </section>
-    <img src="../assets/images/helma-logo.png" width="200" />
+    <img src="../assets/images/helma-logo.png"  />
     <section>
       <button>
         <p>17:22:11</p>

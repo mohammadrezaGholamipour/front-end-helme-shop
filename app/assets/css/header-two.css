@@ -3,5 +3,5 @@
 }
 
 .header-two>button {
-    @apply flex rounded-md bg-white text-[var(--gold-one)] p-3 gap-2 font-bold text-xl shadow-md border-2 border-[var(--gold-two)];
+    @apply flex rounded-xl bg-white text-[var(--gold-one)] p-3 gap-2 font-bold  shadow-md border-2 border-[var(--gold-two)];
 }

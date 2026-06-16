@@ -13,5 +13,6 @@
 }
 
 .category-card>button {
-    @apply flex p-3 justify-center w-full rounded-xl items-center gap-2 text-2xl font-bold bg-[var(--gold-two)] text-white shadow-md;
+    @apply flex p-3 justify-center w-full rounded-xl items-center gap-2 text-2xl font-bold text-white shadow-md;
+    background-image: var(--gold-gradiant);
 }

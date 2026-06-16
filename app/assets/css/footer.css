@@ -1,43 +1,57 @@
-.footer {
-    @apply w-full flex flex-wrap bg-[var(--gold-one)] gap-4 p-4 px-10 rounded-md shadow-md text-white justify-between items-center
+footer {
+    @apply w-full
 }
 
+footer>svg {
+    @apply md:hidden relative top-1
+}
+
+.footer {
+    @apply w-full flex flex-wrap bg-[var(--gold-one)] p-2 lg:p-4 gap-4 px-2 lg:px-10 font-bold text-base rounded-md rounded-t-none md:rounded-t-md shadow-md text-white justify-center lg:justify-between items-center
+}
 
 .footer>section:first-of-type {
-    @apply flex flex-col justify-start items-start gap-4
+    @apply flex flex-col justify-center items-center lg:items-start gap-4
 }
 
 .footer>section:first-of-type>div {
-    @apply flex flex-row-reverse gap-3
+    @apply flex flex-row-reverse gap-3 border p-3 rounded-xl border-white flex-wrap-reverse justify-center items-center
 }
 
 .footer>section:last-of-type {
-    /* @apply flex gap-5 flex-wrap justify-center items-center text-lg */
-    display: grid; /* تبدیل به گرید */
-    grid-template-columns: repeat(3, 1fr); /* دو ستونه */
-    gap: 1.25rem; /* معادل gap-5 در Tailwind */
-    justify-items: start; /* هم‌ترازی افقی */
-    align-items: start; /* هم‌ترازی عمودی */
+    @apply grid-cols-2 md:grid-cols-3;
+    justify-items: stretch;
+    align-items: center;
     column-gap: 50px;
-    /* flex-wrap و justify-center و text-lg باید در HTML اعمال شوند */
+    display: grid;
+    gap: 1.25rem;
+
 }
+
 
 .footer>section:last-of-type>button {
-    /* @apply flex gap-3 justify-center items-center cursor-pointer */
-    display: flex; /* همچنان فلکس برای دکمه‌ها */
-    gap: 0.75rem; /* معادل gap-3 در Tailwind */
-    justify-content: space-between;
-    align-items: center;
-    cursor: pointer;
-    width: 120px;
+    @apply flex items-center gap-3 border p-3 px-5 border-white justify-between rounded-2xl;
 }
 
-.footer>section:last-of-type img {
-    @apply drop-shadow-xl; /* کلاس Tailwind */
-    /* filter: brightness(0) invert(1); */
-    filter: brightness(0) invert(100%); /* معادل Tailwind */
-    min-width: 2.5rem; /* معادل min-width: 40px */
-    max-width: 2.5rem; /* معادل max-width: 40px */
-    width: 100%; /* برای پر کردن سلول گرید */
-    height: auto; /* حفظ نسبت ابعاد */
+.footer>section img {
+    @apply drop-shadow-xl;
+    filter: brightness(0) invert(100%);
+    object-fit: contain;
+    min-width: 2.5rem;
+    max-width: 2.5rem;
+    height: auto;
+    height: 40px;
+    width: 100%;
+
+}
+
+
+iframe {
+    width: clamp(300px, 50vw, 700px);
+}
+
+@media (min-width: 1000px) and (max-width: 1650px) {
+    iframe {
+        display: none !important;
+    }
 }
