@@ -1,9 +1,9 @@
 .category-card {
-    @apply rounded-2xl bg-white dark:bg-black dark:text-white text-xl p-5 border-2 shadow-md border-[var(--gold-two)] flex flex-col justify-center items-center gap-7 max-w-[300px] mx-auto;
+    @apply rounded-2xl bg-white dark:bg-black dark:text-white text-xl p-5 border-2 shadow-md border-[var(--gold-two)] flex flex-col justify-center items-center gap-7 max-w-[300px] ;
 }
 
 .category-card>img {
-    @apply border-2 rounded-xl border-[var(--gold-two)] shadow-md;
+    @apply rounded-xl shadow-md;
     aspect-ratio: 4/3;
     object-fit: fill;
 }
@@ -13,6 +13,6 @@
 }
 
 .category-card>button {
-    @apply flex p-3 justify-center w-full rounded-xl items-center gap-2 text-2xl font-bold text-white shadow-md;
+    @apply flex p-3 justify-center w-full rounded-xl items-center gap-2  font-bold text-white shadow-md;
     background-image: var(--gold-gradiant);
 }

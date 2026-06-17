@@ -3,8 +3,7 @@
     <NuxtRouteAnnouncer />
     <HeaderOne />
     <HeaderTwo />
-    <CardProduct />
-    <CardCategory />
+    <NuxtPage />
     <Footer />
   </div>
 </template>
