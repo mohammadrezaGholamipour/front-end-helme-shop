@@ -1,10 +1,24 @@
 <script setup lang="ts">
-const { data, isLoading, error } = useAllCategory();
-console.log(data.value);
+import type { CategoryOut } from "~/types";
+
+const { data, isLoading, error } = useAllCategory() as unknown as {
+  data: CategoryOut[] | undefined;
+  isLoading: boolean;
+  error: unknown;
+};
+
+
 </script>
 <template>
-{{ data }}
-  <div class="parent-catgories">
-    <CardCategory v-for="item in 10" />
+  <div class="parent-page">
+    <div v-if="isLoading">Loading...</div>
+
+    <div v-else-if="data?.length === 0">
+      <p>هیچ دسته بندی ای وجود ندارد</p>
+    </div>
+
+    <template v-else>
+      <CardCategory :category="item" v-for="item in data" :key="item.id" />
+    </template>
   </div>
 </template>

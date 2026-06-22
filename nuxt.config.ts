@@ -16,7 +16,7 @@ export default defineNuxtConfig({
      * Specify which Vue Query composables to auto-import
      * Default: `false`, set to `true` to auto-import all Vue Query composables
      */
-    autoImports: ["useQuery", "useMutation"],
+    autoImports: ["useQuery", "useMutation","useQueryClient"],
 
     // Enable/disable Nuxt DevTools integration (default: true)
     devtools: true,

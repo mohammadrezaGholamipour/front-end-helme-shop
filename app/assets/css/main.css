@@ -1,6 +1,5 @@
 @import './card-category.css';
 @import './card-product.css';
-@import './parent-catgories';
 @import './color-mood.css';
 @import './header-one.css';
 @import './header-two.css';
@@ -19,7 +18,7 @@ html {
 :root {
     --gold-one: #D6B46C;
     --gold-two: #E7BC4C;
-    --gold-gradiant:linear-gradient(137.49deg, #d8bb64 0%, #E7BC4C 50.32%, #d8bb64 96.01%);
+    --gold-gradiant: linear-gradient(137.49deg, #d8bb64 0%, #E7BC4C 50.32%, #d8bb64 96.01%);
 }
 
 * {
@@ -57,5 +56,9 @@ body::before {
 }
 
 .parent-project {
-    @apply p-1 pt-3 md:p-4 flex flex-col items-center justify-center gap-4;
+    @apply p-1 pt-3 h-dvh md:p-4 flex flex-col items-center justify-start gap-4;
+}
+
+.parent-page {
+    @apply w-full flex flex-grow items-center flex-wrap gap-10 justify-center
 }
