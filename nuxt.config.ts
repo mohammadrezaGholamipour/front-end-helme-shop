@@ -1,5 +1,20 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+  app: {
+    head: {
+      htmlAttrs: {
+        lang: 'fa',
+        dir: 'rtl'
+      },
+      title: '★ سوهان و گز حلما ★',
+      meta: [
+        {
+          name: 'description',
+          content: '✦ خرید آنلاین سوهان و گز | تازه، باکیفیت و ارسال سریع ✦'
+        }
+      ]
+    }
+  },
   srcDir: "app/",
   compatibilityDate: "2025-07-15",
   devtools: {
@@ -33,9 +48,6 @@ export default defineNuxtConfig({
         queries: {
           // for example disable refetching on window focus
           refetchOnWindowFocus: false,
-
-          // or change the default refetch interval
-          refetchInterval: 5000,
         },
       },
     },
