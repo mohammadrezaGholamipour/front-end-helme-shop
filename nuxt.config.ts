@@ -16,7 +16,7 @@ export default defineNuxtConfig({
      * Specify which Vue Query composables to auto-import
      * Default: `false`, set to `true` to auto-import all Vue Query composables
      */
-    autoImports: ["useQuery", "useMutation","useQueryClient"],
+    autoImports: ["useQuery", "useMutation", "useQueryClient"],
 
     // Enable/disable Nuxt DevTools integration (default: true)
     devtools: true,
@@ -42,7 +42,7 @@ export default defineNuxtConfig({
   },
   runtimeConfig: {
     public: {
-      apiBase: process.env.NUXT_PUBLIC_API_BASE_URL,
+      apiBase: 'http://130.185.73.247/helma-shop-api/v1',
     },
   },
 });
