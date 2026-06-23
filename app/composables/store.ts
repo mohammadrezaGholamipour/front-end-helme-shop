@@ -8,11 +8,18 @@ export const useAllStore = () => {
   const queryKey = ["store"] as const;
   const queryFn = () => StoreApi.getAll($api);
 
+  const globalStore = useGlobalStore();
+
   onServerPrefetch(() => queryClient.prefetchQuery({ queryKey, queryFn }));
 
   return useQuery<StoreOut[]>({
     queryKey,
     queryFn,
+    onSuccess: (data) => {
+      if (data && data.length) {
+        globalStore.setStores(data);
+      }
+    },
   });
 };
 

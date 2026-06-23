@@ -18,7 +18,7 @@
         <Icon name="tabler:library-filled" class="w-6 h-6" />
       </button>
     </section>
-    <img src="../assets/images/helma-logo.png" />
+    <img src="../assets/images/helma-logo.png" alt="سوهان و گز حلما" />
     <section>
       <button>
         <p>17:22:11</p>

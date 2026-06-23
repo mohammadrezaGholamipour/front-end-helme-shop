@@ -1,3 +1,6 @@
+<script setup lang="ts">
+const globalStore = useGlobalStore();
+</script>
 <template>
   <footer>
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
@@ -10,11 +13,11 @@
     <div class="footer">
       <section>
         <div>
-          <p>آدرس : تهران - میدان ونک - پاساژ الماس</p>
+          <p>{{ globalStore.state.store.address }}</p>
           <img src="../assets/images/map.png" alt="" />
         </div>
         <div>
-          <p>تلفن : 09195412801 - 09036266494</p>
+          <p>{{ globalStore.state.store.phone }}</p>
           <img src="../assets/images/phone.png" alt="" />
         </div>
       </section>

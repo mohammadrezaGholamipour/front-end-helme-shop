@@ -6,7 +6,7 @@ export default defineNuxtConfig({
         lang: 'fa',
         dir: 'rtl'
       },
-      title:  'فروشگاه سوهان و گز حلما',
+      title: 'فروشگاه سوهان و گز حلما',
       meta: [
         {
           name: 'description',
@@ -25,7 +25,7 @@ export default defineNuxtConfig({
     },
   },
   css: ["~/assets/css/main.css"],
-  modules: ["@nuxtjs/tailwindcss", "@nuxt/icon", "@peterbud/nuxt-query"],
+  modules: ["@nuxtjs/tailwindcss", "@nuxt/icon", "@peterbud/nuxt-query", "@pinia/nuxt"],
   nuxtQuery: {
     /**
      * Specify which Vue Query composables to auto-import
