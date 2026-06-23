@@ -3,6 +3,7 @@
 @import './color-mood.css';
 @import './header-one.css';
 @import './header-two.css';
+@import './contact-us.css';
 @import './footer.css';
 @import './font.css';
 
@@ -39,20 +40,7 @@ html {
 }
 
 body {
-    @apply bg-white dark:bg-black h-screen
-}
-
-body::before {
-    @apply mt-72 lg:mt-32;
-    background-image: url("../images/pattern.jpg");
-    background-repeat: repeat;
-    background-size: 200px;
-    pointer-events: none;
-    position: fixed;
-    opacity: 0.027;
-    z-index: -1;
-    content: "";
-    inset: 0;
+   @apply bg-white dark:bg-black h-screen
 }
 
 .parent-project {

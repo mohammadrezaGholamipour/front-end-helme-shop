@@ -6,7 +6,7 @@ export default defineNuxtConfig({
         lang: 'fa',
         dir: 'rtl'
       },
-      title: '★ سوهان و گز حلما ★',
+      title:  'فروشگاه سوهان و گز حلما',
       meta: [
         {
           name: 'description',

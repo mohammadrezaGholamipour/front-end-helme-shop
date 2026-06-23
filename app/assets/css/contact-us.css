@@ -1,0 +1,119 @@
+    .parent-contact-us {
+      @apply min-h-screen flex justify-center items-start py-8 px-4 bg-[#FCF3E4];
+    }
+
+    .parent-contact-us__card {
+      @apply w-full max-w-sm flex flex-col items-center gap-6;
+    }
+
+    .logo {
+      @apply flex flex-col items-center gap-1 pt-2 drop-shadow-xl ;
+    }
+
+    .logo__icon {
+      @apply w-20 h-20 flex items-center justify-center;
+    }
+
+    .heading {
+      @apply text-center flex flex-col gap-1;
+    }
+
+    .heading__title {
+      @apply text-xl font-bold flex items-center justify-center gap-2;
+    }
+
+    .heading__diamond {
+      @apply text-base;
+      color: #c8922a;
+    }
+
+    .heading__subtitle {
+      @apply text-sm font-normal ;
+      color: #c8922a;
+    }
+
+    /* ── Links List ── */
+    .links {
+      @apply w-full flex flex-col gap-3 ;
+    }
+
+    /* ── Link Card ── */
+    .link-card {
+      @apply w-full flex items-center justify-between drop-shadow-xl rounded-2xl hover:scale-90 px-4 py-3 cursor-pointer transition-all duration-200;
+      background-color: #fffdf8;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.07);
+    }
+
+
+    .link-card__left {
+      @apply flex items-center gap-3;
+    }
+
+    .link-card__icon {
+      @apply w-12 h-12 rounded-xl drop-shadow-xl flex items-center justify-center overflow-hidden flex-shrink-0;
+      background-color: #c8912a5e;
+
+    }
+    .link-card__icon img{
+      filter: brightness(0) invert(100%);
+      object-fit: contain;
+      min-width: 2.5rem;
+      max-width: 2.5rem;
+      height: auto;
+      height: 40px;
+      width: 100%;
+
+    }
+
+    .link-card__text {
+      @apply flex flex-col gap-0.5;
+    }
+
+    .link-card__name {
+      @apply text-sm font-bold;
+      color: #3d2c1e;
+    }
+
+    .link-card__handle {
+      @apply text-xs font-normal;
+      color: #c8922a;
+    }
+
+    .link-card__arrow {
+      @apply text-base flex-shrink-0 mt-2 drop-shadow-lg;
+      color: #c8912a86;
+    }
+
+    .footer-info {
+      @apply w-full grid grid-cols-3 text-center rounded-2xl overflow-hidden mt-2;
+      background-color: #fffdf8;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.07);
+    }
+
+    .footer-info__cell {
+      @apply flex flex-col items-center gap-1 py-4 px-2;
+    }
+
+    .footer-info__cell+.footer-info__cell {
+      border-right: 1px solid #ede8df;
+    }
+
+    .footer-info__icon {
+      @apply w-6 h-6 flex items-center justify-center;
+      color: #c8922a;
+    }
+
+    .footer-info__label {
+      @apply text-xs font-bold;
+      color: #3d2c1e;
+    }
+
+    .footer-info__value {
+      @apply text-xs;
+      color: #8a7260;
+    }
+
+    .copyright {
+      @apply text-xs text-center pb-4;
+      color: #b0a090;
+    }

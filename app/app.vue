@@ -1,9 +1,5 @@
 <template>
-  <div class="parent-project">
-    <NuxtRouteAnnouncer />
-    <HeaderOne />
-    <HeaderTwo />
+  <NuxtLayout>
     <NuxtPage />
-    <Footer />
-  </div>
+  </NuxtLayout>
 </template>

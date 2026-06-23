@@ -1,20 +1,24 @@
 <template>
   <div class="header-one">
     <section>
-      <button>
-        <p>صفحه اصلی</p>
-        <Icon name="tabler:home-filled" class="w-6 h-6" />
-      </button>
-      <button>
-        <p>ارتباط باما</p>
-        <Icon name="tabler:phone-filled" class="w-6 h-6" />
-      </button>
+      <NuxtLink to="/">
+        <button>
+          <p>صفحه اصلی</p>
+          <Icon name="tabler:home-filled" class="w-6 h-6" />
+        </button>
+      </NuxtLink>
+      <NuxtLink to="/contact-us">
+        <button>
+          <p>ارتباط باما</p>
+          <Icon name="tabler:phone-filled" class="w-6 h-6" />
+        </button>
+      </NuxtLink>
       <button>
         <p>وبلاگ</p>
         <Icon name="tabler:library-filled" class="w-6 h-6" />
       </button>
     </section>
-    <img src="../assets/images/helma-logo.png"  />
+    <img src="../assets/images/helma-logo.png" />
     <section>
       <button>
         <p>17:22:11</p>

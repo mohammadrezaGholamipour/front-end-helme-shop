@@ -1,13 +1,10 @@
 <script setup lang="ts">
 import type { CategoryOut } from "~/types";
-
 const { data, isLoading, error } = useAllCategory() as unknown as {
   data: CategoryOut[] | undefined;
   isLoading: boolean;
   error: unknown;
 };
-
-
 </script>
 <template>
   <div class="parent-page">
