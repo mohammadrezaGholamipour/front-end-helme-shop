@@ -53,8 +53,8 @@ const { time, date } = useDateTime();
         threshold: 0,
       }"
     >
-      <button class="min-w-[205px] min-h-[47px]">
-        <p class="min-w-[55px]">{{ time }}</p>
+      <button class="min-h-[47px]">
+        <p class="min-w-[55px] tabular-nums">{{ time }}</p>
         |
         <p>{{ date }}</p>
       </button>
