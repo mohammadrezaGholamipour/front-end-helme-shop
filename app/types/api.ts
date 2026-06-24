@@ -60,13 +60,17 @@ export interface StoreOut {
   instagram?: string | null;
   telegram?: string | null;
   whatsapp?: string | null;
-  lat?: number | null;
-  lng?: number | null;
-  logo?: string | null;
+  rubika?: string | null;
+  bale?: string | null;
+  eita?: string | null;
   address: string;
   phone: string;
-  name: string;
   id: number;
+}
+
+
+export interface StoreUI extends StoreOut {
+  social: { icon: string; link: string, name: string; }[];
 }
 
 export interface TokenResponse {

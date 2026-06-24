@@ -24,7 +24,7 @@ function goBack() {
     <div v-else-if="data">
       <button @click="goBack">بازگشت</button>
       <div class="product-detail">
-        <img
+        <NuxtImg
           :src="data.image ? `http://130.185.73.247${data.image}` : ''"
           alt="product"
         />

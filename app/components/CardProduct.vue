@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { ProductOut } from "~/types";
-import productFallback from "~/assets/images/product.png";
+import productFallback from "/images/product.png";
 
 const props = defineProps<{ product: ProductOut }>();
 
@@ -13,7 +13,7 @@ const imgSrc = () => {
 
 <template>
   <div class="product-card">
-    <img :src="imgSrc()" alt="product" />
+    <NuxtImg :src="imgSrc()" alt="product" />
     <p>{{ props.product.name }}</p>
     <div>
       <Icon name="tabler:scale-filled" class="w-6 h-6" />

@@ -1,4 +1,3 @@
-// https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   app: {
     head: {
@@ -25,28 +24,21 @@ export default defineNuxtConfig({
     },
   },
   css: ["~/assets/css/main.css"],
-  modules: ["@nuxtjs/tailwindcss", "@nuxt/icon", "@peterbud/nuxt-query", "@pinia/nuxt"],
+  modules: [
+    "@nuxtjs/tailwindcss",
+    "@nuxt/icon",
+    "@peterbud/nuxt-query",
+    "@pinia/nuxt",
+    "@nuxt/image",
+    "nuxt-bezier",
+    "@vueuse/nuxt",
+  ],
   nuxtQuery: {
-    /**
-     * Specify which Vue Query composables to auto-import
-     * Default: `false`, set to `true` to auto-import all Vue Query composables
-     */
     autoImports: ["useQuery", "useMutation", "useQueryClient"],
-
-    // Enable/disable Nuxt DevTools integration (default: true)
     devtools: true,
-
-    /**
-     * These are the same options as the QueryClient
-     * from @tanstack/vue-query, which will be passed
-     * to the QueryClient constructor
-     * More details: https://tanstack.com/query/v5/docs/reference/QueryClient
-     */
-
     queryClientOptions: {
       defaultOptions: {
         queries: {
-          // for example disable refetching on window focus
           refetchOnWindowFocus: false,
         },
       },

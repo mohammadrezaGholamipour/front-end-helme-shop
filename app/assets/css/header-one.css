@@ -19,7 +19,6 @@
 
     .header-one>section:first-of-type {
         @apply px-2 justify-start md:justify-center;
-   
         order: 1 !important;
         overflow-x: auto;
         width: 100%;
@@ -46,7 +45,10 @@
 }
 
 .header-one>section:last-of-type {
-    justify-self: end;
+    @apply px-2 justify-start md:justify-center lg:justify-end;
+    overflow-x: auto;
+    width: 100%;
+
 }
 
 .header-one button {

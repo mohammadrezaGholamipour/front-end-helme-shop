@@ -1,11 +1,13 @@
-import type { StoreOut } from '~/types';
+import type { StoreUI } from '~/types';
 
 export const useGlobalStore = defineStore('global', () => {
     const state = reactive({
-        store: {} as StoreOut
+        store: {} as StoreUI,
+        loading: true
     })
 
-    const setStores = (items: StoreOut) => { state.store = items }
+    const setStores = (items: StoreUI) => { state.store = items }
+    const setLoading = (status: boolean) => { state.loading = status }
 
-    return { state, setStores, };
+    return { state, setStores, setLoading };
 });

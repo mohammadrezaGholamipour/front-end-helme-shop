@@ -15,7 +15,7 @@ const { data, isLoading, error } = useAllCategory() as unknown as {
     </div>
 
     <template v-else>
-      <CardCategory :category="item" v-for="item in data" :key="item.id" />
+      <CardCategory v-animate="{ type: 'slideUp',delay: 300, threshold: 0.1 }" :category="item" v-for="item in data" :key="item.id" />
     </template>
   </div>
 </template>

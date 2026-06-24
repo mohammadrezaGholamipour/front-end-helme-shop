@@ -1,12 +1,29 @@
 <script setup lang="ts">
-import type { StoreOut } from "~/types";
-const { data, isLoading, error } = useAllStore() as unknown as {
-  data: StoreOut;
-  isLoading: boolean;
-  error: unknown;
+import type { StoreUI } from "~/types";
+const { data, isLoading } = useAllStore() as unknown as {
+  data: StoreUI;
+  isLoading: boolean
 };
 const globalStore = useGlobalStore();
-globalStore.setStores(data);
+
+const startTime = Date.now()
+
+watchEffect(async () => {
+  if (data) {
+    globalStore.setStores(data)
+
+    const elapsed = Date.now() - startTime
+    const minDuration = 2000
+
+    if (elapsed < minDuration) {
+      await new Promise(resolve =>
+        setTimeout(resolve, minDuration - elapsed)
+      )
+    }
+
+    globalStore.setLoading(isLoading);
+  }
+})
 </script>
 
 <template>

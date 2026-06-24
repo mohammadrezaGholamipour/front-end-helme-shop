@@ -2,7 +2,7 @@
   <div class="parent-project">
     <NuxtRouteAnnouncer />
     <HeaderOne />
-    <HeaderTwo />
+    <HeaderTwo  />
     <slot />
     <Footer />
   </div>

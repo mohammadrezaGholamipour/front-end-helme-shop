@@ -10,15 +10,24 @@ const globalStore = useGlobalStore();
         d="M0,192L20,170.7C40,149,80,107,120,96C160,85,200,107,240,149.3C280,192,320,256,360,245.3C400,235,440,149,480,144C520,139,560,213,600,250.7C640,288,680,288,720,261.3C760,235,800,181,840,133.3C880,85,920,43,960,69.3C1000,96,1040,192,1080,213.3C1120,235,1160,181,1200,181.3C1240,181,1280,235,1320,229.3C1360,224,1400,160,1420,128L1440,96L1440,320L1420,320C1400,320,1360,320,1320,320C1280,320,1240,320,1200,320C1160,320,1120,320,1080,320C1040,320,1000,320,960,320C920,320,880,320,840,320C800,320,760,320,720,320C680,320,640,320,600,320C560,320,520,320,480,320C440,320,400,320,360,320C320,320,280,320,240,320C200,320,160,320,120,320C80,320,40,320,20,320L0,320Z"
       ></path>
     </svg>
-    <div class="footer">
+    <div
+      class="footer"
+      v-animate-stagger="{ delay: 500, threshold: 0.1, once: true }"
+    >
       <section>
         <div>
-          <p>{{ globalStore.state.store.address }}</p>
-          <img src="../assets/images/map.png" alt="" />
+          <p>{{ globalStore.state.store?.address }}</p>
+          <NuxtImg
+            src="/images/map.png"
+            :alt="globalStore.state.store?.address"
+          />
         </div>
         <div>
-          <p>{{ globalStore.state.store.phone }}</p>
-          <img src="../assets/images/phone.png" alt="" />
+          <p>{{ globalStore.state.store?.phone }}</p>
+          <NuxtImg
+            src="/images/phone.png"
+            :alt="globalStore.state.store?.phone"
+          />
         </div>
       </section>
 
@@ -32,31 +41,13 @@ const globalStore = useGlobalStore();
         referrerpolicy="no-referrer-when-downgrade"
       ></iframe>
 
-      <section>
-        <button>
-          <p>تلگرام</p>
-          <img src="../assets/images/telegram.png" alt="" />
-        </button>
-        <button>
-          <p>واتساپ</p>
-          <img src="../assets/images/whatsapp.png" alt="" />
-        </button>
-        <button>
-          <p>اینستاگرام</p>
-          <img src="../assets/images/instagram.png" alt="" />
-        </button>
-
-        <button>
-          <p>بله</p>
-          <img src="../assets/images/bale.png" alt="" />
-        </button>
-        <button>
-          <p>ایتا</p>
-          <img src="../assets/images/eita.png" alt="" />
-        </button>
-        <button>
-          <p>روبیکا</p>
-          <img src="../assets/images/rubika.png" alt="" />
+      <section
+        v-animate-stagger="{ delay: 500, threshold: 0.1, once: true }"
+        v-if="globalStore.state.store?.social?.length"
+      >
+        <button v-for="item in globalStore.state.store?.social">
+          <p>{{ item?.name }}</p>
+          <NuxtImg :src="`/images/${item?.icon}.png`" :alt="item?.icon" />
         </button>
       </section>
     </div>

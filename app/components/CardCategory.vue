@@ -5,7 +5,10 @@ const router = useRouter();
 </script>
 <template>
   <div class="category-card">
-    <img :src="`http://130.185.73.247${props.category.image}`" alt="category" />
+    <NuxtImg
+      :src="`http://130.185.73.247${props.category.image}`"
+      alt="category"
+    />
     <p>{{ props.category.name }}</p>
     <button
       @click="router.push({ path: `/categories/${props.category.name}` })"
