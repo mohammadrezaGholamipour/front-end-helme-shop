@@ -7,15 +7,15 @@ footer>svg {
 }
 
 .footer {
-    @apply w-full flex flex-wrap bg-[var(--gold-one)] p-2 lg:p-4 gap-4 px-2 lg:px-10 font-bold text-base rounded-md rounded-t-none md:rounded-t-md shadow-md text-white justify-center lg:justify-between items-center
+    @apply w-full flex flex-wrap  bg-[var(--gold-one)]   p-2 lg:p-4 gap-4 px-2 lg:px-10 font-bold text-base rounded-md rounded-t-none md:rounded-t-md  text-white justify-center lg:justify-between items-center
 }
 
 .footer>section:first-of-type {
-    @apply flex flex-col justify-center items-center lg:items-start gap-4
+    @apply flex flex-col justify-center items-center lg:items-start gap-4 
 }
 
 .footer>section:first-of-type>div {
-    @apply flex flex-row-reverse gap-3  border p-3 rounded-xl border-white flex-wrap-reverse justify-center items-center
+    @apply flex flex-row-reverse gap-3  p-3 rounded-xl bg-[var(--gold-one)] flex-wrap-reverse justify-center items-center
 }
 
 .footer>section:first-of-type>div p{
@@ -34,7 +34,7 @@ footer>svg {
 
 
 .footer>section:last-of-type>button {
-    @apply flex items-center gap-3 border p-3 px-5 border-white justify-between rounded-2xl;
+    @apply flex items-center gap-3 border-2 p-3 px-5 shadow-xl  bg-[var(--gold-one)] justify-between rounded-2xl;
 }
 
 .footer>section img {

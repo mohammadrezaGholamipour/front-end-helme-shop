@@ -4,20 +4,19 @@ const props = defineProps<{ category: CategoryOut }>();
 const router = useRouter();
 </script>
 <template>
-  <div class="category-card">
+  <main class="category-card">
     <img
       :src="`https://sohangaz.com${props.category.image}`"
-      :alt="`${props.category.name} محصولات`"
+      :alt="`خرید انواع ${props.category.name}`"
       width="220"
       height="260"
       fetchpriority="high"
     />
-    <p>{{ props.category.name }}</p>
-    <button
-      @click="router.push({ path: `/categories/${props.category.slug}` })"
-    >
-      <p>مشاهده بیشتر</p>
+    <h2>{{ props.category.name }}</h2>
+    <NuxtLink :to="`/categories/${props.category.slug}`" class="category-card__buttom">
+      <span>مشاهده بیشتر</span>
       <Icon name="tabler:dots-filled" class="w-6 h-6" />
-    </button>
-  </div>
+    </NuxtLink>
+
+  </main>
 </template>

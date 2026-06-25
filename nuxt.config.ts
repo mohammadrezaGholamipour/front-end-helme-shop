@@ -1,16 +1,16 @@
 export default defineNuxtConfig({
   app: {
     head: {
-      htmlAttrs: {
-        lang: 'fa',
-        dir: 'rtl'
-      },
-      title: 'فروشگاه سوهان و گز حلما',
+      charset: 'utf-8',
+      viewport: 'width=device-width, initial-scale=1',
+      htmlAttrs: { lang: 'fa', dir: 'rtl' }, 
       meta: [
-        {
-          name: 'description',
-          content: '✦ خرید آنلاین سوهان و گز | تازه، باکیفیت و ارسال سریع ✦'
-        }
+        { name: 'theme-color', content: '#fbf3e4' }, 
+        { name: 'robots', content: 'index, follow' } 
+      ],
+      link: [
+        { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+        { rel: 'canonical', href: 'https://sohangaz.com' } 
       ]
     }
   },
@@ -30,6 +30,8 @@ export default defineNuxtConfig({
     "@peterbud/nuxt-query",
     "@pinia/nuxt",
     "nuxt-bezier",
+    '@nuxtjs/sitemap',
+    'nuxt-schema-org',
   ],
   nuxtQuery: {
     autoImports: ["useQuery", "useMutation", "useQueryClient"],

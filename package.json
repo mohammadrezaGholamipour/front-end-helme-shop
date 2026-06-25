@@ -19,9 +19,11 @@
     "vue-router": "^5.1.0"
   },
   "devDependencies": {
+    "@nuxtjs/sitemap": "^8.2.1",
     "@nuxtjs/tailwindcss": "^6.14.0",
     "@peterbud/nuxt-query": "^1.8.0",
     "@types/node": "^25.9.3",
-    "nuxt-bezier": "^2.0.0"
+    "nuxt-bezier": "^2.0.0",
+    "nuxt-schema-org": "^6.2.2"
   }
 }

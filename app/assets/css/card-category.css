@@ -8,11 +8,11 @@
     object-fit: fill;
 }
 
-.category-card>P {
+.category-card>h2 {
     @apply text-[1.75rem] font-bold text-center;
 }
 
-.category-card>button {
+.category-card__buttom {
     @apply flex p-3 justify-center animate-pulse w-full rounded-xl items-center gap-2  font-bold text-white shadow-md;
     background-image: var(--gold-gradiant);
 }
