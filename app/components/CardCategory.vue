@@ -8,13 +8,13 @@ const router = useRouter();
     <img
       :src="`https://sohangaz.com${props.category.image}`"
       :alt="`${props.category.name} محصولات`"
-      width="260"
-      height="194"
+      width="220"
+      height="260"
       fetchpriority="high"
     />
     <p>{{ props.category.name }}</p>
     <button
-      @click="router.push({ path: `/categories/${props.category.name}` })"
+      @click="router.push({ path: `/categories/${props.category.slug}` })"
     >
       <p>مشاهده بیشتر</p>
       <Icon name="tabler:dots-filled" class="w-6 h-6" />

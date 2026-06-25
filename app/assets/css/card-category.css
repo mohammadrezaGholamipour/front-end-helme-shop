@@ -1,18 +1,18 @@
 .category-card {
-    @apply rounded-2xl bg-white dark:bg-black dark:text-white text-xl p-5 border-2 shadow-md border-[var(--gold-two)] flex flex-col justify-center items-center gap-7 max-w-[300px] ;
+    @apply rounded-2xl flex-1 bg-white dark:bg-black dark:text-white text-xl p-5 border-2 shadow-md border-[var(--gold-two)] flex flex-col  justify-center items-center gap-7 max-w-[300px] ;
 }
 
 .category-card>img {
-    @apply rounded-xl shadow-md;
-    aspect-ratio: 4/3;
+    @apply rounded-xl shadow-md ;
+    aspect-ratio: 4/4;
     object-fit: fill;
 }
 
 .category-card>P {
-    @apply text-[3rem] font-bold;
+    @apply text-[1.75rem] font-bold text-center;
 }
 
 .category-card>button {
-    @apply flex p-3 justify-center w-full rounded-xl items-center gap-2  font-bold text-white shadow-md;
+    @apply flex p-3 justify-center animate-pulse w-full rounded-xl items-center gap-2  font-bold text-white shadow-md;
     background-image: var(--gold-gradiant);
 }

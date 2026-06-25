@@ -15,20 +15,20 @@ export const useAllCategory = () => {
 
 
 
-export const useCategorySearch = (name:string) => {
+export const useCategorySlug = (slug:string) => {
   const { $api } = useNuxtApp();
   const queryClient = useQueryClient();
 
-  const queryKey = computed(() => ["category", "search", name] as const);
+  const queryKey = computed(() => ["category", "slug", slug] as const);
 
-  const queryFn = () => CategoryApi.getByName($api, name);
+  const queryFn = () => CategoryApi.getBySlug($api, slug);
 
   onServerPrefetch(() => queryClient.prefetchQuery({ queryKey: queryKey.value, queryFn }));
 
   return useQuery({
     queryKey: queryKey,
     queryFn,
-    enabled: computed(() => name.length >= 2),
+    enabled: computed(() => slug.length >= 2),
   });
 };
 

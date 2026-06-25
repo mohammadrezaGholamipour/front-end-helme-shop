@@ -27,18 +27,30 @@ export interface CreateProductBody {
 }
 
 export interface LoginBody {
-  grant_type?: string | null;
   username: string;
   password: string;
-  scope?: string;
-  client_id?: string | null;
-  client_secret?: string | null;
 }
 
 export interface CategoryOut {
   id: number;
   image?: string | null;
   name: string;
+  description: string;
+  meta_title: string;
+  application_id: string;
+  meta_description: string;
+  slug: string;
+}
+
+
+export interface CategorySlugOut {
+  id: number;
+  image?: string | null;
+  name: string;
+  description: string;
+  meta_title: string;
+  application_id: string;
+  meta_description: string;
   products?: ProductOut[];
 }
 
@@ -53,6 +65,9 @@ export interface ProductOut {
   price: number;
   volume: number;
   description?: string | null;
+  meta_title: string | null;
+  application_id: string;
+  meta_description: string | null;
   image?: string | null;
 }
 

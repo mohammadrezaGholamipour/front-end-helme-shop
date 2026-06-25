@@ -15,7 +15,11 @@ footer>svg {
 }
 
 .footer>section:first-of-type>div {
-    @apply flex flex-row-reverse gap-3 border p-3 rounded-xl border-white flex-wrap-reverse justify-center items-center
+    @apply flex flex-row-reverse gap-3  border p-3 rounded-xl border-white flex-wrap-reverse justify-center items-center
+}
+
+.footer>section:first-of-type>div p{
+@apply max-w-[300px] text-wrap text-center md:text-start
 }
 
 .footer>section:last-of-type {
