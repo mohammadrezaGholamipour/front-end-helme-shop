@@ -5,9 +5,12 @@ const router = useRouter();
 </script>
 <template>
   <div class="category-card">
-    <NuxtImg
-      :src="`http://130.185.73.247${props.category.image}`"
-      alt="category"
+    <img
+      :src="`https://sohangaz.com${props.category.image}`"
+      :alt="`${props.category.name} محصولات`"
+      width="260"
+      height="194"
+      fetchpriority="high"
     />
     <p>{{ props.category.name }}</p>
     <button

@@ -29,9 +29,7 @@ export default defineNuxtConfig({
     "@nuxt/icon",
     "@peterbud/nuxt-query",
     "@pinia/nuxt",
-    "@nuxt/image",
     "nuxt-bezier",
-    "@vueuse/nuxt",
   ],
   nuxtQuery: {
     autoImports: ["useQuery", "useMutation", "useQueryClient"],
@@ -46,7 +44,7 @@ export default defineNuxtConfig({
   },
   runtimeConfig: {
     public: {
-      apiBase: 'http://130.185.73.247/helma-shop-api/v1',
+      apiBase: 'https://sohangaz.com/helma-shop-api/v1',
     },
   },
 });

@@ -2,7 +2,9 @@
 const globalStore = useGlobalStore();
 </script>
 <template>
-  <footer>
+  <footer
+    v-animate="{ type: 'blurIn', delay: 300, duration: 1000, once: true }"
+  >
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
       <path
         fill="#d6b46c"
@@ -17,17 +19,11 @@ const globalStore = useGlobalStore();
       <section>
         <div>
           <p>{{ globalStore.state.store?.address }}</p>
-          <NuxtImg
-            src="/images/map.png"
-            :alt="globalStore.state.store?.address"
-          />
+          <img src="/images/map.webp" :alt="`سوهان و گز حلما ${globalStore.state.store?.address}`" width="40" height="40" />
         </div>
         <div>
           <p>{{ globalStore.state.store?.phone }}</p>
-          <NuxtImg
-            src="/images/phone.png"
-            :alt="globalStore.state.store?.phone"
-          />
+          <img src="/images/phone.webp" :alt="`سوهان و گز حلما ${globalStore.state.store?.phone}`" width="40" height="40" />
         </div>
       </section>
 
@@ -47,7 +43,12 @@ const globalStore = useGlobalStore();
       >
         <button v-for="item in globalStore.state.store?.social">
           <p>{{ item?.name }}</p>
-          <NuxtImg :src="`/images/${item?.icon}.png`" :alt="item?.icon" />
+          <img
+            :src="`/images/${item?.icon}.webp`"
+            :alt="`سوهان و گز حلما ${item?.name}`"
+            width="40"
+            height="40"
+          />
         </button>
       </section>
     </div>

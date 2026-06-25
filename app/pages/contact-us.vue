@@ -13,10 +13,9 @@ const globalStore = useGlobalStore();
       <div class="parent-contact-us__card">
         <!-- Logo -->
         <div v-animate="'slideUp'" class="logo">
-          <NuxtImg
-            src="/images/helma-logo.png"
+          <img
+            src="/images/helma-logo.webp"
             alt="فروشگاه سوهان و گز حلما"
-            format="webp"
             height="105"
             width="305"
           />
@@ -43,10 +42,9 @@ const globalStore = useGlobalStore();
           >
             <div class="link-card__left">
               <div class="link-card__icon">
-                <NuxtImg
-                  :src="`/images/${item?.icon}.png`"
+                <img
+                  :src="`/images/${item?.icon}.webp`"
                   :alt="`سوهان و گز حلما ${item?.name}`"
-                  format="webp"
                   height="38"
                   width="38"
                 />
@@ -64,10 +62,9 @@ const globalStore = useGlobalStore();
           <a class="link-card" target="_blank">
             <div class="link-card__left">
               <div class="link-card__icon">
-                <NuxtImg
-                  src="/images/website.png"
+                <img
+                  src="/images/website.webp"
                   alt="وبسایت فروشگاه سوهان و ز حلما"
-                  format="webp"
                   height="38"
                   width="38"
                 />
@@ -85,10 +82,9 @@ const globalStore = useGlobalStore();
           <a class="link-card" target="_blank">
             <div class="link-card__left">
               <div class="link-card__icon">
-                <NuxtImg
-                  src="/images/phone.png"
+                <img
+                  src="/images/phone.webp"
                   alt="وبسایت فروشگاه سوهان و ز حلما"
-                  format="webp"
                   height="38"
                   width="38"
                 />

@@ -1,19 +1,12 @@
 <script setup lang="ts">
 import type { ProductOut } from "~/types";
-import productFallback from "/images/product.png";
 
 const props = defineProps<{ product: ProductOut }>();
-
-const imgSrc = () => {
-  return props.product.image
-    ? `http://130.185.73.247${props.product.image}`
-    : productFallback;
-};
 </script>
 
 <template>
   <div class="product-card">
-    <NuxtImg :src="imgSrc()" alt="product" />
+    <img :src="`https://sohangaz.com${props.product.image}`" alt="product" />
     <p>{{ props.product.name }}</p>
     <div>
       <Icon name="tabler:scale-filled" class="w-6 h-6" />

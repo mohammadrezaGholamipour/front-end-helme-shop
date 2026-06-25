@@ -30,7 +30,7 @@ const { time, date } = useDateTime();
         <Icon name="tabler:library-filled" class="w-6 h-6" />
       </button>
     </section>
-    <NuxtImg
+    <img
       v-animate="{
         type: 'scaleIn',
         delay: 300,
@@ -38,9 +38,9 @@ const { time, date } = useDateTime();
         once: true,
         threshold: 0,
       }"
-      src="/images/helma-logo.png"
+      src="/images/helma-logo.webp"
       alt="سوهان و گز حلما"
-      format="webp"
+      fetchpriority=high
       width="200"
       height="67"
     />
