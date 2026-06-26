@@ -40,13 +40,26 @@ html {
 }
 
 body {
-   @apply bg-white dark:bg-black h-screen overflow-x-hidden
+    @apply bg-white dark:bg-black h-screen overflow-x-hidden
 }
 
 .parent-project {
-    @apply p-1 pt-3 h-dvh md:p-4 flex flex-col items-center justify-start gap-4;
+    @apply p-1 pt-3 h-dvh md:p-4 flex flex-col items-center justify-start gap-3;
 }
 
 .parent-page {
-    @apply w-full flex flex-grow items-center flex-wrap gap-10 justify-center
+    @apply w-full flex flex-1 flex-col items-center  gap-5 justify-center
+}
+
+
+.parent-categories {
+    @apply w-full flex flex-wrap gap-4 items-stretch justify-center
+}
+
+
+.parent-page.index > h1 {
+  @apply w-full text-2xl leading-10 font-['kalameh'] py-5 text-center text-wrap dark:text-white flex flex-wrap justify-center items-center gap-2;
+}
+.parent-page.index  .animated-title span {
+  @apply text-2xl  font-['kalameh']  dark:text-white;
 }
