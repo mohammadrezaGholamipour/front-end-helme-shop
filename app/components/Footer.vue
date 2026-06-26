@@ -19,12 +19,7 @@ const globalStore = useGlobalStore();
       <section>
         <div>
           <p>{{ globalStore.state.store?.address }}</p>
-          <img
-            src="/images/map.webp"
-            :alt="`${globalStore.state.store?.address} آدرس`"
-            width="40"
-            height="40"
-          />
+          <Icon name="tabler:map-pin-filled" class="w-10 h-10" />
         </div>
         <div>
           <p>{{ globalStore.state.store?.phone }}</p>

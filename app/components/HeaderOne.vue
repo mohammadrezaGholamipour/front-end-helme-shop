@@ -40,9 +40,9 @@ const { time, date } = useDateTime();
       }"
       src="/images/helma-logo.webp"
       alt="سوهان و گز حلما"
-      fetchpriority=high
-      width="200"
-      height="67"
+      fetchpriority="high"
+      width="305"
+      height="115"
     />
     <section
       v-animate="{
