@@ -19,11 +19,21 @@ const globalStore = useGlobalStore();
       <section>
         <div>
           <p>{{ globalStore.state.store?.address }}</p>
-          <img src="/images/map.webp" :alt="`سوهان و گز حلما ${globalStore.state.store?.address}`" width="40" height="40" />
+          <img
+            src="/images/map.webp"
+            :alt="`${globalStore.state.store?.address} آدرس`"
+            width="40"
+            height="40"
+          />
         </div>
         <div>
           <p>{{ globalStore.state.store?.phone }}</p>
-          <img src="/images/phone.webp" :alt="`سوهان و گز حلما ${globalStore.state.store?.phone}`" width="40" height="40" />
+          <img
+            src="/images/phone.webp"
+            :alt="`${globalStore.state.store?.phone} شماره تلفن سوهان و گز حلما`"
+            width="40"
+            height="40"
+          />
         </div>
       </section>
 
@@ -41,15 +51,22 @@ const globalStore = useGlobalStore();
         v-animate-stagger="{ delay: 500, threshold: 0.1, once: true }"
         v-if="globalStore.state.store?.social?.length"
       >
-        <button v-for="item in globalStore.state.store?.social">
-          <p>{{ item?.name }}</p>
-          <img
-            :src="`/images/${item?.icon}.webp`"
-            :alt="`سوهان و گز حلما ${item?.name}`"
-            width="40"
-            height="40"
-          />
-        </button>
+        <template v-for="item in globalStore.state.store?.social">
+          <a
+            v-if="item.name !== 'شماره تماس' && item.name !== 'وبسایت'"
+            :href="item.link"
+            :key="item.link"
+            target="_blank"
+          >
+            <p>{{ item?.name }}</p>
+            <img
+              :src="`/images/${item?.icon}.webp`"
+              :alt="`${item?.name} سوهان و گز حلما `"
+              width="40"
+              height="40"
+            />
+          </a>
+        </template>
       </section>
     </div>
   </footer>

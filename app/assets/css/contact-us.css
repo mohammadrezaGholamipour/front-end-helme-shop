@@ -50,20 +50,15 @@
     }
 
     .link-card__icon {
-      @apply w-12 h-12 rounded-xl drop-shadow-xl flex items-center justify-center overflow-hidden flex-shrink-0;
+      @apply rounded-lg  p-1 drop-shadow-2xl flex items-center justify-center overflow-hidden flex-shrink-0;
       background-color: #c8912a5e;
 
     }
 
     .link-card__icon img {
-      filter: brightness(0) invert(100%);
-      object-fit: contain;
-      min-width: 2.5rem;
-      max-width: 2.5rem;
-      height: auto;
-      height: 40px;
-      width: 100%;
 
+      filter: brightness(0) invert(100%);
+      aspect-ratio: 1/1
     }
 
     .link-card__text {

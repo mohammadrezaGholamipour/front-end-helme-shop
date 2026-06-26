@@ -1,21 +1,25 @@
 export default defineNuxtConfig({
+  site: {
+    url: 'https://sohangaz.com',
+    name: 'سوهان و گز حلما',
+  },
   app: {
     head: {
       charset: 'utf-8',
       viewport: 'width=device-width, initial-scale=1',
-      htmlAttrs: { lang: 'fa', dir: 'rtl' }, 
+      htmlAttrs: { lang: 'fa', dir: 'rtl' },
       meta: [
-        { name: 'theme-color', content: '#fbf3e4' }, 
-        { name: 'robots', content: 'index, follow' } 
+        { name: 'theme-color', content: '#fbf3e4' },
+        { name: 'robots', content: 'index, follow' }
       ],
       link: [
         { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
-        { rel: 'canonical', href: 'https://sohangaz.com' } 
+        { rel: 'canonical', href: 'https://sohangaz.com' }
       ]
     }
   },
   srcDir: "app/",
-  compatibilityDate: "2025-07-15",
+  compatibilityDate: "2026-06-26",
   devtools: {
     enabled: true,
 

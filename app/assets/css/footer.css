@@ -33,20 +33,14 @@ footer>svg {
 }
 
 
-.footer>section:last-of-type>button {
-    @apply flex items-center gap-3 border-2 p-3 px-5 shadow-xl  bg-[var(--gold-one)] justify-between rounded-2xl;
+.footer>section:last-of-type>a {
+    @apply flex items-center gap-3 border-2 cursor-pointer p-3 px-5 shadow-xl  bg-[var(--gold-one)] justify-between rounded-2xl;
 }
 
 .footer>section img {
     @apply drop-shadow-xl;
     filter: brightness(0) invert(100%);
-    object-fit: contain;
-    min-width: 2.5rem;
-    max-width: 2.5rem;
-    height: auto;
-    height: 40px;
-    width: 100%;
-
+    aspect-ratio: 1/1;
 }
 
 

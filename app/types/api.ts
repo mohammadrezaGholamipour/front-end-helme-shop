@@ -86,6 +86,7 @@ export interface StoreOut {
 
 export interface StoreUI extends StoreOut {
   social: { icon: string; link: string, name: string; }[];
+  logo: string
 }
 
 export interface TokenResponse {

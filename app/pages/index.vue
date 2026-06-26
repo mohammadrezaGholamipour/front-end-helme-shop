@@ -9,12 +9,13 @@ const { data, isLoading, error } = useAllCategory() as unknown as {
 useSeoMeta({
   title: "فروشگاه آنلاین سوهان و گز حلما | طعم اصیل سوغات",
   ogTitle: "فروشگاه آنلاین سوهان و گز حلما",
+  ogSiteName: "سوهان و گز حلما",
   description:
-    "خرید اینترنتی انواع سوهان و گز درجه یک با بهترین قیمت. ارسال تازه و سریع از قم و اصفهان به سراسر ایران.",
+    "خرید اینترنتی انواع سوهان و گز درجه یک با بهترین قیمت | ارسال تازه و سریع به سراسر ایران",
   ogDescription:
-    "خرید اینترنتی انواع سوهان و گز درجه یک با بهترین قیمت. ارسال تازه و سریع.",
-  keywords: "سوهان قم, خرید گز اصفهان, سوغات سنتی, خرید سوهان آنلاین, قیمت گز",
-  ogImage: "https://sohangaz.com/images/helma-logo.webp",
+    "خرید اینترنتی انواع سوهان و گز درجه یک با بهترین قیمت | ارسال تازه و سریع",
+  keywords: "سوهان, گز , سوغات سنتی, خرید سوهان آنلاین, قیمت گز",
+  ogImage: "https://sohangaz.com/images/helma-logo-og.jpg",
   twitterCard: "summary_large_image",
 });
 useSchemaOrg([
@@ -24,7 +25,7 @@ useSchemaOrg([
   }),
   defineOrganization({
     name: "سوهان و گز حلما",
-    logo: "https://sohangaz.com/images/helma-logo.webp",
+    logo: "https://sohangaz.com/images/helma-logo-og.jpg",
     url: "https://sohangaz.com",
   }),
 ]);
