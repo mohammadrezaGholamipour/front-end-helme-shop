@@ -48,18 +48,19 @@ body {
 }
 
 .parent-page {
-    @apply w-full flex flex-1 flex-col items-center  gap-5 justify-center
+    @apply w-full flex flex-1 flex-col items-center gap-5 justify-center
 }
 
 
 .parent-categories {
-    @apply w-full flex flex-wrap gap-4 items-stretch justify-center
+    @apply w-full flex flex-wrap gap-4 items-stretch mb-4 justify-center
 }
 
 
-.parent-page.index > h1 {
-  @apply w-full text-2xl leading-10 font-['kalameh'] py-5 text-center text-wrap dark:text-white flex flex-wrap justify-center items-center gap-2;
+.parent-page.index>h1 {
+    @apply w-full text-2xl leading-10 font-['kalameh'] py-5 text-center text-wrap dark:text-white flex flex-wrap justify-center items-center gap-2;
 }
-.parent-page.index  .animated-title span {
-  @apply text-2xl  font-['kalameh']  dark:text-white;
+
+.parent-page.index .animated-title span {
+    @apply text-2xl font-['kalameh'] dark:text-white;
 }

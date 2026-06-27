@@ -14,8 +14,10 @@ const [container, slider] = useKeenSlider({
       <img
         alt="ارائه دهنده انواع سوهان با روغن های حیوانی"
         class="w-full h-full object-cover"
-        src="/images/banner-one-small.png"
+        src="/images/banner-one-small.webp"
         fetchpriority="high"
+        height="500"
+        width="500"
       />
       <div
         v-animate="{
@@ -35,10 +37,12 @@ const [container, slider] = useKeenSlider({
     <div class="slider slider-two keen-slider__slide">
       <img
         class="w-full h-full object-cover"
-        src="/images/banner-three-small.png"
+        src="/images/banner-three-small.webp"
         alt=" مجموعه‌ای چشم‌نواز برای پذیرایی و هدیه، با ترکیبی از طعم اصیل، بسته‌بندی
         شکیل و کیفیتی که هر لحظه را به خاطره‌ای ماندگار تبدیل می‌کند."
         fetchpriority="high"
+        width="500"
+        height="500"
       />
       <p
         v-animate="{
