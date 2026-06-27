@@ -30,12 +30,13 @@ export default defineNuxtConfig({
   css: ["~/assets/css/main.css"],
   modules: [
     "@nuxtjs/tailwindcss",
-    "@nuxt/icon",
     "@peterbud/nuxt-query",
-    "@pinia/nuxt",
-    "nuxt-bezier",
+    'nuxt-keen-slider',
     '@nuxtjs/sitemap',
     'nuxt-schema-org',
+    "nuxt-bezier",
+    "@pinia/nuxt",
+    "@nuxt/icon",
   ],
   nuxtQuery: {
     autoImports: ["useQuery", "useMutation", "useQueryClient"],

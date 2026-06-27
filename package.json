@@ -24,6 +24,7 @@
     "@peterbud/nuxt-query": "^1.8.0",
     "@types/node": "^25.9.3",
     "nuxt-bezier": "^2.0.0",
+    "nuxt-keen-slider": "^1.1.1",
     "nuxt-schema-org": "^6.2.2"
   }
 }
