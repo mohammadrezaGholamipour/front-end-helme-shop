@@ -52,6 +52,7 @@ const globalStore = useGlobalStore();
     <div class="parent-contact-us__card">
       <!-- Logo -->
       <div v-animate="'slideUp'" class="logo">
+        <img src="/images/title.png" width="100" alt="سوهان و گز">
         <img
           :src="globalStore.state.store?.logo"
           alt="فروشگاه سوهان و گز حلما"
