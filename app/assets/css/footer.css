@@ -39,7 +39,6 @@ footer>svg {
 
 .footer>section img {
     @apply drop-shadow-xl;
-    filter: brightness(0) invert(100%);
     aspect-ratio: 1/1;
 }
 
