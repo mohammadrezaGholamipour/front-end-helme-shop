@@ -24,7 +24,7 @@ const globalStore = useGlobalStore();
         <div>
           <p>{{ globalStore.state.store?.phone }}</p>
           <img
-            src="/images/phone.webp"
+            src="/images/footer-phone.webp"
             :alt="`${globalStore.state.store?.phone} شماره تلفن سوهان و گز حلما`"
             width="40"
             height="40"
@@ -55,7 +55,7 @@ const globalStore = useGlobalStore();
           >
             <p>{{ item?.name }}</p>
             <img
-              :src="`/images/${item?.icon}.webp`"
+              :src="`/images/footer-${item?.icon}.webp`"
               :alt="`${item?.name} سوهان و گز حلما `"
               width="40"
               height="40"

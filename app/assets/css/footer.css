@@ -23,7 +23,7 @@ footer>svg {
 }
 
 .footer>section:last-of-type {
-    @apply grid-cols-2 md:grid-cols-3;
+    @apply grid-cols-2 md:grid-cols-3 ;
     justify-items: stretch;
     align-items: center;
     column-gap: 50px;
@@ -34,11 +34,12 @@ footer>svg {
 
 
 .footer>section:last-of-type>a {
-    @apply flex items-center gap-3 border-2 cursor-pointer p-3 px-5 shadow-xl  bg-[var(--gold-one)] justify-between rounded-2xl;
+    @apply flex items-center gap-3  cursor-pointer p-3 px-5   bg-[var(--gold-one)] justify-between rounded-2xl;
 }
 
 .footer>section img {
     @apply drop-shadow-xl;
+    filter: brightness(0) invert(100%);
     aspect-ratio: 1/1;
 }
 

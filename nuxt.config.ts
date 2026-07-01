@@ -15,7 +15,19 @@ export default defineNuxtConfig({
       link: [
         { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
         { rel: 'canonical', href: 'https://sohangaz.com' }
-      ]
+      ],
+      script: [
+        {
+          innerHTML: `
+            (() => {
+              const theme = localStorage.getItem('colorMode');
+              if (theme === 'dark') {
+                document.documentElement.classList.add('dark');
+              }
+            })();
+          `,
+        },
+      ],
     }
   },
   srcDir: "app/",

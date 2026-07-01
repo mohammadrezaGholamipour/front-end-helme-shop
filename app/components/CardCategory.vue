@@ -13,10 +13,11 @@ const router = useRouter();
       fetchpriority="high"
     />
     <h2>{{ props.category.name }}</h2>
-    <NuxtLink :to="`/categories/${props.category.slug}`" class="category-card__buttom">
-      <span>مشاهده بیشتر</span>
-      <Icon name="tabler:dots-filled" class="w-6 h-6" />
+    <NuxtLink
+      :to="`/categories/${props.category.slug}`"
+      class="category-card__buttom"
+    >
+      <span>مشاهده محصول</span>
     </NuxtLink>
-
   </main>
 </template>
