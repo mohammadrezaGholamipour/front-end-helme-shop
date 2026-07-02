@@ -23,7 +23,7 @@ footer>svg {
 }
 
 .footer>section:last-of-type {
-    @apply grid-cols-2 md:grid-cols-3 ;
+    @apply grid-cols-2 md:grid-cols-3;
     justify-items: stretch;
     align-items: center;
     column-gap: 50px;
