@@ -3,7 +3,7 @@
     <NuxtRouteAnnouncer />
     <HeaderOne />
     <HeaderTwo  />
-    <slot />
+    <slot  />
     <Footer />
   </div>
 </template>

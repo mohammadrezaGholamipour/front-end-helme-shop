@@ -2,9 +2,9 @@
 import type { CategoryOut } from "~/types";
 
 useSeoMeta({
-  title: "فروشگاه آنلاین سوهان و گز حلما | طعم اصیل سوغات",
-  ogTitle: "فروشگاه آنلاین سوهان و گز حلما",
-  ogSiteName: "سوهان و گز حلما",
+  title: "فروشگاه سوهان و گز حلما وفایی | طعم اصیل سوغات",
+  ogTitle: "فروشگاه سوهان و گز حلما وفایی | طعم اصیل سوغات",
+  ogSiteName: "حلما شاپ",
   description:
     "خرید اینترنتی انواع سوهان و گز درجه یک با بهترین قیمت | ارسال تازه و سریع به سراسر ایران",
   ogDescription:
@@ -19,7 +19,7 @@ useSchemaOrg([
     description: "فروشگاه سوغات سنتی ایران",
   }),
   defineOrganization({
-    name: "سوهان و گز حلما",
+    name: "سوهان و گز حلما وفایی",
     logo: "https://sohangaz.com/images/helma-logo-og.jpg",
     url: "https://sohangaz.com",
   }),
@@ -32,7 +32,10 @@ const { data, isLoading, error } = useAllCategory() as unknown as {
 };
 </script>
 <template>
-  <div class="parent-page index">
+  <div
+
+    class="parent-page index"
+  >
     <SliderIndex />
     <TItleIndex />
     <div v-if="isLoading">Loading...</div>

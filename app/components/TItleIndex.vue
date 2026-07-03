@@ -7,7 +7,6 @@
       <span
         v-animate="{
           type: 'blurIn',
-          delay: 1000,
           duration: 1000,
           once: true,
           threshold: 0,
@@ -16,7 +15,7 @@
       ><strong
         v-animate="{
           type: 'blurIn',
-          delay: 2000,
+          delay: 1000,
           duration: 1000,
           once: true,
           threshold: 0,
@@ -29,7 +28,7 @@
       <span
         v-animate="{
           type: 'blurIn',
-          delay: 4000,
+          delay: 2000,
           duration: 1000,
           once: true,
           threshold: 0,
@@ -39,7 +38,7 @@
       ><span
         v-animate="{
           type: 'blurIn',
-          delay: 5000,
+          delay: 3000,
           duration: 1000,
           once: true,
           threshold: 0,

@@ -48,7 +48,7 @@ const [container] = useKeenSlider(
 );
 </script>
 <template>
-  <div ref="container" class="keen-slider sm:!hidden slide-in-elliptic-top-fwd">
+  <div ref="container" class="keen-slider sm:!hidden slide-in-elliptic-top-fwd max-h-[700px]">
     <div class="slider slider-one keen-slider__slide">
       <img
         alt="ارائه دهنده انواع سوهان با روغن های حیوانی"
@@ -61,9 +61,8 @@ const [container] = useKeenSlider(
       <div
         v-animate="{
           type: 'blurIn',
-          delay: 2000,
+          delay: 1000,
           duration: 1000,
-          once: true,
           threshold: 0,
         }"
         class="slider-one__content"

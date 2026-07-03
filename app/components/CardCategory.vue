@@ -1,13 +1,14 @@
 <script setup lang="ts">
 import type { CategoryOut } from "~/types";
 const props = defineProps<{ category: CategoryOut }>();
-const router = useRouter();
 </script>
 <template>
   <main class="category-card">
+    <div class="category-card__bg"></div>
     <img
       :src="`https://sohangaz.com${props.category.image}`"
       :alt="`خرید انواع ${props.category.name}`"
+      class="relative "
       width="220"
       height="260"
       fetchpriority="high"
@@ -18,6 +19,7 @@ const router = useRouter();
       class="category-card__buttom"
     >
       <span>مشاهده محصول</span>
+     
     </NuxtLink>
   </main>
 </template>
