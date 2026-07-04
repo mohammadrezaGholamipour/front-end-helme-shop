@@ -1,9 +1,19 @@
+<script setup>
+const status = ref(false);
+
+onMounted(() => {
+  setTimeout(() => {
+    status.value = !status.value;
+  }, 1000);
+});
+</script>
+
 <template>
-  <div class="parent-project">
+  <div v-show="status" class="parent-project">
     <NuxtRouteAnnouncer />
     <HeaderOne />
-    <HeaderTwo  />
-    <slot  />
+    <HeaderTwo />
+    <slot />
     <Footer />
   </div>
 </template>

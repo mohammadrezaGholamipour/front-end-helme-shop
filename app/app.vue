@@ -28,12 +28,6 @@ watchEffect(async () => {
 
 <template>
   <NuxtLayout>
-    <NuxtPage     v-animate="{
-      type: 'blurIn',
-      delay: 2000,
-      duration: 1000,
-      once: true,
-      threshold: 0,
-    }" />
+    <NuxtPage     />
   </NuxtLayout>
 </template>

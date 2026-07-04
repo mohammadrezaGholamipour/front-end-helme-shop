@@ -30,13 +30,19 @@ const { data, isLoading, error } = useAllCategory() as unknown as {
   isLoading: boolean;
   error: unknown;
 };
+
+const sliderKey = ref(0);
+
+onMounted(async () => {
+  await nextTick();
+  setTimeout(() => {
+    sliderKey.value++;
+  }, 1000);
+});
 </script>
 <template>
-  <div
-
-    class="parent-page index"
-  >
-    <SliderIndex />
+  <div class="parent-page index">
+    <SliderIndex :key="sliderKey" />
     <TItleIndex />
     <div v-if="isLoading">Loading...</div>
     <div v-else-if="data?.length === 0">
