@@ -39,8 +39,21 @@ html {
     margin: 0;
 }
 
+
+::-webkit-scrollbar {
+  width: 0px !important;
+}
+
+::-webkit-scrollbar-button {
+  display: none !important;
+}
+
+::-webkit-scrollbar-track-piece {
+  @apply bg-transparent !important;
+}
+
 body {
-    @apply bg-white dark:bg-black h-screen overflow-x-hidden
+    @apply bg-white dark:bg-black h-screen overflow-x-hidden transition-all 
 }
 
 .parent-project {

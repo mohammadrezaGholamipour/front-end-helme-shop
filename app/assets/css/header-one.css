@@ -9,7 +9,7 @@
     .header-one {
         @apply text-sm;
         grid-template-columns: 1fr;
-        gap: 1rem;
+        gap: 0rem;
 
     }
 
@@ -18,11 +18,14 @@
     }
 
     .header-one>section:first-of-type {
-        @apply px-2 justify-start md:justify-center;
+        @apply px-2 mt-3 justify-start md:justify-center;
         order: 1 !important;
         overflow-x: auto;
         width: 100%;
+    }
 
+    .header-one>section:last-of-type{
+        @apply mt-3 md:justify-center
     }
 }
 
@@ -44,8 +47,7 @@ aspect-ratio: 4/1.5;
 }
 
 .header-one>section:last-of-type {
-    @apply px-2 justify-start md:justify-center lg:justify-end;
-    overflow-x: auto;
+    @apply px-2 justify-start md:!justify-center overflow-hidden lg:!justify-end;
     width: 100%;
 
 }
