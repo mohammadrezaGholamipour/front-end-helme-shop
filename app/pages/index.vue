@@ -37,7 +37,7 @@ onMounted(async () => {
   await nextTick();
   setTimeout(() => {
     sliderKey.value++;
-  }, 1000);
+  }, 700);
 });
 </script>
 <template>

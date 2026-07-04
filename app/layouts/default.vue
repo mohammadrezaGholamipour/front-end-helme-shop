@@ -4,7 +4,7 @@ const status = ref(false);
 onMounted(() => {
   setTimeout(() => {
     status.value = !status.value;
-  }, 1000);
+  }, 700);
 });
 </script>
 
