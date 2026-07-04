@@ -1,4 +1,78 @@
-footer {
+.parent-footer {
+    @apply w-full flex gap-10 flex-wrap justify-evenly items-center text-white bg-[#1E242B] p-5 py-8 rounded-lg shadow-2xl
+}
+
+.parent-footer section {
+    @apply flex flex-col order-[-1] md:order-none justify-center items-center gap-5
+}
+
+.parent-footer__logo {
+    @apply flex flex-col justify-center items-center gap-2
+}
+
+.parent-footer__logo p {
+    @apply text-[0.75rem] font-bold
+}
+
+.parent-footer__quick-access {
+    @apply flex flex-col justify-start w-full md:w-auto items-center gap-4 font-thin;
+}
+
+
+.parent-footer__quick-access>div {
+    @apply flex items-center justify-center gap-2 cursor-pointer min-w-[220px]  p-4 border-2 border-double border-[--gold-one] rounded-full
+}
+
+
+.parent-footer__quick-access>div:first-of-type {
+    @apply text-white font-bold text-lg !bg-transparent justify-center border-none
+}
+
+
+.parent-footer__contact-us {
+    @apply flex flex-col md:hidden w-full md:w-auto justify-start border-2 border-dashed p-5  rounded-md border-[--gold-one] items-start gap-4 font-thin;
+}
+
+
+.parent-footer__contact-us>div {
+    @apply flex items-center justify-center gap-2 cursor-pointer
+}
+
+.parent-footer__contact-us>div:first-of-type {
+    @apply text-white font-bold text-lg mb-2
+}
+
+
+.parent-footer__map {
+    @apply flex flex-col justify-start items-center gap-5
+}
+
+.parent-footer__map>div {
+    @apply flex flex-row-reverse gap-2 text-white font-bold text-lg
+}
+
+.parent-footer__map>p {
+    @apply max-w-[250px] text-wrap text-center
+}
+
+
+.parent-social-media {
+    @apply flex flex-col justify-start items-center gap-5
+}
+
+.parent-social-media>div:first-of-type {
+    @apply flex flex-row-reverse gap-2 text-white font-bold text-lg
+}
+
+.parent-social-media>div:last-of-type {
+    @apply flex flex-wrap justify-center items-center gap-2;
+}
+
+.parent-social-media__social-icon {
+    @apply flex items-center justify-center p-3 bg-[#1A1E26] rounded-xl shadow-md cursor-pointer
+}
+
+/* footer {
     @apply w-full
 }
 
@@ -52,4 +126,4 @@ iframe {
     iframe {
         display: none !important;
     }
-}
+} */
