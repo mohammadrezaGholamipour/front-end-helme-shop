@@ -1,14 +1,14 @@
-import { onServerPrefetch } from "vue";
-import { ProductApi } from "~/services/product";
 import type { ProductOut, CreateProductBody } from "~/types";
+import { ProductApi } from "~/services/product";
+import { onServerPrefetch } from "vue";
 
 export const useAllProduct = () => {
   const { $api } = useNuxtApp();
-  const qc = useQueryClient();
+   const queryClient = useQueryClient();
   const queryKey = ["product"] as const;
   const queryFn = () => ProductApi.getAll($api);
 
-  onServerPrefetch(() => qc.prefetchQuery({ queryKey, queryFn }));
+  onServerPrefetch(() => queryClient.prefetchQuery({ queryKey, queryFn }));
 
   return useQuery<ProductOut[]>({
     queryKey,

@@ -6,7 +6,12 @@ const props = defineProps<{ product: ProductOut }>();
 
 <template>
   <div class="product-card">
-    <img :src="`https://sohangaz.com${props.product.image}`" alt="product" />
+    <img
+      :src="`https://sohangaz.com${props.product.image}`"
+      :alt="props.product.name"
+      height="220"
+      width="220"
+    />
     <p>{{ props.product.name }}</p>
     <div>
       <Icon name="tabler:scale-filled" class="w-6 h-6" />

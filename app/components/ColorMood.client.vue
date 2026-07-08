@@ -1,4 +1,4 @@
-<script setup>
+<script setup >
 const html = ref(document.getElementsByTagName("html")[0]);
 const colorMoodValue = ref(null);
 
@@ -16,15 +16,22 @@ onMounted(() => {
   }
 });
 const handleColorMood = () => {
+  const themeColor = document.querySelector('meta[name="theme-color"]');
+
   if (html.value.classList.contains("dark")) {
     html.value.classList.remove("dark");
     localStorage.setItem("colorMode", "light");
     colorMoodValue.value = false;
+
+    themeColor?.setAttribute("content", "#fbf3e4");
   } else {
     html.value.classList.add("dark");
     localStorage.setItem("colorMode", "dark");
     colorMoodValue.value = true;
+
+    themeColor?.setAttribute("content", "#000000");
   }
+
   const storageEvent = new Event("storage");
   window.dispatchEvent(storageEvent);
 };

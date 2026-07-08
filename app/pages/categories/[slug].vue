@@ -29,12 +29,13 @@ const { data, isLoading, error } = useCategorySlug(name) as unknown as {
       <p class="dark:text-white text-sm animate-bounce">به زودی پر میشه !</p>
     </div>
 
-    <template v-else>
+    <div class="parent-cards" v-else>
       <CardProduct
-        v-for="item in data.products"
+      v-animate="{ type: 'slideUp', delay: 300, threshold: 0.1 }"
+        v-for="item in data?.products"
         :product="item"
         :key="item.id"
       />
-    </template>
+    </div>
   </div>
 </template>

@@ -1,11 +1,11 @@
 .product-card {
-    @apply rounded-2xl bg-white dark:bg-black dark:text-white text-xl p-5 border-2 shadow-md border-[var(--gold-two)] flex flex-col justify-center items-center gap-5 max-w-[300px] mx-auto ;
+    @apply rounded-2xl bg-white dark:bg-black dark:text-white text-xl p-5 border-2 shadow-md border-[var(--gold-two)] flex flex-col justify-center items-center gap-5  !flex-1 max-w-[300px];
 }
 
 .product-card>img {
     @apply rounded-xl  shadow-md;
-    aspect-ratio: 4/3;
-    object-fit: fill;
+    aspect-ratio: 1/1;
+    object-fit: cover;
 }
 
 .product-card>P {

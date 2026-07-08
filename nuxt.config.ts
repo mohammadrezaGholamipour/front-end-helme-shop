@@ -9,7 +9,16 @@ export default defineNuxtConfig({
       viewport: 'width=device-width, initial-scale=1',
       htmlAttrs: { lang: 'fa', dir: 'rtl' },
       meta: [
-        { name: 'theme-color', content: '#fbf3e4' },
+        {
+          name: 'theme-color',
+          media: '(prefers-color-scheme: light)',
+          content: '#fbf3e4'
+        },
+        {
+          name: 'theme-color',
+          media: '(prefers-color-scheme: dark)',
+          content: '#000000'
+        },
         { name: 'robots', content: 'index, follow' }
       ],
       link: [

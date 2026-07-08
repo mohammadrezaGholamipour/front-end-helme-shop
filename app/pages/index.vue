@@ -48,7 +48,7 @@ onMounted(async () => {
     <div v-else-if="data?.length === 0">
       <p>هیچ دسته بندی ای وجود ندارد</p>
     </div>
-    <div class="parent-categories" v-else>
+    <div class="parent-cards" v-else>
       <CardCategory
         v-animate="{ type: 'slideUp', delay: 300, threshold: 0.1 }"
         :category="item"

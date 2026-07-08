@@ -53,7 +53,7 @@ html {
 }
 
 body {
-    @apply bg-white dark:bg-black h-screen overflow-x-hidden transition-all 
+    @apply bg-white dark:bg-black h-screen overflow-x-hidden 
 }
 
 .parent-project {
@@ -65,7 +65,7 @@ body {
 }
 
 
-.parent-categories {
+.parent-cards {
     @apply w-full flex flex-wrap gap-4 items-stretch mb-4 justify-center
 }
 
