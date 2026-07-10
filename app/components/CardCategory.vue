@@ -7,7 +7,7 @@ const props = defineProps<{ category: CategoryOut }>();
     <div class="category-card__bg"></div>
     <img
       :src="`https://sohangaz.com${props.category.image}`"
-      :alt="`خرید انواع ${props.category.name}`"
+      :alt="props.category.meta_title"
       class="relative "
       width="220"
       height="260"

@@ -66,6 +66,7 @@ export default defineNuxtConfig({
       defaultOptions: {
         queries: {
           refetchOnWindowFocus: false,
+          staleTime: 1000 * 60,
         },
       },
     },

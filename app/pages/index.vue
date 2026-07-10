@@ -25,7 +25,7 @@ useSchemaOrg([
   }),
 ]);
 
-const { data, isLoading, error } = useAllCategory() as unknown as {
+const { data } = useAllCategory() as unknown as {
   data: CategoryOut[] | undefined;
   isLoading: boolean;
   error: unknown;
@@ -44,8 +44,7 @@ onMounted(async () => {
   <div class="parent-page index">
     <SliderIndex :key="sliderKey" />
     <TItleIndex />
-    <div v-if="isLoading">Loading...</div>
-    <div v-else-if="data?.length === 0">
+    <div v-if="data?.length === 0">
       <p>هیچ دسته بندی ای وجود ندارد</p>
     </div>
     <div class="parent-cards" v-else>

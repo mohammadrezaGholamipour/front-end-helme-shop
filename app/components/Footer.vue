@@ -2,16 +2,20 @@
 const globalStore = useGlobalStore();
 </script>
 <template>
-  <footer  v-animate-stagger="{ delay: 500, threshold: 0.1, once: true }" class="parent-footer">
+  <footer
+    v-animate="{ type: 'blurIn', delay: 300, duration: 1000, once: true }"
+    class="parent-footer"
+  >
     <div class="parent-footer__map">
       <div>
         <p>ما را پیدا کنید</p>
         <Icon name="tabler:map-pin" class="w-6 h-6 text-[--gold-two]" />
       </div>
       <p>{{ globalStore.state.store?.address }}</p>
+
       <iframe
-        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d821.5757134180984!2d50.79468376962758!3d34.54588660294193!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3f93a35a3182c78b%3A0x569309d4a8cfd093!2sShahab%20Danesh%20University!5e0!3m2!1sen!2s!4v1781537845333!5m2!1sen!2s"
-        style="border: 0"
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d410.17541535498833!2d50.8878354!3d34.6697689!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3f93bb004d715c8f%3A0xab98b4cd8e02297a!2shelmaShop!5e0!3m2!1sen!2s!4v1783716034165!5m2!1sen!2s"
+         style="border: 0"
         loading="lazy"
         class="rounded-lg shadow-md"
         referrerpolicy="no-referrer-when-downgrade"
@@ -38,7 +42,6 @@ const globalStore = useGlobalStore();
               <img :src="`/images/${item?.icon}.webp`" width="40" alt="" />
             </a>
           </template>
-          
         </div>
       </div>
     </section>
