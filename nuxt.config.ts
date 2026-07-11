@@ -12,7 +12,7 @@ export default defineNuxtConfig({
         {
           name: 'theme-color',
           media: '(prefers-color-scheme: light)',
-          content: '#fbf3e4'
+          content: '#d3b46d'
         },
         {
           name: 'theme-color',

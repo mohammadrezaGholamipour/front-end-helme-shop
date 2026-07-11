@@ -49,7 +49,7 @@ onMounted(async () => {
     </div>
     <div class="parent-cards" v-else>
       <CardCategory
-        v-animate="{ type: 'slideUp', delay: 300, threshold: 0.1 }"
+        v-animate="{ type: 'slideUp', delay: 300, threshold: 0.1, once: true, }"
         :category="item"
         v-for="item in data"
         :key="item.id"

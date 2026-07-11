@@ -4,7 +4,7 @@ const status = ref(false);
 onMounted(() => {
   setTimeout(() => {
     status.value = !status.value;
-  }, 700);
+  }, 1000);
 });
 </script>
 
@@ -13,7 +13,7 @@ onMounted(() => {
     <NuxtRouteAnnouncer />
     <HeaderOne />
     <HeaderTwo />
-    <slot />
+      <slot  />
     <Footer />
   </div>
 </template>
