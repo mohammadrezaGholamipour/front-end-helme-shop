@@ -16,11 +16,11 @@ export const useAllProduct = () => {
   });
 };
 
-export const useProduct = (id: number) => {
+export const useProduct = (slug: string) => {
   const { $api } = useNuxtApp();
   const qc = useQueryClient();
-  const queryKey = ["product", id] as const;
-  const queryFn = () => ProductApi.getById($api, id);
+  const queryKey = ["product", slug] as const;
+  const queryFn = () => ProductApi.getBySlug($api, slug);
 
   onServerPrefetch(() => qc.prefetchQuery({ queryKey, queryFn }));
 

@@ -25,7 +25,8 @@
     }
 
     .header-one>section:last-of-type{
-        @apply mt-3 md:justify-center
+        @apply mt-3 md:justify-center;
+         width: 100%;
     }
 }
 
@@ -47,7 +48,7 @@ aspect-ratio: 4/1.5;
 }
 
 .header-one>section:last-of-type {
-    @apply px-2 justify-start md:!justify-center overflow-hidden lg:!justify-end;
+    @apply px-2 justify-start md:!justify-center overflow-auto xl:!justify-end;
     width: 100%;
 
 }

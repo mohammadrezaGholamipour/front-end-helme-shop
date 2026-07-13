@@ -1,5 +1,6 @@
 @import './card-category.css';
 @import './card-product.css';
+@import './product-page.css';
 @import './color-mood.css';
 @import './header-one.css';
 @import './header-two.css';
@@ -41,20 +42,21 @@ html {
 
 
 ::-webkit-scrollbar {
-  width: 0px !important;
+    width: 0px !important;
 }
 
 ::-webkit-scrollbar-button {
-  display: none !important;
+    display: none !important;
 }
 
 ::-webkit-scrollbar-track-piece {
-  @apply bg-transparent !important;
+    @apply bg-transparent !important;
 }
 
 body {
-    @apply bg-white dark:bg-black h-screen overflow-x-hidden 
+    @apply bg-white dark:bg-black h-screen overflow-x-hidden;
 }
+
 
 .parent-project {
     @apply p-1 pt-3 h-dvh md:p-4 flex flex-col items-center justify-start gap-3;

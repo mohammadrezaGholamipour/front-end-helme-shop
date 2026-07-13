@@ -18,8 +18,7 @@ const props = defineProps<{ category: CategoryOut }>();
       :to="`/categories/${props.category.slug}`"
       class="category-card__buttom"
     >
-      <span>مشاهده محصول</span>
-     
+      <span>مشاهده محصولات</span>  
     </NuxtLink>
   </main>
 </template>

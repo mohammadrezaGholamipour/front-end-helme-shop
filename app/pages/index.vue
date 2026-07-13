@@ -43,13 +43,13 @@ onMounted(async () => {
 <template>
   <div class="parent-page index">
     <SliderIndex :key="sliderKey" />
-    <TItleIndex />
+    <TitleIndex />
     <div v-if="data?.length === 0">
       <p>هیچ دسته بندی ای وجود ندارد</p>
     </div>
     <div class="parent-cards" v-else>
       <CardCategory
-        v-animate="{ type: 'slideUp', delay: 300, threshold: 0.1, once: true, }"
+        v-animate="{ type: 'slideUp', delay: 300, threshold: 0.1 }"
         :category="item"
         v-for="item in data"
         :key="item.id"

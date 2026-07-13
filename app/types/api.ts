@@ -59,16 +59,29 @@ export interface CreateAndUpdateCategory {
   image?: string | null;
 }
 
+export interface ProductVariantOut {
+  id: number;
+  product_id: number;
+  volume: number;
+  price: number;
+  stock: number;
+  image: string | null;
+}
+
 export interface ProductOut {
   id: number;
+  category_id: number;
+
   name: string;
-  price: number;
-  volume: number;
-  description?: string | null;
+  slug: string;
+
+  description: string | null;
+  image: string | null;
+
   meta_title: string | null;
-  application_id: string;
   meta_description: string | null;
-  image?: string | null;
+
+  variants: ProductVariantOut[];
 }
 
 export interface StoreOut {

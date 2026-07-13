@@ -13,9 +13,9 @@ const { data, isLoading, error } = useCategorySlug(name) as unknown as {
 </script>
 
 <template>
-  <div class="parent-page">
+  <div class="parent-page index">
+    <TitleIndex />
     <div v-if="isLoading">Loading...</div>
-
     <div
       class="flex flex-col gap-4 py-7 items-center"
       v-else-if="data?.products?.length === 0"
@@ -31,7 +31,7 @@ const { data, isLoading, error } = useCategorySlug(name) as unknown as {
 
     <div class="parent-cards" v-else>
       <CardProduct
-      v-animate="{ type: 'slideUp', delay: 300, threshold: 0.1 }"
+        v-animate="{ type: 'slideUp', delay: 300, threshold: 0.1 }"
         v-for="item in data?.products"
         :product="item"
         :key="item.id"
