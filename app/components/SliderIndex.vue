@@ -51,7 +51,7 @@ const [container] = useKeenSlider(
   <div ref="container" class="keen-slider sm:!hidden slide-in-elliptic-top-fwd max-h-[700px]">
     <div class="slider slider-one keen-slider__slide">
       <img
-        alt="ارائه دهنده انواع سوهان با روغن های حیوانی"
+        alt="حلما شاپ"
         class="w-full h-full object-cover"
         src="/images/banner-one-small.webp"
         fetchpriority="high"
@@ -79,8 +79,7 @@ const [container] = useKeenSlider(
       <img
         class="w-full h-full object-cover"
         src="/images/banner-three-small.webp"
-        alt=" مجموعه‌ای چشم‌نواز برای پذیرایی و هدیه، با ترکیبی از طعم اصیل، بسته‌بندی
-        شکیل و کیفیتی که هر لحظه را به خاطره‌ای ماندگار تبدیل می‌کند."
+        alt="سوهان و گز حلما وفایی"
         fetchpriority="high"
         width="500"
         height="500"

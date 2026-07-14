@@ -1,5 +1,5 @@
 .product-page {
-    @apply w-full border-2 border-[--gold-one] max-w-[1300px] rounded-md p-10;
+    @apply w-full  max-w-[1300px] rounded-md p-10;
     display: grid;
     grid-template-columns: 1fr;
     grid-template-areas:
@@ -18,7 +18,7 @@
 }
 
 .product-page__image {
-    @apply rounded-md overflow-hidden shadow-lg xl:sticky;
+    @apply rounded-2xl overflow-hidden shadow-xl xl:sticky;
     grid-area: image;
     top: 20px;
 }
@@ -112,7 +112,7 @@
 }
 
 .product-page__Shopping-cart {
-    @apply flex items-center  w-full text-xl text-white justify-center animate-pulse gap-3 p-3 rounded-lg bg-[--gold-one] cursor-pointer font-bold
+    @apply flex items-center shadow-xl  w-full text-xl text-white justify-center animate-pulse gap-3 p-3 rounded-lg bg-[--gold-one] cursor-pointer font-bold
 }
 
 .product-page__delivery {

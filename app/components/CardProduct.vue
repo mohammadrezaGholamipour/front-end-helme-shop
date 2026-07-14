@@ -13,7 +13,7 @@ const props = defineProps<{ product: ProductOut }>();
       height="220"
       width="220"
     />
-    <p>{{ props.product.name }}</p>
+    <h2>{{ props.product.name }}</h2>
     <p>{{ props.product.description }}</p>
     <nuxt-link
       class="product-card__button"

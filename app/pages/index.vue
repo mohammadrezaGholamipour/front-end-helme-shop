@@ -43,7 +43,13 @@ onMounted(async () => {
 <template>
   <div class="parent-page index">
     <SliderIndex :key="sliderKey" />
-    <TitleIndex />
+    <TitlePage
+      text-one="فروشگاه"
+      text-two="سوهان و گز حلما وفایی"
+      text-three=", طعم اصیل سوهان و گز"
+      text-four="سوغات دست نخورده ایران"
+      seo="فروشگاه سوهان و گز حلما وفایی طعم اصیل سوهان و گز سوغات دست‌ نخورده‌ی ایران"
+    />
     <div v-if="data?.length === 0">
       <p>هیچ دسته بندی ای وجود ندارد</p>
     </div>

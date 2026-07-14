@@ -16,12 +16,12 @@
     object-fit: cover;
 }
 
-.product-card>P {
-    @apply font-bold w-full text-wrap text-center;
+.product-card>h2 {
+    @apply font-bold text-2xl ;
 }
 
 .product-card>P:last-of-type{
-    @apply font-normal text-sm text-center leading-6
+    @apply font-normal text-sm w-full text-wrap text-center leading-10
 }
 
 

@@ -1,18 +1,33 @@
+<script setup lang="ts">
+const props = defineProps<{
+  textOne: String;
+  textTwo: String;
+  textThree: String;
+  textFour: String;
+  seo: String;
+}>();
+</script>
 <template>
   <h1 class="sr-only">
-    فروشگاه سوهان و گز حلما وفایی طعم اصیل سوهان و گز سوغات دست‌نخورده‌ی ایران
+    {{
+      seo?.length
+        ? seo
+        : "فروشگاه سوهان و گز حلما وفایی طعم اصیل سوهان و گز سوغات دست‌ نخورده‌ی ایران"
+    }}
   </h1>
   <ClientOnly>
     <h1>
       <span
+        v-if="props.textOne?.length"
         v-animate="{
           type: 'blurIn',
           duration: 1000,
           once: true,
           threshold: 0,
         }"
-        >فروشگاه</span
+        >{{ props.textOne }}</span
       ><strong
+        v-if="props.textTwo?.length"
         v-animate="{
           type: 'blurIn',
           delay: 1000,
@@ -22,10 +37,12 @@
         }"
         class="text-[var(--gold-two)]"
       >
-        سوهان و گز حلما وفایی</strong
+        {{ props.textTwo }}</strong
       >
 
       <span
+        v-if="props.textThree?.length"
+        class="text-wrap"
         v-animate="{
           type: 'blurIn',
           delay: 2000,
@@ -34,8 +51,9 @@
           threshold: 0,
         }"
       >
-        طعم اصیل سوهان و گز ,</span
+        {{ props.textThree }}</span
       ><span
+        v-if="props.textFour?.length"
         v-animate="{
           type: 'blurIn',
           delay: 3000,
@@ -44,7 +62,7 @@
           threshold: 0,
         }"
       >
-        سوغات دست‌نخورده‌ی ایران
+        {{ props.textFour }}
         <strong
           class="relative top-5 left-2 text-[0.75rem] text-[var(--gold-two)]"
           >قم</strong
@@ -53,4 +71,3 @@
     </h1>
   </ClientOnly>
 </template>
-

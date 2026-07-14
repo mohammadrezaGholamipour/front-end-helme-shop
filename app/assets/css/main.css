@@ -72,8 +72,12 @@ body {
 }
 
 
-.parent-page.index>h1 {
-    @apply w-full text-2xl leading-10 font-['kalameh'] py-5 text-center text-wrap dark:text-white flex flex-wrap justify-center items-center gap-2;
+.parent-page>h1 {
+    @apply w-full text-2xl leading-10 font-['kalameh'] py-5 gap-2 text-center text-wrap dark:text-white flex flex-wrap justify-center items-center ;
+}
+
+.parent-page>h1 *{
+    @apply text-wrap
 }
 
 .parent-page.index .animated-title span {
