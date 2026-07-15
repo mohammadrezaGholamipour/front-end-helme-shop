@@ -1,10 +1,10 @@
 <script setup lang="ts">
 const props = defineProps<{
-  textOne: String;
-  textTwo: String;
-  textThree: String;
-  textFour: String;
-  seo: String;
+  textOne?: String|null;
+  textTwo?: String|null;
+  textThree?: String|null;
+  textFour?: String|null;
+  seo?: String|null;
 }>();
 </script>
 <template>

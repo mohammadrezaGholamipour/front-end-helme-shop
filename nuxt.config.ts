@@ -58,6 +58,7 @@ export default defineNuxtConfig({
     "nuxt-bezier",
     "@pinia/nuxt",
     "@nuxt/icon",
+    '@vueuse/nuxt',
   ],
   nuxtQuery: {
     autoImports: ["useQuery", "useMutation", "useQueryClient"],

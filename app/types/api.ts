@@ -66,6 +66,7 @@ export interface ProductVariantOut {
   price: number;
   stock: number;
   image: string | null;
+  selected: boolean | null;
 }
 
 export interface ProductOut {

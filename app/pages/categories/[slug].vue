@@ -15,8 +15,6 @@ const title: Record<string, TitleItem> = {
   "sohan-nabati": {
     textOne: "سوهان نباتی از انتخاب‌های پرطرفدار",
     textTwo: "در میان علاقه‌مندان به شیرینی‌های سنتی ایرانی است",
-    textThree:
-      "سوهان نباتی حلما وفایی با حفظ طعم اصیل، بافت ترد و کیفیت مناسب تهیه می‌شود تا تجربه‌ای خوشایند از خرید سوهان برای شما فراهم کند.",
   },
 };
 
@@ -29,7 +27,6 @@ const srOnly =
     <TitlePage
       :text-one="title[name]?.['textOne']"
       :text-two="title[name]?.['textTwo']"
-      :text-three="title[name]?.['textThree']"
       :seo="srOnly"
     />
     <div v-if="isLoading">Loading...</div>

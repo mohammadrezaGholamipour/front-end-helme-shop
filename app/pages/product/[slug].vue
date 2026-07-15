@@ -1,8 +1,11 @@
 <script setup lang="ts">
+import { TransitionPresets } from "@vueuse/core";
 import type { ProductOut } from "~/types";
-import { useRoute } from "vue-router";
 
+const unitPrice = ref(378000);
+const selected = ref<ProductOut>();
 const route = useRoute();
+const count = ref(1);
 
 const slug = String(route.params.slug);
 const { data } = useProduct(slug) as unknown as {
@@ -10,6 +13,17 @@ const { data } = useProduct(slug) as unknown as {
   isLoading: boolean;
   error: unknown;
 };
+
+const totalPrice = computed(() => count.value * unitPrice.value);
+
+const displayPrice = computed(() =>
+  Math.round(animatedTotalPrice.value).toLocaleString("fa-IR"),
+);
+
+const animatedTotalPrice = useTransition(totalPrice, {
+  duration: 500,
+  transition: TransitionPresets.easeOutCubic,
+});
 </script>
 
 <template>
@@ -66,13 +80,14 @@ const { data } = useProduct(slug) as unknown as {
         <section class="product-page__volume">
           <p>وزن دلخواه خود را انتخاب کنید :</p>
           <section>
-            <div class="product-page__volume--active">
-              <p>500 گرمی</p>
-              <p>400.000 تومان</p>
-            </div>
-            <div>
-              <p>یک کیلویی</p>
-              <p>800.000 تومان</p>
+            <div
+              v-for="(item, index) in data?.variants"
+              :key="item.id"
+              @click="item.selected = !item?.selected"
+              :class="selected?.?"
+            >
+              <p>{{ item.volume }} گرمی</p>
+              <p>{{ item.price.toLocaleString() }} تومان</p>
             </div>
           </section>
         </section>
@@ -81,21 +96,23 @@ const { data } = useProduct(slug) as unknown as {
           <p>چند بسته نیاز دارید؟</p>
           <div>
             <Icon
+              @click="count > 1 && count--"
               name="tabler:square-rounded-minus-filled"
-              class="w-8 h-8 text-[--gold-one] cursor-pointer"
+              class="w-10 h-10 text-[--gold-one] cursor-pointer"
             />
-            <p>3 عدد</p>
+            <p class="tabular-nums">{{ count }} عدد</p>
             <Icon
+              @click="count++"
               name="tabler:square-rounded-plus-filled"
-              class="w-8 h-8 text-[--gold-one] cursor-pointer"
+              class="w-10 h-10 text-[--gold-one] cursor-pointer"
             />
           </div>
         </section>
       </section>
 
       <section class="product-page__price">
-        <p>378.000 تومان</p>
-        <p>یک عدد سوهان نباتی باقوایی 500 گرمی</p>
+        <p class="tabular-nums">{{ displayPrice }} تومان</p>
+        <p class="tabular-nums">{{ count }} عدد سوهان نباتی باقوایی 500 گرمی</p>
       </section>
 
       <button class="product-page__Shopping-cart">
