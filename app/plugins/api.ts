@@ -6,7 +6,7 @@ export default defineNuxtPlugin(() => {
     const baseURL = isServer? 'http://backend:8000/helma-shop-api/v1' : apiBaseClient; 
     console.log(isServer? 'http://backend:8000/helma-shop-api/v1' : apiBaseClient);
     const api = $fetch.create({
-      baseURL: apiBaseClient,
+      baseURL: baseURL,
       query: {
         application_id: '1',
       },
