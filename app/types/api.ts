@@ -35,7 +35,7 @@ export interface CategoryOut {
   id: number;
   image?: string | null;
   name: string;
-  description: string;
+  description?: string | null;
   meta_title: string;
   application_id: string;
   meta_description: string;
@@ -44,14 +44,14 @@ export interface CategoryOut {
 
 
 export interface CategorySlugOut {
-  id: number;
-  image?: string | null;
-  name: string;
-  description: string;
-  meta_title: string;
-  application_id: string;
-  meta_description: string;
-  products?: ProductOut[];
+  category: CategoryOut;
+
+  products: ProductOut[];
+
+  page: number;
+  per_page: number;
+  total: number;
+  last_page: number;
 }
 
 export interface CreateAndUpdateCategory {
@@ -69,6 +69,12 @@ export interface ProductVariantOut {
   selected: boolean | null;
 }
 
+export interface CategoryForProductOut {
+  id: number;
+  name: string;
+  slug: string;
+}
+
 export interface ProductOut {
   id: number;
   category_id: number;
@@ -82,6 +88,7 @@ export interface ProductOut {
   meta_title: string | null;
   meta_description: string | null;
 
+  category: CategoryForProductOut;
   variants: ProductVariantOut[];
 }
 

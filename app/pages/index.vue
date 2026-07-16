@@ -4,26 +4,38 @@ import type { CategoryOut } from "~/types";
 useSeoMeta({
   title: "فروشگاه سوهان و گز حلما وفایی | طعم اصیل سوغات",
   ogTitle: "فروشگاه سوهان و گز حلما وفایی | طعم اصیل سوغات",
-  ogSiteName: "حلما شاپ",
   description:
     "خرید اینترنتی انواع سوهان و گز درجه یک با بهترین قیمت | ارسال تازه و سریع به سراسر ایران",
   ogDescription:
     "خرید اینترنتی انواع سوهان و گز درجه یک با بهترین قیمت | ارسال تازه و سریع",
-  keywords: "سوهان, گز , سوغات سنتی, خرید سوهان آنلاین, قیمت گز",
+  ogSiteName: "فروشگاه سوهان و گز حلما وفایی",
   ogImage: "https://sohangaz.com/images/helma-logo-og.jpg",
+  ogUrl: "https://sohangaz.com/",
   twitterCard: "summary_large_image",
-});
+  twitterTitle: "فروشگاه سوهان و گز حلما وفایی | طعم اصیل سوغات",
+  twitterDescription:
+    "خرید اینترنتی انواع سوهان و گز درجه یک با بهترین قیمت | ارسال تازه و سریع به سراسر ایران",
+  twitterImage: "https://sohangaz.com/images/helma-logo-og.jpg",
+})
+useHead({
+  link: [
+    { rel: "canonical", href: "https://sohangaz.com/" },
+  ],
+})
 useSchemaOrg([
   defineWebSite({
-    name: "سوهان و گز حلما",
+    name: "فروشگاه سوهان و گز حلما وفایی",
     description: "فروشگاه سوغات سنتی ایران",
-  }),
-  defineOrganization({
-    name: "سوهان و گز حلما وفایی",
-    logo: "https://sohangaz.com/images/helma-logo-og.jpg",
     url: "https://sohangaz.com",
   }),
-]);
+  defineOrganization({
+    name: "فروشگاه سوهان و گز حلما وفایی",
+    logo: "https://sohangaz.com/images/helma-logo-og.jpg",
+    url: "https://sohangaz.com",
+    sameAs: [],
+  }),
+])
+
 
 const { data } = useAllCategory() as unknown as {
   data: CategoryOut[] | undefined;
@@ -46,7 +58,7 @@ onMounted(async () => {
     <TitlePage
       text-one="فروشگاه"
       text-two="سوهان و گز حلما وفایی"
-      text-three=", طعم اصیل سوهان و گز"
+      text-three="طعم اصیل سوهان و گز"
       text-four="سوغات دست نخورده ایران"
       seo="فروشگاه سوهان و گز حلما وفایی طعم اصیل سوهان و گز سوغات دست‌ نخورده‌ی ایران"
     />

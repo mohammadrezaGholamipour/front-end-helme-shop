@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { computed, ref, watch } from "vue";
 import { TransitionPresets, useTransition } from "@vueuse/core";
 import type { ProductOut } from "~/types";
 
@@ -32,9 +31,8 @@ const productQuery = useProduct(slug) as {
   error?: Ref<unknown>;
 };
 
-const product = computed<ProductOut | null>(
-  () => productQuery.data.value ?? null,
-);
+const product = computed(() => productQuery.data.value);
+useProductSeo(product);
 
 const selectedVariantId = ref<number | null>(null);
 const count = ref<number>(1);

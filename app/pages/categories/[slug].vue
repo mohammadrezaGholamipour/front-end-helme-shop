@@ -3,13 +3,15 @@ import type { CategorySlugOut, TitleItem } from "~/types";
 import { useRoute } from "vue-router";
 
 const route = useRoute();
-
 const name = route.params.slug as string;
 const { data, isLoading, error } = useCategorySlug(name) as unknown as {
-  data: CategorySlugOut;
+  data: Ref<CategorySlugOut | undefined>;
   isLoading: boolean;
   error: unknown;
 };
+
+const category = computed(() => data.value?.category);
+useCategorySeo(category);
 
 const title: Record<string, TitleItem> = {
   "sohan-nabati": {

@@ -48,7 +48,10 @@ const [container] = useKeenSlider(
 );
 </script>
 <template>
-  <div ref="container" class="keen-slider sm:!hidden slide-in-elliptic-top-fwd max-h-[700px]">
+  <div
+    ref="container"
+    class="keen-slider sm:!hidden slide-in-elliptic-top-fwd max-h-[700px]"
+  >
     <div class="slider slider-one keen-slider__slide">
       <img
         alt="حلما شاپ"
@@ -58,24 +61,18 @@ const [container] = useKeenSlider(
         height="500"
         width="500"
       />
-      <div
-        v-animate="{
-          type: 'blurIn',
-          delay: 1000,
-          duration: 1000,
-          threshold: 0,
-        }"
-        class="slider-one__content"
-      >
-        <p>ســـــــــوهان</p>
-        <p>تهیه‌شده با متریال درجه یک</p>
-        <p>
-          کیفیت و طعم اصیل را <br />
-          باما بچشید
-        </p>
-      </div>
     </div>
-    <div class="slider slider-two keen-slider__slide ">
+    <div class="slider slider-one keen-slider__slide">
+      <img
+        alt="حلما شاپ"
+        class="w-full h-full object-cover"
+        src="/images/banner-four-small.webp"
+        fetchpriority="high"
+        height="500"
+        width="500"
+      />
+    </div>
+    <div class="slider keen-slider__slide">
       <img
         class="w-full h-full object-cover"
         src="/images/banner-three-small.webp"
@@ -84,40 +81,16 @@ const [container] = useKeenSlider(
         width="500"
         height="500"
       />
-      <p
-        v-animate="{
-          type: 'blurIn',
-          delay: 1000,
-          duration: 1000,
-          once: true,
-          threshold: 0,
-        }"
-      >
-        چیدمان خوش‌مزه ایرانی
-      </p>
-      <p
-        v-animate="{
-          type: 'blurIn',
-          delay: 2000,
-          duration: 1000,
-          once: true,
-          threshold: 0,
-        }"
-      >
-        مجموعه‌ای چشم‌نواز برای پذیرایی و هدیه، با ترکیبی از طعم اصیل، بسته‌بندی
-        شکیل و کیفیتی که هر لحظه را به خاطره‌ای ماندگار تبدیل می‌کند.
-      </p>
-      <p
-        v-animate="{
-          type: 'blurIn',
-          delay: 3000,
-          duration: 1000,
-          once: true,
-          threshold: 0,
-        }"
-      >
-        همراهی دلخواه برای هر مناسبت
-      </p>
+    </div>
+    <div class="slider keen-slider__slide">
+      <img
+        class="w-full h-full object-cover"
+        src="/images/banner-two-small.webp"
+        alt="سوهان و گز حلما وفایی"
+        fetchpriority="high"
+        width="500"
+        height="500"
+      />
     </div>
   </div>
 </template>
