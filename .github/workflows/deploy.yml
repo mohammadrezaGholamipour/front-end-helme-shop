@@ -44,5 +44,5 @@ jobs:
           port: ${{ secrets.PORT }}
           script: |
             cd /root/app
-            docker compose build frontend
-            docker compose up -d frontend
+            docker-compose build frontend
+            docker-compose up -d frontend
