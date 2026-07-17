@@ -76,4 +76,18 @@ export default defineNuxtConfig({
       apiBase: 'https://sohangaz.com/helma-shop-api/v1',
     },
   },
+
+  routeRules: {
+    "/images/**": {
+      headers: {
+        "cache-control": "public, max-age=31536000, immutable",
+      },
+    },
+
+    "/fonts/**": {
+      headers: {
+        "cache-control": "public, max-age=31536000, immutable",
+      },
+    },
+  },
 });
