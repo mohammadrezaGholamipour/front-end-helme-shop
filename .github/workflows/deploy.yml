@@ -3,16 +3,11 @@ name: Deploy Frontend
 on:
   push:
     branches:
-      - main # اگر شاخه‌ات master است تغییر بده
-
-concurrency:
-  group: production
-  cancel-in-progress: true
+      - main
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
     timeout-minutes: 30
 
     steps:
@@ -31,6 +26,20 @@ jobs:
       - name: Build Nuxt
         run: npm run build
 
+      - name: Debug files
+        run: |
+          echo "Current directory:"
+          pwd
+
+          echo "Root files:"
+          ls -la
+
+          echo ".output exists?"
+          ls -la .output || true
+
+          echo "Find output:"
+          find . -maxdepth 3
+
       - name: Copy files to VPS
         uses: appleboy/scp-action@v0.1.7
         with:
@@ -39,11 +48,8 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           port: ${{ secrets.PORT }}
           overwrite: true
-          source: |
-            .output
-            package.json
-            package-lock.json
-          target: /root/app/frontend
+          source: ".output/**,package.json,package-lock.json"
+          target: "/root/app/frontend"
 
       - name: Deploy
         uses: appleboy/ssh-action@v1.2.0
@@ -54,10 +60,5 @@ jobs:
           port: ${{ secrets.PORT }}
           command_timeout: 30m
           script: |
-            set -e
-
             cd /root/app
-
             docker-compose up -d --build frontend
-
-            docker image prune -f
