@@ -1,11 +1,3 @@
-@import './card-category.css';
-@import './card-product.css';
-@import './product-page.css';
-@import './color-mood.css';
-@import './header-one.css';
-@import './header-two.css';
-@import './contact-us.css';
-@import './footer.css';
 @import './font.css';
 
 @tailwind base;

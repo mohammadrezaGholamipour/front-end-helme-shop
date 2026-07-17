@@ -283,3 +283,131 @@ const handleAddToCart = (): void => {
     </div>
   </div>
 </template>
+<style scoped>
+.product-page {
+  @apply w-full  max-w-[1300px] rounded-md p-10;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-areas:
+    "image"
+    "content";
+  gap: 40px;
+  align-items: start;
+}
+
+@media (min-width: 1300px) {
+  .product-page {
+    grid-template-columns: 1fr 450px;
+    grid-template-areas: "content image";
+  }
+}
+
+.product-page__image {
+  @apply flex justify-center  xl:sticky;
+  grid-area: image;
+  top: 20px;
+}
+
+.product-page__image img {
+  @apply rounded-2xl shadow-xl;
+}
+
+.product-page__content {
+  @apply justify-center md:justify-start;
+  align-items: flex-start;
+  grid-area: content;
+  flex-wrap: wrap;
+  display: flex;
+  gap: 50px;
+}
+
+.product-page__content > * {
+  flex: 0 1 auto;
+}
+
+.product-page__text {
+  @apply flex flex-col items-center lg:items-start justify-start gap-4 !text-wrap;
+}
+
+.product-page__text h1 {
+  @apply font-bold text-4xl;
+}
+
+.product-page__text p:first-of-type {
+  @apply max-w-[400px] text-wrap leading-10 lg:text-justify text-center;
+}
+
+.product-page__price {
+  @apply flex flex-wrap items-center justify-center w-full gap-3;
+}
+
+.product-page__price p:first-of-type {
+  @apply font-bold text-2xl;
+}
+
+.product-page__volume-and-count {
+  @apply flex flex-col justify-start items-start gap-7 w-full;
+}
+
+.product-page__volume {
+  @apply flex justify-center font-bold  lg:justify-between items-center gap-3 w-full  flex-wrap;
+}
+
+.product-page__volume > p {
+  @apply text-xl;
+}
+
+.product-page__volume section {
+  @apply flex items-center gap-3;
+}
+
+.product-page__volume section > div {
+  @apply flex flex-col items-center justify-center gap-3 border-2 p-3 rounded-lg cursor-pointer;
+}
+
+.product-page__volume--active {
+  @apply !border-2 text-[--gold-one] font-bold border-[--gold-one];
+}
+
+.product-page__count {
+  @apply flex items-center justify-center font-bold lg:justify-between w-full gap-3 flex-wrap;
+}
+.product-page__count > p {
+  @apply text-xl;
+}
+.product-page__count > div {
+  @apply flex items-center border-dashed w-full md:w-max border border-[--gold-one] justify-center rounded-lg p-3 gap-5;
+}
+
+.product-page__info {
+  @apply flex flex-col w-full md:w-max justify-start items-center md:items-start gap-3;
+}
+
+.product-page__info > div {
+  @apply flex flex-row-reverse gap-2 items-center;
+}
+
+.product-page__description {
+  @apply flex flex-col w-full md:w-max justify-start items-center md:items-start gap-2;
+}
+
+.product-page__description > p:first-of-type {
+  @apply font-bold text-2xl w-full text-center md:text-right;
+}
+
+.product-page__description > p:last-of-type {
+  @apply w-full max-w-[700px]  text-wrap leading-10 text-center  md:text-justify;
+}
+
+.product-page__Shopping-cart {
+  @apply flex items-center shadow-xl  w-full text-xl text-white justify-center animate-pulse gap-3 p-3 rounded-lg bg-[--gold-one] cursor-pointer font-bold;
+}
+
+.product-page__delivery {
+  @apply flex items-center justify-start flex-wrap gap-3;
+}
+
+.product-page__delivery > div {
+  @apply flex justify-center flex-1 w-full md:w-max items-center gap-2 font-bold border border-dashed text-[--gold-one]  border-[--gold-one] p-3 rounded-md;
+}
+</style>
