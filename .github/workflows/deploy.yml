@@ -61,4 +61,4 @@ jobs:
           command_timeout: 30m
           script: |
             cd /root/app
-            docker-compose up -d --build frontend
+            docker-compose up -d --no-deps --build frontend
