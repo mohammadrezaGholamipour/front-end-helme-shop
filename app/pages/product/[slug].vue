@@ -1,26 +1,8 @@
 <script setup lang="ts">
 import { TransitionPresets, useTransition } from "@vueuse/core";
-import type { ProductOut } from "~/types";
+import type { ProductOut, CartItem } from "~/types";
 
 type ProductVariant = ProductOut["variants"][number];
-
-type CartItem = {
-  product: {
-    id: number;
-    name: string;
-    slug: string;
-    image: string | null;
-    description: string | null;
-  };
-  variant: {
-    id: number;
-    volume: number;
-    price: number;
-    stock: number;
-  };
-  count: number;
-  lineTotal: number;
-};
 
 const route = useRoute();
 const slug = String(route.params.slug);
@@ -160,6 +142,7 @@ const handleAddToCart = (): void => {
       <img
         :src="product?.image ? `https://sohangaz.com${product.image}` : ''"
         :alt="product?.name || 'product'"
+        fetchpriority="high"
         width="500"
       />
     </section>
@@ -285,7 +268,7 @@ const handleAddToCart = (): void => {
 </template>
 <style scoped>
 .product-page {
-  @apply w-full  max-w-[1300px] rounded-md p-10;
+  @apply w-full relative  max-w-[1300px] rounded-md p-10;
   display: grid;
   grid-template-columns: 1fr;
   grid-template-areas:
@@ -303,7 +286,7 @@ const handleAddToCart = (): void => {
 }
 
 .product-page__image {
-  @apply flex justify-center  xl:sticky;
+  @apply flex justify-center  xl:!sticky;
   grid-area: image;
   top: 20px;
 }

@@ -73,11 +73,11 @@ body::before {
 
 
 .parent-project {
-    @apply p-1 w-full pt-3 min-h-dvh md:p-4 flex flex-col items-center justify-start gap-3 overflow-hidden;
+    @apply p-1 w-full pt-3 min-h-dvh md:p-4 flex flex-col items-center justify-start gap-3 overflow-hidden ;
 }
 
 .parent-page {
-    @apply w-full  flex flex-1 flex-col items-center gap-5 justify-center
+    @apply w-full  flex flex-1 flex-col items-center gap-5 justify-center 
 }
 
 

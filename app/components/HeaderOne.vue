@@ -86,14 +86,14 @@ const { time, date } = useDateTime();
     }
 
     .header-one>section:first-of-type {
-        @apply px-2 !mt-1  justify-start md:justify-center;
+        @apply px-2 justify-start md:justify-center;
         order: 1 !important;
         overflow-x: auto;
         width: 100%;
     }
 
     .header-one>section:last-of-type{
-        @apply mt-5 md:justify-center;
+        @apply mt-5  md:justify-center;
          width: 100%;
     }
 }
@@ -113,7 +113,7 @@ const { time, date } = useDateTime();
 }
 
 .header-one>section:last-of-type {
-    @apply px-2 justify-start md:!justify-center overflow-auto xl:!justify-end;
+    @apply px-2 justify-start md:!justify-center overflow-x-scroll md:overflow-hidden xl:!justify-end;
     width: 100%;
 
 }

@@ -6,7 +6,10 @@ export type TitleItem = {
   textThree?: string | null;
 };
 
-type CartItem = {
+
+
+
+export type CartItem = {
   product: {
     id: number;
     name: string;
