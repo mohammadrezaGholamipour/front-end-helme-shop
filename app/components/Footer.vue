@@ -40,7 +40,7 @@ const globalStore = useGlobalStore();
               :key="item.link"
               target="_blank"
             >
-              <img :src="`/images/${item?.icon}.webp`" width="40" alt="" />
+              <img :src="`/images/${item?.icon}.webp`" width="40" height="40" :alt="`آدرس ${item?.name} حلما شاپ`" />
             </a>
           </template>
         </div>

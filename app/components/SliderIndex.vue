@@ -65,7 +65,7 @@ onMounted(() => {
 <template>
   <div
     ref="container"
-    class="keen-slider slide-in-elliptic-top-fwd sm:!hidden  max-h-[700px]"
+    class="keen-slider slide-in-elliptic-top-fwd sm:!hidden  max-h-[700px] min-h-[100vw]"
   >
     <div class="keen-slider__slide">
       <img

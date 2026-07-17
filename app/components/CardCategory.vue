@@ -10,7 +10,7 @@ const props = defineProps<{ category: CategoryOut }>();
       :alt="props.category.meta_title"
       class="relative "
       width="220"
-      height="260"
+      height="220"
       fetchpriority="high"
     />
     <h2>{{ props.category.name }}</h2>
