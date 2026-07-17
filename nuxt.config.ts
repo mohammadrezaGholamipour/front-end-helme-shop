@@ -55,7 +55,6 @@ export default defineNuxtConfig({
     'nuxt-keen-slider',
     '@nuxtjs/sitemap',
     'nuxt-schema-org',
-    "nuxt-bezier",
     "@pinia/nuxt",
     "@nuxt/icon",
     '@vueuse/nuxt',
