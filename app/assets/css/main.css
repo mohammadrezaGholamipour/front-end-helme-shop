@@ -54,7 +54,7 @@ html {
 }
 
 body {
-    @apply bg-white dark:bg-black h-screen overflow-x-hidden;
+    @apply bg-white w-full dark:bg-black h-screen overflow-x-hidden;
     position: relative;
 }
 
@@ -81,7 +81,7 @@ body::before {
 
 
 .parent-project {
-    @apply p-1 pt-3 h-dvh md:p-4 flex flex-col items-center justify-start gap-3;
+    @apply p-1 w-full pt-3 h-dvh md:p-4 flex flex-col items-center justify-start gap-3;
 }
 
 .parent-page {

@@ -3,17 +3,23 @@ name: Deploy Frontend
 on:
   push:
     branches:
-      - main # اگر شاخه اصلیت master هست، این را تغییر بده
+      - main # اگر شاخه‌ات master است تغییر بده
+
+concurrency:
+  group: production
+  cancel-in-progress: true
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
+    timeout-minutes: 30
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
+      - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: 22
@@ -32,17 +38,26 @@ jobs:
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.SSH_KEY }}
           port: ${{ secrets.PORT }}
-          source: ".output,package.json,package-lock.json"
-          target: "/root/app/frontend"
+          overwrite: true
+          source: |
+            .output
+            package.json
+            package-lock.json
+          target: /root/app/frontend
 
-      - name: Restart frontend
+      - name: Deploy
         uses: appleboy/ssh-action@v1.2.0
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.SSH_KEY }}
           port: ${{ secrets.PORT }}
+          command_timeout: 30m
           script: |
+            set -e
+
             cd /root/app
-            docker-compose build frontend
-            docker-compose up -d frontend
+
+            docker-compose up -d --build frontend
+
+            docker image prune -f

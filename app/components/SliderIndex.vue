@@ -1,5 +1,6 @@
 <script setup lang="ts">
-const [container] = useKeenSlider(
+import { useKeenSlider } from "keen-slider/vue.es";
+const [container, slider] = useKeenSlider(
   {
     loop: true,
     slides: {
@@ -46,23 +47,38 @@ const [container] = useKeenSlider(
     },
   ],
 );
+
+onMounted(() => {
+  if (!container.value) return;
+
+  const observer = new ResizeObserver(() => {
+    slider.value?.update();
+  });
+
+  observer.observe(container.value);
+
+  onBeforeUnmount(() => {
+    observer.disconnect();
+  });
+});
 </script>
 <template>
   <div
     ref="container"
-    class="keen-slider sm:!hidden slide-in-elliptic-top-fwd max-h-[700px]"
+    class="keen-slider slide-in-elliptic-top-fwd sm:!hidden  max-h-[700px]"
   >
-    <div class="slider slider-one keen-slider__slide">
+    <div class="keen-slider__slide">
       <img
         alt="حلما شاپ"
         class="w-full h-full object-cover"
         src="/images/banner-one-small.webp"
         fetchpriority="high"
+        @load="slider?.update()"
         height="500"
         width="500"
       />
     </div>
-    <div class="slider slider-one keen-slider__slide">
+    <div class="keen-slider__slide">
       <img
         alt="حلما شاپ"
         class="w-full h-full object-cover"
@@ -72,7 +88,7 @@ const [container] = useKeenSlider(
         width="500"
       />
     </div>
-    <div class="slider keen-slider__slide">
+    <div class="keen-slider__slide">
       <img
         class="w-full h-full object-cover"
         src="/images/banner-three-small.webp"
@@ -82,7 +98,7 @@ const [container] = useKeenSlider(
         height="500"
       />
     </div>
-    <div class="slider keen-slider__slide">
+    <div class="keen-slider__slide">
       <img
         class="w-full h-full object-cover"
         src="/images/banner-two-small.webp"
@@ -95,39 +111,10 @@ const [container] = useKeenSlider(
   </div>
 </template>
 <style>
-.slider {
-  @apply relative w-full rounded-lg overflow-hidden aspect-[1/1];
+.keen-slider__slide {
+  @apply rounded-lg overflow-hidden ;
 }
 
-.slider-one__content {
-  @apply absolute  z-10 left-[15vw] top-[26vw] flex flex-col gap-7 items-center;
-}
-
-.slider-one__content p:nth-child(1) {
-  @apply text-2xl font-bold text-[var(--gold-two)];
-}
-
-.slider-one__content p:nth-child(2) {
-  @apply text-base font-bold text-white max-w-[35vw] text-center text-wrap;
-}
-
-.slider-one__content p:nth-child(3) {
-  @apply text-[0.70rem]  font-bold text-[var(--gold-two)]  text-center text-wrap;
-}
-
-.slider-two__content {
-  @apply absolute  z-10  top-[38vw] flex flex-col gap-2 items-start;
-}
-
-.slider-two > p:nth-of-type(1) {
-  @apply text-2xl top-[10vw] absolute right-0 left-0 m-auto text-center font-bold text-[var(--gold-two)];
-}
-.slider-two > p:nth-of-type(2) {
-  @apply text-[0.60rem]  top-[41vw] absolute right-[9vw] text-justify max-w-[30vw] text-wrap font-bold text-white;
-}
-.slider-two > p:nth-of-type(3) {
-  @apply text-sm top-[80vw] absolute right-0 left-0 m-auto text-center font-bold text-[var(--gold-two)];
-}
 .slide-in-elliptic-top-fwd {
   -webkit-animation: slide-in-elliptic-top-fwd 2s
     cubic-bezier(0.25, 0.46, 0.45, 0.94) 2s both;
