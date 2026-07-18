@@ -90,7 +90,12 @@ const props = defineProps<{ product: ProductOut }>();
 }
 
 .product-card > P:last-of-type {
-  @apply font-normal text-sm w-full text-wrap text-center leading-10 line-clamp-3 ;
+  @apply font-normal text-sm w-full text-wrap text-center leading-10 ;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
 }
 
 .product-card__button {
