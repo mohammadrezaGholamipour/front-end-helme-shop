@@ -14,7 +14,7 @@ const props = defineProps<{ product: ProductOut }>();
       width="220"
     />
     <h2>{{ props.product.name }}</h2>
-    <p>{{ props.product.description }}</p>
+    <p class="line-clamp-3">{{ props.product.description }}</p>
     <nuxt-link
       class="product-card__button"
       :to="`/product/${props.product.slug}`"
@@ -90,12 +90,7 @@ const props = defineProps<{ product: ProductOut }>();
 }
 
 .product-card > P:last-of-type {
-  @apply font-normal text-sm w-full text-wrap text-center leading-10 ;
-  overflow: hidden;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 3;
-  line-clamp: 3;
+  @apply font-normal text-sm w-full text-wrap text-center leading-10;
 }
 
 .product-card__button {
