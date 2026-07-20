@@ -19,7 +19,8 @@ export default defineNuxtConfig({
           media: '(prefers-color-scheme: dark)',
           content: '#000000'
         },
-        { name: 'robots', content: 'index, follow' }
+        { name: 'robots', content: 'index, follow' },
+        { name: 'enamad', content: '53584465' },
       ],
       link: [
         { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
