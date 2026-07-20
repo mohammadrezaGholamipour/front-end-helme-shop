@@ -22,7 +22,7 @@ const globalStore = useGlobalStore();
         referrerpolicy="no-referrer-when-downgrade"
       ></iframe>
     </div>
-    <a
+        <a
       referrerpolicy="origin"
       target="_blank"
       href="https://trustseal.enamad.ir/?id=6967227&Code=2u8elDP41k6UJxkmFPenbFxf4jVU02bC"
