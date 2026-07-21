@@ -171,7 +171,10 @@ const handleAddToCart = (): void => {
         </div>
       </section>
       <section class="product-page__volume-and-count">
-        <section class="product-page__volume">
+        <section
+          v-if="Number(product?.variants?.length) > 1"
+          class="product-page__volume"
+        >
           <p>وزن دلخواه خود را انتخاب کنید :</p>
 
           <section>
