@@ -202,7 +202,15 @@ const handleAddToCart = (): void => {
         </section>
 
         <section class="product-page__count">
-          <p>چند بسته نیاز دارید؟</p>
+          <p>
+            چند
+            {{
+              product?.is_packaged || product?.is_packaged === null
+                ? "بسته"
+                : "کیلو"
+            }}
+            نیاز دارید؟
+          </p>
 
           <div>
             <Icon
@@ -212,7 +220,14 @@ const handleAddToCart = (): void => {
               :class="{ 'opacity-50 pointer-events-none': count <= 1 }"
             />
 
-            <p class="tabular-nums">{{ count.toLocaleString("fa-IR") }} عدد</p>
+            <p class="tabular-nums">
+              {{ count.toLocaleString("fa-IR") }}
+              {{
+                product?.is_packaged || product?.is_packaged === null
+                  ? "عدد"
+                  : "کیلو گرم"
+              }}
+            </p>
 
             <Icon
               @click="increaseCount"
@@ -231,9 +246,18 @@ const handleAddToCart = (): void => {
         <p class="tabular-nums">{{ displayAnimatedTotalPrice }} تومان</p>
 
         <p v-if="selectedVariant && product" class="tabular-nums">
-          {{ count.toLocaleString("fa-IR") }} عدد
+          {{ count.toLocaleString("fa-IR") }}
+          {{
+            product?.is_packaged || product?.is_packaged === null
+              ? "بسته"
+              : "کیلو گرم"
+          }}
           {{ product.name }}
-          {{ selectedVariant.volume.toLocaleString("fa-IR") }} گرمی
+           {{
+            product?.is_packaged || product?.is_packaged === null
+              ? `${selectedVariant.volume.toLocaleString("fa-IR")} گرمی`
+              : ""
+          }}
         </p>
       </section>
 
@@ -316,7 +340,7 @@ const handleAddToCart = (): void => {
 }
 
 .product-page__text h1 {
-  @apply font-bold text-4xl;
+  @apply font-bold text-4xl text-wrap text-center leading-[4rem];
 }
 
 .product-page__text p:first-of-type {

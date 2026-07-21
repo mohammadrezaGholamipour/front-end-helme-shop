@@ -4,6 +4,7 @@ export type TitleItem = {
   textOne?: string | null;
   textTwo?: string | null;
   textThree?: string | null;
+  srOnly?: string | null
 };
 
 

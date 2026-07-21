@@ -84,7 +84,11 @@ export interface ProductOut {
 
   description: string | null;
   image: string | null;
-
+  is_packaged: Boolean
+  display_order: Number
+  product_type: String
+  product_model: String
+  oil_type: String
   meta_title: string | null;
   meta_description: string | null;
 

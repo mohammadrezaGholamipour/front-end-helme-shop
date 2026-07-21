@@ -16,7 +16,7 @@ const props = defineProps<{
     }}
   </h1>
   <ClientOnly>
-    <h1>
+    <h1 class="px-4">
       <span
         v-if="props.textOne?.length"
         v-animate="{

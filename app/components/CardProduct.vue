@@ -27,7 +27,7 @@ const props = defineProps<{ product: ProductOut }>();
 
 <style scoped>
 .product-card {
-  @apply rounded-2xl relative bg-white  dark:bg-black dark:text-white text-xl p-5 border-2 shadow-md border-[var(--gold-two)] flex flex-col justify-between items-center gap-5  !flex-1 max-w-[300px];
+  @apply rounded-2xl relative bg-white  dark:bg-black dark:text-white text-xl p-5 pt-8 border-2 shadow-md border-[var(--gold-two)] flex flex-col justify-between items-center gap-5  !flex-1 max-w-[300px];
 }
 
 .product-card__bg {
