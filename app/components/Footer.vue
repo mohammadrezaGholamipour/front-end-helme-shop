@@ -29,7 +29,7 @@ const globalStore = useGlobalStore();
         href="https://trustseal.enamad.ir/?id=6967227&Code=2u8elDP41k6UJxkmFPenbFxf4jVU02bC"
         ><img
           referrerpolicy="origin"
-          src="https://trustseal.enamad.ir/logo.aspx?id=6967227&Code=2u8elDP41k6UJxkmFPenbFxf4jVU02bC"
+          src="https://trustseal.enamad.ir/logo.aspx?id=761452&Code=2u8elDP41k6UJxkmFPenbFxf4jVU02bC"
           alt=""
           style="cursor: pointer"
           code="2u8elDP41k6UJxkmFPenbFxf4jVU02bC"
