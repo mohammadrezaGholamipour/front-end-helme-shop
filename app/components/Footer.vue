@@ -22,17 +22,19 @@ const globalStore = useGlobalStore();
         referrerpolicy="no-referrer-when-downgrade"
       ></iframe>
     </div>
-        <a
-      referrerpolicy="origin"
-      target="_blank"
-      href="https://trustseal.enamad.ir/?id=6967227&Code=2u8elDP41k6UJxkmFPenbFxf4jVU02bC"
-      ><img
+    <ClientOnly>
+      <a
         referrerpolicy="origin"
-        src="https://trustseal.enamad.ir/logo.aspx?id=6967227&Code=2u8elDP41k6UJxkmFPenbFxf4jVU02bC"
-        alt=""
-        style="cursor: pointer"
-        code="2u8elDP41k6UJxkmFPenbFxf4jVU02bC"
-    /></a>
+        target="_blank"
+        href="https://trustseal.enamad.ir/?id=6967227&Code=2u8elDP41k6UJxkmFPenbFxf4jVU02bC"
+        ><img
+          referrerpolicy="origin"
+          src="https://trustseal.enamad.ir/logo.aspx?id=6967227&Code=2u8elDP41k6UJxkmFPenbFxf4jVU02bC"
+          alt=""
+          style="cursor: pointer"
+          code="2u8elDP41k6UJxkmFPenbFxf4jVU02bC"
+      /></a>
+    </ClientOnly>
     <section>
       <div class="parent-footer__logo">
         <img src="/images/helma-logo.webp" width="250" alt="سوهان و گز حلما" />
