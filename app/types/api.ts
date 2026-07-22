@@ -132,3 +132,16 @@ export interface UserOut {
   userName: string;
   application_id: number;
 }
+
+
+export interface ProductFilters {
+  application_id: string;
+  search?: string;
+
+  min_price?: number;
+  max_price?: number;
+
+  product_type?: string;
+  product_model?: string;
+  oil_type?: string;
+}

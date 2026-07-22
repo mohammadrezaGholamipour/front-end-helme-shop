@@ -1,7 +1,10 @@
-import type { CreateProductBody, ProductOut } from "~/types";
+import type { CreateProductBody, ProductFilters, ProductOut } from "~/types";
 
 export const ProductApi = {
-  getAll: ($api: any) => $api("/product") as Promise<ProductOut[]>,
+  getAll: ($api: any, params: ProductFilters) =>
+    $api("/product/me", {
+      params,
+    }) as Promise<ProductOut[]>,
   getBySlug: ($api: any, slug: string) =>
     $api(`/product/${slug}`) as Promise<ProductOut>,
   create: ($api: any, payload: CreateProductBody) =>
