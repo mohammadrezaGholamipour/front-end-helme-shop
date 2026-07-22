@@ -8,10 +8,18 @@ const { data: products, isLoading, error } = useProduct();
     v-animate="{ type: 'blurIn', delay: 700, duration: 1000, once: true }"
     class="parent-page"
   >
-    <div v-if="isLoading">درحال دریافت اطلاعات</div>
+    <div
+      v-if="isLoading"
+      v-animate="{ type: 'blurIn', delay: 700, duration: 1000, once: true }"
+      class="flex flex-col items-center gap-5 font-bold text-2xl p-10 w-full"
+    >
+      <div class="loader"></div>
+      <p>در حال دریافت محصولات ...</p>
+    </div>
 
     <div
       class="flex flex-col justify-center items-center gap-3"
+      v-animate="{ type: 'blurIn', delay: 700, duration: 1000, once: true }"
       v-else-if="error"
     >
       <img
@@ -32,7 +40,10 @@ const { data: products, isLoading, error } = useProduct();
       </p>
     </div>
 
-    <div class="parent-cards !mb-0" v-else>
+    <div
+      class="parent-cards !mb-0"
+      v-else
+    >
       <template v-if="products?.length">
         <CardProduct
           v-animate="{ type: 'slideUp', delay: 300, threshold: 0.1 }"
@@ -62,3 +73,55 @@ const { data: products, isLoading, error } = useProduct();
     </div>
   </div>
 </template>
+<style scoped>
+.loader {
+  --c: no-repeat linear-gradient(#d6b46c 0 0);
+  background:
+    var(--c), var(--c), var(--c), var(--c), var(--c), var(--c), var(--c),
+    var(--c), var(--c);
+  background-size: 16px 16px;
+  animation:
+    l32-1 1s infinite,
+    l32-2 1s infinite;
+}
+@keyframes l32-1 {
+  0%,
+  100% {
+    width: 45px;
+    height: 45px;
+  }
+  35%,
+  65% {
+    width: 65px;
+    height: 65px;
+  }
+}
+@keyframes l32-2 {
+  0%,
+  40% {
+    background-position:
+      0 0,
+      0 50%,
+      0 100%,
+      50% 100%,
+      100% 100%,
+      100% 50%,
+      100% 0,
+      50% 0,
+      50% 50%;
+  }
+  60%,
+  100% {
+    background-position:
+      0 50%,
+      0 100%,
+      50% 100%,
+      100% 100%,
+      100% 50%,
+      100% 0,
+      50% 0,
+      0 0,
+      50% 50%;
+  }
+}
+</style>
