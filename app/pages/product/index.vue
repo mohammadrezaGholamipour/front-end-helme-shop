@@ -41,8 +41,7 @@ const { data: products, isLoading, error } = useProduct();
           :key="item.id"
         />
       </template>
-
-      <div class="flex flex-col justify-center items-center gap-3" v-else>
+      <div v-else class="flex flex-col justify-center items-center gap-3">
         <img
           class="block dark:hidden rounded-lg w-full max-w-[500px]"
           src="/images/not-found-light.png"

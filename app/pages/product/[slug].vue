@@ -7,7 +7,7 @@ type ProductVariant = ProductOut["variants"][number];
 const route = useRoute();
 const slug = String(route.params.slug);
 
-const productQuery = useProduct(slug) as {
+const productQuery = useProductSlug(slug) as {
   data: Ref<ProductOut | null | undefined>;
   isLoading?: Ref<boolean>;
   error?: Ref<unknown>;
