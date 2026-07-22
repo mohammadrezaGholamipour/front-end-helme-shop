@@ -28,7 +28,10 @@ const productModelOptions = [
 ];
 const oilTypeOptions = ["روغن حیوانی", "کره گیاهی", "روغن نباتی"];
 
-function toggle(key: "productType" | "productModel" | "oilType", value: string) {
+function toggle(
+  key: "productType" | "productModel" | "oilType",
+  value: string,
+) {
   filters[key] = filters[key] === value ? undefined : value;
 }
 
@@ -106,16 +109,25 @@ function clearFilters() {
       <div
         v-if="modelValue"
         dir="rtl"
-        class="fixed inset-y-0 right-0 z-50 flex h-full w-full max-w-md flex-col bg-white shadow-2xl"
+        class="fixed inset-y-0 right-0 z-50 flex h-full w-full max-w-md flex-col bg-white shadow-2xl product-filter-dialog"
         @click.stop
       >
         <!-- Header -->
-        <div class="flex items-center justify-between border-b border-gray-100 px-6 py-5">
+        <div
+          class="flex items-center justify-between border-b border-gray-100 px-6 py-5"
+        >
           <div class="flex items-center gap-2">
             <h2 class="text-lg font-bold text-gray-900">فیلتر محصولات</h2>
             <span
+              v-animate="{
+                type: 'scaleIn',
+                delay: 300,
+                duration: 1000,
+                once: true,
+                threshold: 0,
+              }"
               v-if="activeFiltersCount > 0"
-              class="flex h-6 min-w-6 items-center justify-center rounded-full bg-amber-500 px-1.5 text-xs font-bold text-white"
+              class="flex h-8 min-w-8 items-center justify-center rounded-full bg-[--gold-one] px-1.5 font-bold text-white"
             >
               {{ activeFiltersCount }}
             </span>
@@ -125,8 +137,19 @@ function clearFilters() {
             class="flex h-9 w-9 items-center justify-center rounded-full text-gray-500 transition hover:bg-gray-100 hover:text-gray-900"
             @click="modelValue = false"
           >
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-5 w-5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M6 18L18 6M6 6l12 12"
+              />
             </svg>
           </button>
         </div>
@@ -134,16 +157,18 @@ function clearFilters() {
         <!-- Body -->
         <div class="flex-1 space-y-7 overflow-y-auto px-6 py-6">
           <div>
-            <label class="mb-3 block text-sm font-semibold text-gray-700">نوع محصول</label>
+            <label class="mb-3 block text-sm font-semibold text-gray-700"
+              >نوع محصول</label
+            >
             <div class="flex flex-wrap gap-2">
               <button
                 v-for="item in productTypeOptions"
                 :key="item"
                 type="button"
-                class="rounded-full border px-4 py-2 text-sm font-medium transition"
+                class="rounded-full flex-1 border px-4 py-2 text-sm font-medium transition"
                 :class="
                   filters.productType === item
-                    ? 'border-amber-500 bg-amber-500 text-white shadow-sm shadow-amber-200'
+                    ? 'bg-[--gold-one]  text-white shadow-sm shadow-amber-200'
                     : 'border-gray-200 bg-gray-50 text-gray-700 hover:border-amber-300 hover:bg-amber-50'
                 "
                 @click="toggle('productType', item)"
@@ -154,16 +179,18 @@ function clearFilters() {
           </div>
 
           <div>
-            <label class="mb-3 block text-sm font-semibold text-gray-700">مدل محصول</label>
+            <label class="mb-3 block text-sm font-semibold text-gray-700"
+              >مدل محصول</label
+            >
             <div class="flex flex-wrap gap-2">
               <button
                 v-for="item in productModelOptions"
                 :key="item"
                 type="button"
-                class="rounded-full border px-4 py-2 text-sm font-medium transition"
+                class="rounded-full border flex-1 px-4 py-2 text-sm font-medium transition"
                 :class="
                   filters.productModel === item
-                    ? 'border-amber-500 bg-amber-500 text-white shadow-sm shadow-amber-200'
+                    ? 'bg-[--gold-one] text-white shadow-sm shadow-amber-200'
                     : 'border-gray-200 bg-gray-50 text-gray-700 hover:border-amber-300 hover:bg-amber-50'
                 "
                 @click="toggle('productModel', item)"
@@ -174,16 +201,18 @@ function clearFilters() {
           </div>
 
           <div>
-            <label class="mb-3 block text-sm font-semibold text-gray-700">نوع روغن</label>
+            <label class="mb-3 block text-sm font-semibold text-gray-700"
+              >نوع روغن</label
+            >
             <div class="flex flex-wrap gap-2">
               <button
                 v-for="item in oilTypeOptions"
                 :key="item"
                 type="button"
-                class="rounded-full border px-4 py-2 text-sm font-medium transition"
+                class="rounded-full flex-1 border px-4 py-2 text-sm font-medium transition"
                 :class="
                   filters.oilType === item
-                    ? 'border-amber-500 bg-amber-500 text-white shadow-sm shadow-amber-200'
+                    ? 'bg-[--gold-one] text-white shadow-sm shadow-amber-200'
                     : 'border-gray-200 bg-gray-50 text-gray-700 hover:border-amber-300 hover:bg-amber-50'
                 "
                 @click="toggle('oilType', item)"
@@ -196,28 +225,38 @@ function clearFilters() {
           <!-- قیمت: Range Slider -->
           <div>
             <div class="mb-4 flex items-center justify-between">
-              <label class="text-sm font-semibold text-gray-700">محدوده قیمت</label>
-              <span class="text-xs font-medium text-gray-500">تومان</span>
+              <label class="text-sm font-semibold text-gray-700"
+                >محدوده قیمت</label
+              >
+              <span class="text-xs font-medium text-gray-500"
+                >قیمت ها به تومان هستند</span
+              >
             </div>
 
             <div class="mb-5 flex items-center justify-between gap-3">
               <div class="flex-1 rounded-xl bg-gray-50 px-3 py-2 text-center">
                 <span class="block text-[10px] text-gray-400">از</span>
-                <span class="text-sm font-bold text-gray-800">{{ formatPrice(filters.minPrice) }}</span>
+                <span class="text-sm font-bold text-gray-800">{{
+                  formatPrice(filters.minPrice)
+                }}</span>
               </div>
               <span class="text-gray-300">—</span>
               <div class="flex-1 rounded-xl bg-gray-50 px-3 py-2 text-center">
                 <span class="block text-[10px] text-gray-400">تا</span>
-                <span class="text-sm font-bold text-gray-800">{{ formatPrice(filters.maxPrice) }}</span>
+                <span class="text-sm font-bold text-gray-800">{{
+                  formatPrice(filters.maxPrice)
+                }}</span>
               </div>
             </div>
 
             <div class="relative h-6">
               <!-- ترک پس‌زمینه -->
-              <div class="absolute top-1/2 h-1.5 w-full -translate-y-1/2 rounded-full bg-gray-200" />
+              <div
+                class="absolute top-1/2 h-1.5 w-full -translate-y-1/2 rounded-full bg-gray-200"
+              />
               <!-- ترک پرشده بین دو دستگیره -->
               <div
-                class="absolute top-1/2 h-1.5 -translate-y-1/2 rounded-full bg-amber-500"
+                class="absolute top-1/2 h-1.5 -translate-y-1/2 rounded-full bg-[--gold-one]"
                 :style="{
                   right: minPercent + '%',
                   left: 100 - maxPercent + '%',
@@ -245,7 +284,21 @@ function clearFilters() {
             </div>
           </div>
         </div>
-
+        <div class="w-full flex justify-center">
+          <img
+            v-animate="{
+              type: 'scaleIn',
+              delay: 300,
+              duration: 1000,
+              once: true,
+              threshold: 0,
+            }"
+            src="/images/helma-logo.webp"
+            alt="سوهان و گز حلما"
+            fetchpriority="high"
+            width="350"
+          />
+        </div>
         <!-- Footer -->
         <div class="flex gap-3 border-t border-gray-100 px-6 py-5">
           <button
@@ -256,8 +309,9 @@ function clearFilters() {
           </button>
 
           <button
-            class="flex-1 rounded-xl bg-gray-900 py-3 text-sm font-bold text-white transition hover:bg-black active:scale-[0.98]"
+            class="flex-1 rounded-xl disabled:opacity-25 disabled:cursor-not-allowed bg-gray-900 py-3 text-sm font-bold text-white transition hover:bg-black active:scale-[0.98]"
             @click="applyFilters"
+            :disabled="!!!activeFiltersCount"
           >
             اعمال فیلتر
           </button>
@@ -267,7 +321,22 @@ function clearFilters() {
   </Teleport>
 </template>
 
-<style scoped>
+<style>
+.product-filter-dialog::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+
+  background: repeating-linear-gradient(
+    45deg,
+    rgba(0, 0, 0, 0.025) 0px,
+    rgba(0, 0, 0, 0.025) 1px,
+    transparent 1px,
+    transparent 18px
+  );
+}
 .backdrop-fade-enter-active,
 .backdrop-fade-leave-active {
   transition: opacity 0.25s ease;
@@ -290,11 +359,11 @@ function clearFilters() {
 .range-thumb::-webkit-slider-thumb {
   pointer-events: auto;
   appearance: none;
-  width: 18px;
-  height: 18px;
+  width: 30px;
+  height: 20px;
   border-radius: 9999px;
   background: white;
-  border: 3px solid #f59e0b;
+  border: 3px solid #d8bb64;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
   cursor: pointer;
 }
