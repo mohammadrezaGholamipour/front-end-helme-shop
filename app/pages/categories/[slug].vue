@@ -48,7 +48,37 @@ const title: Record<string, TitleItem> = {
       :text-two="title[name]?.['textTwo']"
       :seo="title[name]?.['srOnly']"
     />
-    <div v-if="isLoading">Loading...</div>
+    <div
+      v-if="isLoading"
+      v-animate="{ type: 'blurIn', delay: 700, duration: 1000, once: true }"
+      class="flex flex-col items-center gap-5 font-bold text-2xl p-10 w-full"
+    >
+      <div class="loader"></div>
+      <p>در حال دریافت محصولات ...</p>
+    </div>
+
+    <div
+      class="flex flex-col justify-center items-center gap-3"
+      v-animate="{ type: 'blurIn', delay: 700, duration: 1000, once: true }"
+      v-else-if="error"
+    >
+      <img
+        class="block dark:hidden rounded-lg w-full max-w-[500px]"
+        src="/images/error-light.png"
+        alt="خطا در دریافت اطلاعات"
+      />
+
+      <img
+        class="hidden dark:block rounded-lg w-full max-w-[500px]"
+        src="/images/error-dark.png"
+        alt="خطا در دریافت اطلاعات"
+      />
+      <p
+        class="text-2xl font-bold text-white w-full text-center bg-[--gold-one] p-4 rounded-md"
+      >
+        خطا در دریافت اطلاعات
+      </p>
+    </div>
     <div
       class="flex flex-col gap-4 py-7 items-center"
       v-else-if="data?.products?.length === 0"
