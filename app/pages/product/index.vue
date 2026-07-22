@@ -8,7 +8,7 @@ const { data: products, isLoading, error } = useProduct();
     v-animate="{ type: 'blurIn', delay: 700, duration: 1000, once: true }"
     class="parent-page"
   >
-    <div v-if="isLoading">در اطلاعات...</div>
+    <div v-if="isLoading">درحال دریافت اطلاعات</div>
 
     <div
       class="flex flex-col justify-center items-center gap-3"

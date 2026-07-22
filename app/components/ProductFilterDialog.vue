@@ -18,13 +18,13 @@ const filters = reactive({
 
 const productTypeOptions = ["سوهان", "گز"];
 const productModelOptions = [
-  "حبه ای",
-  "لقمه ای",
-  "سکه ای",
+  "حبه‌ای",
+  "لقمه‌ای",
+  "سکه‌ای",
   "گل",
   "باقلوایی",
   "مدادی",
-  "ترکیبی",
+  "ترکیبی از چند مدل",
 ];
 const oilTypeOptions = ["روغن حیوانی", "کره گیاهی", "روغن نباتی"];
 
@@ -87,7 +87,7 @@ function clearFilters() {
   filters.minPrice = PRICE_MIN;
   filters.maxPrice = PRICE_MAX;
 
-  router.push({ path: "/product" });
+  router.push({ path: "/" });
   modelValue.value = false;
 }
 </script>
