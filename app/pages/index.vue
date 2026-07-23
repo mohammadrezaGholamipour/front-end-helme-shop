@@ -51,7 +51,6 @@ onMounted(async () => {
 </script>
 <template>
   <div class="parent-page index">
-    fasdfa
     <SliderIndex :key="sliderKey" />
     <TitlePage
       text-one="فروشگاه"
