@@ -6,21 +6,25 @@ export function useProductSeo(
 ) {
   const data = computed(() => toValue(product));
 
-  // اگر دیتا هنوز لود نشده، بقیه کد اجرا نشود
-  if (!data.value) return;
-
-  const title = computed(() => `${data.value?.name} | خرید و قیمت | ${SITE.name}`);
+  const title = computed(() =>
+    data.value
+      ? `${data.value.name} | خرید و قیمت | ${SITE.name}`
+      : SITE.name,
+  );
 
   const description = computed(
-    () => data.value?.meta_description ??
-      `${data.value?.name} درجه یک حلما، تهیه شده از بهترین مواد اولیه. مشاهده قیمت و خرید آنلاین با ارسال سریع.`
+    () =>
+      data.value?.meta_description ??
+      (data.value
+        ? `${data.value.name} درجه یک حلما، تهیه شده از بهترین مواد اولیه. مشاهده قیمت و خرید آنلاین با ارسال سریع.`
+        : undefined),
   );
 
   const image = computed(() =>
-    data.value?.image ? `${SITE.url}${data.value.image}` : SITE.logo
+    data.value?.image ? `${SITE.url}${data.value.image}` : SITE.logo,
   );
 
-  const url = computed(() => `${SITE.url}/products/${data.value?.slug}`);
+  const url = computed(() => `${SITE.url}/products/${data.value?.slug ?? ""}`);
 
   useHead({
     link: [{ rel: "canonical", href: url }],
@@ -43,30 +47,38 @@ export function useProductSeo(
     defineProduct({
       name: () => data.value?.name,
       description: () => data.value?.description || description.value,
-      image: [image.value], // گوگل لیست آرایه ای را ترجیح میدهد
-      sku: () => `HELMA-${data.value?.id}`, // SKU معتبرتر
-      // اگر برند خاصی دارید اینجا اضافه کنید
+      image: () => (image.value ? [image.value] : []),
+      sku: () => (data.value ? `HELMA-${data.value.id}` : undefined),
       brand: {
         "@type": "Brand",
-        name: SITE.name
+        name: SITE.name,
       },
-      offers: () => data.value?.variants.map((variant) => ({
-        "@type": "Offer",
-        // اگر قیمت شما به تومان است، اینجا تبدیل به ریال کنید
-        price: variant.price * 10,
-        priceCurrency: "IRR",
-        availability: variant.stock > 0
-          ? "https://schema.org/InStock"
-          : "https://schema.org/OutOfStock",
-        url: url.value,
-        priceValidUntil: new Date(new Date().getFullYear() + 1, 0, 1).toISOString() // اعتبار قیمت
-      })),
+      offers: () =>
+        data.value?.variants?.map((variant) => ({
+          "@type": "Offer",
+          // اگر قیمت شما به تومان است، اینجا تبدیل به ریال شده
+          price: variant.price * 10,
+          priceCurrency: "IRR",
+          availability:
+            variant.stock > 0
+              ? "https://schema.org/InStock"
+              : "https://schema.org/OutOfStock",
+          url: url.value,
+          priceValidUntil: new Date(
+            new Date().getFullYear() + 1,
+            0,
+            1,
+          ).toISOString(),
+        })) ?? [],
     }),
 
     defineBreadcrumb({
       itemListElement: [
         { name: "خانه", item: "/" },
-        { name: data.value.category.name, item: `/categories/${data.value.category.slug}` },
+        {
+          name: () => data.value?.category?.name,
+          item: () => `/categories/${data.value?.category?.slug ?? ""}`,
+        },
         { name: () => data.value?.name, item: url },
       ],
     }),
