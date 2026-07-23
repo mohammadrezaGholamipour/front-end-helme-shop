@@ -1,9 +1,10 @@
 <script setup lang="ts">
 const route = useRoute();
-const searchQuery = computed(() => route.query.q as string | undefined);
+const searchQuery = computed(
+  () => route.query.product_type as string | undefined,
+);
 
 const { data: products, isLoading, error } = useProduct();
-
 useSearchSeo(
   searchQuery,
   computed(() => products.value?.length),
@@ -11,10 +12,13 @@ useSearchSeo(
 </script>
 
 <template>
-  <div
-    v-animate="{ type: 'blurIn', delay: 700, duration: 1000, once: true }"
-    class="parent-page"
-  >
+  <div class="parent-page">
+    <TitlePage
+      text-one="لیستی از تمامی محصولات"
+      text-two="با کیفیت و تازه فروشگاه سوهان و گز حلما وفایی"
+      text-three="همراه شیرینی لحظات شما"
+      seo="لیستی از تمامی محصولات باکیفیت و تازه فروشگاه سوهان و گز حلما وفایی همراه شیرینی لحظمات شما"
+    />
     <div
       v-if="isLoading"
       v-animate="{ type: 'blurIn', delay: 700, duration: 1000, once: true }"

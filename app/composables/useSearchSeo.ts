@@ -10,7 +10,7 @@ export function useSearchSeo(
   const title = computed(() =>
     hasQuery.value
       ? `نتایج جستجو برای «${searchTerm.value}» | ${SITE.name}`
-      : `جستجوی محصولات | ${SITE.name}`,
+      : `لیست همه محصولات | ${SITE.name}`,
   );
 
   const description = computed(() =>
@@ -22,7 +22,7 @@ export function useSearchSeo(
   const url = computed(() => `${SITE.url}`);
 
   useHead({
-    link: [{ rel: "canonical", href: url }],
+    link: [{ rel: "canonical", href: `${url}/product` }],
   });
 
   useSeoMeta({

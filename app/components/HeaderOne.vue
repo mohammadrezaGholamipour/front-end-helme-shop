@@ -19,16 +19,18 @@ const { time, date } = useDateTime();
           <Icon name="tabler:home-filled" class="w-6 h-6" />
         </button>
       </NuxtLink>
+      <NuxtLink to="/product">
+        <button>
+          <p>همه محصولات</p>
+          <Icon name="tabler:brand-walmart" class="w-6 h-6" />
+        </button>
+      </NuxtLink>
       <NuxtLink to="/contact-us">
         <button>
           <p>ارتباط باما</p>
           <Icon name="tabler:phone-filled" class="w-6 h-6" />
         </button>
       </NuxtLink>
-      <button>
-        <p>وبلاگ</p>
-        <Icon name="tabler:library-filled" class="w-6 h-6" />
-      </button>
     </section>
     <img
       v-animate="{
@@ -53,6 +55,10 @@ const { time, date } = useDateTime();
         threshold: 0,
       }"
     >
+      <button>
+        <p>وبلاگ</p>
+        <Icon name="tabler:library-filled" class="w-6 h-6" />
+      </button>
       <button class="min-h-[47px]">
         <p class="min-w-[55px] tabular-nums">{{ time }}</p>
         |
@@ -67,58 +73,54 @@ const { time, date } = useDateTime();
 </template>
 <style scoped>
 .header-one {
-    grid-template-columns: 1fr auto 1fr;
-    align-items: center;
-    display: grid;
-    width: 100%;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  display: grid;
+  width: 100%;
 }
 
 @media (max-width: 1300px) {
-    .header-one {
-        @apply text-sm;
-        grid-template-columns: 1fr;
-        gap: 0rem;
+  .header-one {
+    @apply text-sm;
+    grid-template-columns: 1fr;
+    gap: 0rem;
+  }
 
-    }
+  .header-one > * {
+    justify-self: center !important;
+  }
 
-    .header-one>* {
-        justify-self: center !important;
-    }
-
-    .header-one>section:first-of-type {
-        @apply px-2 justify-start md:justify-center;
-        order: 1 !important;
-        overflow-x: auto;
-        width: 100%;
-    }
-
-    .header-one>section:last-of-type{
-        @apply mt-5  md:justify-center;
-         width: 100%;
-    }
-}
-
-
-.header-one>section:first-of-type {
-    justify-self: start;
-}
-
-.header-one>section {
-    @apply flex items-center gap-4;
-}
-
-
-.header-one>section:nth-of-type(2) {
-    justify-self: center;
-}
-
-.header-one>section:last-of-type {
-    @apply px-2 justify-start md:!justify-center overflow-x-scroll md:overflow-hidden xl:!justify-end;
+  .header-one > section:first-of-type {
+    @apply px-2 justify-start md:justify-center;
+    order: 1 !important;
+    overflow-x: auto;
     width: 100%;
+  }
 
+  .header-one > section:last-of-type {
+    @apply mt-5  md:justify-center;
+    width: 100%;
+  }
+}
+
+.header-one > section:first-of-type {
+  justify-self: start;
+}
+
+.header-one > section {
+  @apply flex items-center gap-4;
+}
+
+.header-one > section:nth-of-type(2) {
+  justify-self: center;
+}
+
+.header-one > section:last-of-type {
+  @apply px-2 justify-start md:!justify-center overflow-x-scroll md:overflow-hidden xl:!justify-end;
+  width: 100%;
 }
 
 .header-one button {
-    @apply flex items-center gap-3 border p-3 px-5 border-[var(--gold-one)] rounded-2xl text-[var(--gold-one)] font-bold;
+  @apply flex items-center gap-3 border p-3 px-5 border-[var(--gold-one)] rounded-2xl text-[var(--gold-one)] font-bold;
 }
 </style>

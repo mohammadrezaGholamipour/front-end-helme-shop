@@ -24,7 +24,6 @@ export default defineNuxtConfig({
       ],
       link: [
         { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
-        { rel: 'canonical', href: 'https://sohangaz.com' }
       ],
       script: [
         {
@@ -91,4 +90,7 @@ export default defineNuxtConfig({
       },
     },
   },
+  sitemap: {
+    sources: ['/api/__sitemap__/urls']
+  }
 });
