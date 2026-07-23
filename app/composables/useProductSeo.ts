@@ -9,9 +9,7 @@ export function useProductSeo(
   // اگر دیتا هنوز لود نشده، بقیه کد اجرا نشود
   if (!data.value) return;
 
-  const title = computed(
-    () => data.value?.meta_title ?? `${data.value?.name} | خرید و قیمت | ${SITE.name}`
-  );
+  const title = computed(() => `${data.value?.name} | خرید و قیمت | ${SITE.name}`);
 
   const description = computed(
     () => data.value?.meta_description ??

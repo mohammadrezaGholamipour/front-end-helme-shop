@@ -9,10 +9,7 @@ export function useCategorySeo(
   if (!data.value) return;
 
   const title = computed(
-    () =>
-      data.value?.meta_title ??
-      `خرید و قیمت ${data.value?.name} درجه یک | ${SITE.name}`,
-  );
+    () => `خرید و قیمت ${data.value?.name} درجه یک | ${SITE.name}`);
 
   const description = computed(
     () =>

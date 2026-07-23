@@ -1,5 +1,13 @@
 <script setup lang="ts">
+const route = useRoute();
+const searchQuery = computed(() => route.query.q as string | undefined);
+
 const { data: products, isLoading, error } = useProduct();
+
+useSearchSeo(
+  searchQuery,
+  computed(() => products.value?.length),
+);
 </script>
 
 <template>
@@ -39,10 +47,7 @@ const { data: products, isLoading, error } = useProduct();
       </p>
     </div>
 
-    <div
-      class="parent-cards !mb-0"
-      v-else
-    >
+    <div class="parent-cards !mb-0" v-else>
       <template v-if="products?.length">
         <CardProduct
           v-animate="{ type: 'slideUp', delay: 300, threshold: 0.1 }"
