@@ -35,9 +35,7 @@ export function useSearchSeo(
     ogUrl: url,
     ogImage: SITE.logo,
     twitterCard: "summary_large_image",
-    // صفحات نتایج جستجو نباید ایندکس شوند تا از محتوای تکراری/کم‌ارزش جلوگیری شود
-    // ولی لینک‌های داخل صفحه باید دنبال شوند
-    robots: "noindex, follow",
+    robots: "index, follow",
     appleMobileWebAppTitle: SITE.name,
   });
 
