@@ -55,11 +55,13 @@ const { time, date } = useDateTime();
         threshold: 0,
       }"
     >
+      <NuxtLink to="/blog">
+        <button>
+          <p>وبلاگ</p>
+          <Icon name="tabler:library-filled" class="w-6 h-6" />
+        </button>
+      </NuxtLink>
       <button>
-        <p>وبلاگ</p>
-        <Icon name="tabler:library-filled" class="w-6 h-6" />
-      </button>
-      <button class="min-h-[47px]">
         <p class="min-w-[55px] tabular-nums">{{ time }}</p>
         |
         <p>{{ date }}</p>
@@ -91,7 +93,7 @@ const { time, date } = useDateTime();
   }
 
   .header-one > section:first-of-type {
-    @apply px-2 justify-start md:justify-center;
+    @apply px-2 justify-start mt-2 md:justify-center;
     order: 1 !important;
     overflow-x: auto;
     width: 100%;
@@ -116,7 +118,7 @@ const { time, date } = useDateTime();
 }
 
 .header-one > section:last-of-type {
-  @apply px-2 justify-start md:!justify-center overflow-x-scroll md:overflow-hidden xl:!justify-end;
+  @apply px-2 justify-start items-stretch md:!justify-center overflow-x-scroll md:overflow-hidden xl:!justify-end;
   width: 100%;
 }
 

@@ -145,3 +145,106 @@ export interface ProductFilters {
   product_model?: string;
   oil_type?: string;
 }
+
+export enum BlogStatus {
+  DRAFT = "DRAFT",
+  PUBLISHED = "PUBLISHED",
+}
+
+export interface BlogCategoryOut {
+  id: number;
+  name: string;
+  slug: string;
+  display_order: number;
+}
+
+export interface BlogOut {
+  id: number;
+
+  category_id: number;
+
+  title: string;
+  slug: string;
+
+  summary: string | null;
+  content: string;
+
+  image: string | null;
+
+  status: BlogStatus;
+
+  display_order: number;
+
+  reading_time: number | null;
+
+  views: number;
+
+  is_featured: boolean;
+
+  meta_title: string | null;
+  meta_description: string | null;
+
+  published_at: string | null;
+
+  created_at: string;
+  updated_at: string;
+
+  category: BlogCategoryOut | null;
+}
+
+/**
+ * برای صفحه لیست وبلاگ‌ها
+ */
+export type BlogListItem = Omit<BlogOut, "content">;
+
+export interface BlogListParams {
+  page?: number;
+  per_page?: number;
+  category_id?: number;
+  search?: string;
+  status?: BlogStatus;
+  is_featured?: boolean;
+}
+
+/**
+ * خروجی API لیست وبلاگ‌ها
+ */
+export interface BlogListResponse {
+  blogs: BlogListItem[];
+  total: number;
+  page: number;
+  per_page: number;
+  last_page: number;
+}
+
+/**
+ * ایجاد وبلاگ
+ */
+export interface CreateBlogBody {
+  title: string;
+  slug: string;
+  category_id: number;
+
+  summary?: string;
+  content: string;
+
+  status?: BlogStatus;
+
+  display_order?: number;
+
+  reading_time?: number;
+
+  is_featured?: boolean;
+
+  meta_title?: string;
+  meta_description?: string;
+
+  published_at?: string;
+
+  image?: File;
+}
+
+/**
+ * ویرایش وبلاگ
+ */
+export type UpdateBlogBody = Partial<CreateBlogBody>;
