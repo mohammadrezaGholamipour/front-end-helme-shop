@@ -34,7 +34,7 @@ export default defineSitemapEventHandler(async () => {
     ),
   ]);
 
-  const urls: { loc: string; lastmod: string }[] = [
+  const urls: any[] = [
     { loc: "/", lastmod: now },
     { loc: "/product", lastmod: now },
     { loc: "/blog", lastmod: now },
