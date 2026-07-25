@@ -4,6 +4,20 @@ const slug = computed(() => route.params.slug as string);
 
 const { data: blog, isPending, isError, refetch } = useBlog(slug);
 
+const { data: relatedData, isPending: relatedPending } = useAllBlogs(
+  computed(() =>
+    blog.value && blog.value.category
+      ? { per_page: 6, category_id: blog.value.category.id }
+      : undefined,
+  ),
+);
+
+const relatedBlogs = computed(() =>
+  (relatedData.value?.blogs ?? [])
+    .filter((b) => b.slug !== blog.value?.slug)
+    .slice(0, 4),
+);
+
 useBlogSeo(blog);
 
 function formatDate(date: string) {
@@ -101,19 +115,59 @@ function formatDate(date: string) {
           بازگشت به صفحه وبلاگ ها
         </NuxtLink>
 
-        <p v-if="blog.summary" class="blog-detail__summary">
-          {{ blog.summary }}
-        </p>
+        <div v-if="blog.summary" class="blog-detail__summary-wrapper">
+          <p class="blog-detail__summary">
+            {{ blog.summary }}
+          </p>
+        </div>
 
         <article class="blog-detail__content" v-html="blog.content" />
+
+        <section v-if="relatedBlogs.length || relatedPending" class="related">
+          <h2 class="related__title">مطالب مرتبط</h2>
+
+          <div v-if="relatedPending" class="related__loading">
+            <div class="loader"></div>
+            <span>در حال بارگذاری مطالب مرتبط ...</span>
+          </div>
+
+          <div v-else class="related__grid">
+            <NuxtLink
+              v-for="item in relatedBlogs"
+              :key="item.slug"
+              :to="`/blog/${item.slug}`"
+              class="related__card"
+            >
+              <img
+                v-if="item.image"
+                :src="`https://sohangaz.com${item.image}`"
+                :alt="item.title"
+                class="related__card-image"
+              />
+              <div
+                v-else
+                class="related__card-image related__card-image--placeholder"
+              >
+                <Icon name="mdi:image-outline" />
+              </div>
+
+              <div class="related__card-body">
+                <h3 class="related__card-title">{{ item.title }}</h3>
+                <p v-if="item.summary" class="related__card-summary">
+                  {{ item.summary }}
+                </p>
+              </div>
+            </NuxtLink>
+          </div>
+        </section>
       </div>
     </template>
   </div>
 </template>
 
-<style scoped>
+<style>
 .blog-detail {
-  @apply pb-16 w-full max-w-[1000px];
+  @apply pb-7 w-full max-w-[1000px];
 }
 
 .blog-detail__hero {
@@ -137,7 +191,7 @@ function formatDate(date: string) {
 }
 
 .blog-detail__title {
-  @apply  text-right text-wrap line-clamp-2 text-white sm:text-4xl ;
+  @apply text-right text-wrap line-clamp-2 text-white sm:text-4xl;
 }
 
 .blog-detail__meta {
@@ -164,12 +218,14 @@ function formatDate(date: string) {
   @apply bg-[--gold-one] text-white;
 }
 
-.blog-detail__summary {
-  @apply mb-6 rounded-md text-wrap leading-7 text-justify border-r-4 border-[--gold-one] bg-gray-50 p-4 text-base text-gray-600 dark:bg-white/5 dark:text-white;
-}
+.blog-detail {
+  &__summary-wrapper {
+    @apply mb-6 rounded-md border-r-4 border-[--gold-one] bg-gray-50 p-4 dark:bg-white/5;
+  }
 
-.blog-detail__content {
-  @apply max-w-none text-wrap text-justify leading-10;
+  &__summary {
+    @apply line-clamp-2 text-base text-wrap leading-7 text-gray-600 dark:text-white;
+  }
 }
 
 .blog-detail__state {
@@ -186,5 +242,127 @@ function formatDate(date: string) {
 
 .blog-detail__state-retry {
   @apply mt-1 rounded-full bg-[--gold-one] px-5 py-2 text-sm font-medium text-white transition-colors hover:bg-[--gold-one];
+}
+
+.related {
+  @apply mx-auto max-w-4xl mt-12;
+}
+
+.related__title {
+  @apply mb-4 text-right text-xl font-semibold;
+}
+
+.related__loading {
+  @apply flex items-center gap-2 text-sm text-gray-500 dark:text-white;
+}
+
+.related__grid {
+  @apply grid grid-cols-1 gap-4 sm:grid-cols-2;
+}
+
+.related__card {
+  @apply flex items-start gap-3 rounded-md border border-gray-200 bg-white/80 p-3 transition-all hover:-translate-y-0.5 hover:border-[--gold-one] hover:shadow-md dark:border-white/10 dark:bg-white/5;
+}
+
+.related__card-image {
+  @apply h-16 w-20 shrink-0 rounded-sm object-cover;
+}
+
+.related__card-image--placeholder {
+  @apply flex items-center justify-center bg-gray-100 text-gray-300 dark:bg-white/10;
+}
+
+.related__card-body {
+  @apply flex min-w-0 flex-1 flex-col gap-1;
+}
+
+.related__card-title {
+  @apply line-clamp-2 text-wrap text-right text-sm font-medium text-gray-800 dark:text-white;
+}
+
+.related__card-summary {
+  @apply line-clamp-2 text-wrap text-right text-xs leading-5 text-gray-500;
+}
+
+.blog-detail {
+  &__content {
+    @apply !text-black dark:!text-white w-full text-wrap  text-base;
+    > * + * {
+      @apply mt-6;
+    }
+
+    h2 {
+      @apply text-3xl font-bold text-wrap mt-12 mb-5;
+    }
+
+    h3 {
+      @apply text-2xl font-semibold text-wrap  mt-10 mb-4;
+    }
+
+    h4 {
+      @apply text-xl font-semibold mt-8 mb-3;
+    }
+
+    p {
+      @apply leading-8  !text-wrap;
+    }
+
+    strong {
+      @apply font-bold;
+    }
+
+    em {
+      @apply italic;
+    }
+
+    a {
+      @apply text-[--gold-one] font-medium underline underline-offset-4 transition;
+
+      &:hover {
+        @apply text-[--gold-one];
+      }
+    }
+
+    ul,
+    ol {
+      @apply my-6 space-y-3 ps-6;
+    }
+
+    ul {
+      @apply list-disc;
+    }
+
+    ol {
+      @apply list-decimal;
+    }
+
+    li {
+      @apply leading-8;
+    }
+
+    blockquote {
+      @apply border-s-4 border-[--gold-one] bg-gray-50 py-4 px-5 italic rounded-e-lg my-8;
+    }
+
+    img {
+      @apply rounded-xl w-full h-auto my-8;
+    }
+
+    table {
+      @apply w-full border border-gray-200 my-8 overflow-hidden rounded-lg;
+    }
+
+    th {
+      @apply bg-gray-100 font-semibold text-right p-3 border;
+    }
+
+    td {
+      @apply p-3 border;
+    }
+
+    hr {
+      @apply my-10 border-gray-200;
+    }
+  }
 }
 </style>
