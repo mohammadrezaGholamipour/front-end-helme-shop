@@ -47,7 +47,7 @@ export default defineSitemapEventHandler(async () => {
       lastmod: now,
       images: [
         {
-          loc: category.image
+          loc: `${config.public.siteUrl}${category.image}`
         }
       ]
     })),
@@ -59,7 +59,7 @@ export default defineSitemapEventHandler(async () => {
       lastmod: now,
       images: [
         {
-          loc: product.image
+          loc: `${config.public.siteUrl}${product.image}`
         }
       ]
     })),
@@ -71,7 +71,7 @@ export default defineSitemapEventHandler(async () => {
       lastmod: blog.updated_at ?? blog.created_at,
       images: [
         {
-          loc: blog.image
+          loc: `${config.public.siteUrl}${blog.image}`
         }
       ]
     })),
