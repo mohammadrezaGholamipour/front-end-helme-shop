@@ -45,6 +45,11 @@ export default defineSitemapEventHandler(async () => {
     ...categories.map((category) => ({
       loc: `/categories/${category.slug}`,
       lastmod: now,
+      images: [
+        {
+          loc: category.image
+        }
+      ]
     })),
   );
 
@@ -52,13 +57,23 @@ export default defineSitemapEventHandler(async () => {
     ...products.map((product) => ({
       loc: `/product/${product.slug}`,
       lastmod: now,
+      images: [
+        {
+          loc: product.image
+        }
+      ]
     })),
   );
 
   urls.push(
     ...blogs.blogs.map((blog) => ({
-      loc: `blog/website/${blog.slug}`,
+      loc: `blog/${blog.slug}`,
       lastmod: blog.updated_at ?? blog.created_at,
+      images: [
+        {
+          loc: blog.image
+        }
+      ]
     })),
   );
 
