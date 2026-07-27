@@ -3,7 +3,7 @@ import type { CategoryOut } from "~/types";
 const props = defineProps<{ category: CategoryOut }>();
 </script>
 <template>
-  <main class="category-card">
+  <div class="category-card">
     <div class="category-card__bg"></div>
     <img
       :src="`https://sohangaz.com${props.category.image}`"
@@ -20,7 +20,7 @@ const props = defineProps<{ category: CategoryOut }>();
     >
       <span>مشاهده محصولات</span>
     </NuxtLink>
-  </main>
+  </div>
 </template>
 <style scoped>
 .category-card {
