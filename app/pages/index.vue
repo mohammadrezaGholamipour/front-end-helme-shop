@@ -46,7 +46,7 @@ const {
   isLoading: blogsLoading,
   error: blogsError,
 } = useAllBlogs({
-  per_page: 3,
+  per_page: 4,
   status: BlogStatus.PUBLISHED,
 });
 
@@ -158,7 +158,7 @@ onMounted(async () => {
         <template v-else-if="blogs.length > 0">
           <BlogCard
             v-animate="{ type: 'slideUp', delay: 300, threshold: 0.1 }"
-            class="max-w-[400px]"
+            class="max-w-[300px]"
             v-for="item in blogs"
             :key="item.id"
             :blog="item"

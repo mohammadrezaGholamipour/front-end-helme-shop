@@ -16,17 +16,26 @@ const filters = reactive({
   maxPrice: route.query.max_price ? Number(route.query.max_price) : PRICE_MAX,
 });
 
-const productTypeOptions = ["سوهان", "گز"];
-const productModelOptions = [
-  "حبه‌ای",
-  "لقمه‌ای",
-  "سکه‌ای",
-  "گل",
-  "باقلوایی",
-  "مدادی",
-  "ترکیبی از چند مدل",
+const productTypeOptions = [
+  { value: "SOHAN", label: "سوهان" },
+  { value: "GAZ", label: "گز" },
 ];
-const oilTypeOptions = ["روغن حیوانی", "کره گیاهی", "روغن نباتی"];
+
+const productModelOptions = [
+  { value: "HOBEH", label: "حبه‌ای" },
+  { value: "LOGHMEH", label: "لقمه‌ای" },
+  { value: "SEKKEI", label: "سکه‌ای" },
+  { value: "GOL", label: "گل" },
+  { value: "BAGHLAVAEI", label: "باقلوایی" },
+  { value: "MEDADI", label: "مدادی" },
+  { value: "COMBINATION", label: "ترکیبی از چند مدل" },
+];
+
+const oilTypeOptions = [
+  { value: "ANIMAL_OIL", label: "روغن حیوانی" },
+  { value: "VEGETABLE_BUTTER", label: "کره گیاهی" },
+  { value: "NABATI_OIL", label: "روغن نباتی" },
+];
 
 function toggle(
   key: "productType" | "productModel" | "oilType",
@@ -163,17 +172,17 @@ function clearFilters() {
             <div class="flex flex-wrap gap-2">
               <button
                 v-for="item in productTypeOptions"
-                :key="item"
+                :key="item.value"
                 type="button"
                 class="rounded-full flex-1 border px-4 py-2 text-sm font-medium transition"
                 :class="
-                  filters.productType === item
+                  filters.productType === item.value
                     ? 'bg-[--gold-one]  text-white shadow-sm shadow-amber-200'
                     : 'border-gray-200 bg-gray-50 text-gray-700 hover:border-amber-300 hover:bg-amber-50'
                 "
-                @click="toggle('productType', item)"
+                @click="toggle('productType', item.value)"
               >
-                {{ item }}
+                {{ item.label }}
               </button>
             </div>
           </div>
@@ -185,17 +194,17 @@ function clearFilters() {
             <div class="flex flex-wrap gap-2">
               <button
                 v-for="item in productModelOptions"
-                :key="item"
+                :key="item.value"
                 type="button"
                 class="rounded-full border flex-1 px-4 py-2 text-sm font-medium transition"
                 :class="
-                  filters.productModel === item
+                  filters.productModel === item.value
                     ? 'bg-[--gold-one] text-white shadow-sm shadow-amber-200'
                     : 'border-gray-200 bg-gray-50 text-gray-700 hover:border-amber-300 hover:bg-amber-50'
                 "
-                @click="toggle('productModel', item)"
+                @click="toggle('productModel', item.value)"
               >
-                {{ item }}
+                {{ item.label }}
               </button>
             </div>
           </div>
@@ -207,17 +216,17 @@ function clearFilters() {
             <div class="flex flex-wrap gap-2">
               <button
                 v-for="item in oilTypeOptions"
-                :key="item"
+                :key="item.value"
                 type="button"
                 class="rounded-full flex-1 border px-4 py-2 text-sm font-medium transition"
                 :class="
-                  filters.oilType === item
+                  filters.oilType === item.value
                     ? 'bg-[--gold-one] text-white shadow-sm shadow-amber-200'
                     : 'border-gray-200 bg-gray-50 text-gray-700 hover:border-amber-300 hover:bg-amber-50'
                 "
-                @click="toggle('oilType', item)"
+                @click="toggle('oilType', item.value)"
               >
-                {{ item }}
+                {{ item.label }}
               </button>
             </div>
           </div>
