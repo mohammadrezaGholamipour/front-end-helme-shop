@@ -109,24 +109,17 @@ function clearFilters() {
     <Transition name="backdrop-fade">
       <div
         v-if="modelValue"
-        class="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm"
+        class="filter-dialog__overlay"
         @click="modelValue = false"
       />
     </Transition>
 
     <Transition name="drawer-slide">
-      <div
-        v-if="modelValue"
-        dir="rtl"
-        class="fixed inset-y-0 right-0 z-50 flex h-full w-full max-w-md flex-col bg-white shadow-2xl product-filter-dialog"
-        @click.stop
-      >
+      <div v-if="modelValue" dir="rtl" class="filter-dialog" @click.stop>
         <!-- Header -->
-        <div
-          class="flex items-center justify-between border-b border-gray-100 px-6 py-5"
-        >
-          <div class="flex items-center gap-2">
-            <h2 class="text-lg font-bold text-gray-900">فیلتر محصولات</h2>
+        <div class="filter-dialog__header">
+          <div class="filter-dialog__title-wrap">
+            <h2 class="filter-dialog__title">فیلتر محصولات</h2>
             <span
               v-animate="{
                 type: 'scaleIn',
@@ -136,19 +129,16 @@ function clearFilters() {
                 threshold: 0,
               }"
               v-if="activeFiltersCount > 0"
-              class="flex h-8 min-w-8 items-center justify-center rounded-full bg-[--gold-one] px-1.5 font-bold text-white"
+              class="filter-dialog__badge"
             >
               {{ activeFiltersCount }}
             </span>
           </div>
 
-          <button
-            class="flex h-9 w-9 items-center justify-center rounded-full text-gray-500 transition hover:bg-gray-100 hover:text-gray-900"
-            @click="modelValue = false"
-          >
+          <button class="filter-dialog__close" @click="modelValue = false">
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              class="h-5 w-5"
+              class="filter-dialog__close-icon"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -164,22 +154,19 @@ function clearFilters() {
         </div>
 
         <!-- Body -->
-        <div class="flex-1 space-y-7 overflow-y-auto px-6 py-6">
-          <div>
-            <label class="mb-3 block text-sm font-semibold text-gray-700"
-              >نوع محصول</label
-            >
-            <div class="flex flex-wrap gap-2">
+        <div class="filter-dialog__body">
+          <div class="filter-dialog__section">
+            <label class="filter-dialog__section-label">نوع محصول</label>
+            <div class="filter-dialog__options">
               <button
                 v-for="item in productTypeOptions"
                 :key="item.value"
                 type="button"
-                class="rounded-full flex-1 border px-4 py-2 text-sm font-medium transition"
-                :class="
-                  filters.productType === item.value
-                    ? 'bg-[--gold-one]  text-white shadow-sm shadow-amber-200'
-                    : 'border-gray-200 bg-gray-50 text-gray-700 hover:border-amber-300 hover:bg-amber-50'
-                "
+                class="filter-dialog__option"
+                :class="{
+                  'filter-dialog__option--active':
+                    filters.productType === item.value,
+                }"
                 @click="toggle('productType', item.value)"
               >
                 {{ item.label }}
@@ -187,21 +174,18 @@ function clearFilters() {
             </div>
           </div>
 
-          <div>
-            <label class="mb-3 block text-sm font-semibold text-gray-700"
-              >مدل محصول</label
-            >
-            <div class="flex flex-wrap gap-2">
+          <div class="filter-dialog__section">
+            <label class="filter-dialog__section-label">مدل محصول</label>
+            <div class="filter-dialog__options">
               <button
                 v-for="item in productModelOptions"
                 :key="item.value"
                 type="button"
-                class="rounded-full border flex-1 px-4 py-2 text-sm font-medium transition"
-                :class="
-                  filters.productModel === item.value
-                    ? 'bg-[--gold-one] text-white shadow-sm shadow-amber-200'
-                    : 'border-gray-200 bg-gray-50 text-gray-700 hover:border-amber-300 hover:bg-amber-50'
-                "
+                class="filter-dialog__option"
+                :class="{
+                  'filter-dialog__option--active':
+                    filters.productModel === item.value,
+                }"
                 @click="toggle('productModel', item.value)"
               >
                 {{ item.label }}
@@ -209,21 +193,18 @@ function clearFilters() {
             </div>
           </div>
 
-          <div>
-            <label class="mb-3 block text-sm font-semibold text-gray-700"
-              >نوع روغن</label
-            >
-            <div class="flex flex-wrap gap-2">
+          <div class="filter-dialog__section">
+            <label class="filter-dialog__section-label">نوع روغن</label>
+            <div class="filter-dialog__options">
               <button
                 v-for="item in oilTypeOptions"
                 :key="item.value"
                 type="button"
-                class="rounded-full flex-1 border px-4 py-2 text-sm font-medium transition"
-                :class="
-                  filters.oilType === item.value
-                    ? 'bg-[--gold-one] text-white shadow-sm shadow-amber-200'
-                    : 'border-gray-200 bg-gray-50 text-gray-700 hover:border-amber-300 hover:bg-amber-50'
-                "
+                class="filter-dialog__option"
+                :class="{
+                  'filter-dialog__option--active':
+                    filters.oilType === item.value,
+                }"
                 @click="toggle('oilType', item.value)"
               >
                 {{ item.label }}
@@ -232,40 +213,39 @@ function clearFilters() {
           </div>
 
           <!-- قیمت: Range Slider -->
-          <div>
-            <div class="mb-4 flex items-center justify-between">
-              <label class="text-sm font-semibold text-gray-700"
+          <div class="filter-dialog__section">
+            <div class="filter-dialog__price-header">
+              <label
+                class="filter-dialog__section-label filter-dialog__section-label--no-margin"
                 >محدوده قیمت</label
               >
-              <span class="text-xs font-medium text-gray-500"
+              <span class="filter-dialog__price-hint"
                 >قیمت ها به تومان هستند</span
               >
             </div>
 
-            <div class="mb-5 flex items-center justify-between gap-3">
-              <div class="flex-1 rounded-xl bg-gray-50 px-3 py-2 text-center">
-                <span class="block text-[10px] text-gray-400">از</span>
-                <span class="text-sm font-bold text-gray-800">{{
+            <div class="filter-dialog__price-values">
+              <div class="filter-dialog__price-value">
+                <span class="filter-dialog__price-value-label">از</span>
+                <span class="filter-dialog__price-value-amount">{{
                   formatPrice(filters.minPrice)
                 }}</span>
               </div>
-              <span class="text-gray-300">—</span>
-              <div class="flex-1 rounded-xl bg-gray-50 px-3 py-2 text-center">
-                <span class="block text-[10px] text-gray-400">تا</span>
-                <span class="text-sm font-bold text-gray-800">{{
+              <span class="filter-dialog__price-separator">—</span>
+              <div class="filter-dialog__price-value">
+                <span class="filter-dialog__price-value-label">تا</span>
+                <span class="filter-dialog__price-value-amount">{{
                   formatPrice(filters.maxPrice)
                 }}</span>
               </div>
             </div>
 
-            <div class="relative h-6">
+            <div class="filter-dialog__slider">
               <!-- ترک پس‌زمینه -->
-              <div
-                class="absolute top-1/2 h-1.5 w-full -translate-y-1/2 rounded-full bg-gray-200"
-              />
+              <div class="filter-dialog__slider-track" />
               <!-- ترک پرشده بین دو دستگیره -->
               <div
-                class="absolute top-1/2 h-1.5 -translate-y-1/2 rounded-full bg-[--gold-one]"
+                class="filter-dialog__slider-range"
                 :style="{
                   right: minPercent + '%',
                   left: 100 - maxPercent + '%',
@@ -278,7 +258,7 @@ function clearFilters() {
                 :min="PRICE_MIN"
                 :max="PRICE_MAX"
                 :step="PRICE_STEP"
-                class="range-thumb pointer-events-none absolute top-1/2 h-1.5 w-full -translate-y-1/2 appearance-none bg-transparent"
+                class="filter-dialog__slider-input"
                 @input="onMinInput"
               />
               <input
@@ -287,38 +267,20 @@ function clearFilters() {
                 :min="PRICE_MIN"
                 :max="PRICE_MAX"
                 :step="PRICE_STEP"
-                class="range-thumb pointer-events-none absolute top-1/2 h-1.5 w-full -translate-y-1/2 appearance-none bg-transparent"
+                class="filter-dialog__slider-input"
                 @input="onMaxInput"
               />
             </div>
           </div>
         </div>
-        <div class="w-full flex justify-center">
-          <img
-            v-animate="{
-              type: 'scaleIn',
-              delay: 300,
-              duration: 1000,
-              once: true,
-              threshold: 0,
-            }"
-            src="/images/helma-logo.webp"
-            alt="سوهان و گز حلما"
-            fetchpriority="high"
-            width="350"
-          />
-        </div>
         <!-- Footer -->
-        <div class="flex gap-3 border-t border-gray-100 px-6 py-5">
-          <button
-            class="rounded-xl border border-gray-200 px-5 py-3 text-sm font-medium text-gray-600 transition hover:bg-gray-50"
-            @click="clearFilters"
-          >
+        <div class="filter-dialog__footer">
+          <button class="filter-dialog__clear-btn" @click="clearFilters">
             حذف فیلتر
           </button>
 
           <button
-            class="flex-1 rounded-xl disabled:opacity-25 disabled:cursor-not-allowed bg-gray-900 py-3 text-sm font-bold text-white transition hover:bg-black active:scale-[0.98]"
+            class="filter-dialog__apply-btn"
             @click="applyFilters"
             :disabled="!!!activeFiltersCount"
           >
@@ -330,8 +292,17 @@ function clearFilters() {
   </Teleport>
 </template>
 
-<style>
-.product-filter-dialog::before {
+<style scoped>
+.filter-dialog__overlay {
+  @apply fixed inset-0 z-50 bg-black/50 backdrop-blur-sm;
+}
+
+.filter-dialog {
+  @apply fixed inset-y-0 right-0 z-50 flex h-full w-full max-w-md flex-col shadow-2xl;
+  @apply bg-white dark:bg-gray-900;
+}
+
+.filter-dialog::before {
   content: "";
   position: fixed;
   inset: 0;
@@ -346,6 +317,144 @@ function clearFilters() {
     transparent 18px
   );
 }
+
+:global(.dark) .filter-dialog::before {
+  background: repeating-linear-gradient(
+    45deg,
+    rgba(255, 255, 255, 0.03) 0px,
+    rgba(255, 255, 255, 0.03) 1px,
+    transparent 1px,
+    transparent 18px
+  );
+}
+
+/* Header */
+.filter-dialog__header {
+  @apply flex items-center justify-between border-b px-6 py-5;
+  @apply border-gray-100 dark:border-gray-800;
+}
+
+.filter-dialog__title-wrap {
+  @apply flex items-center gap-2;
+}
+
+.filter-dialog__title {
+  @apply text-lg font-bold;
+  @apply text-gray-900 dark:text-gray-100;
+}
+
+.filter-dialog__badge {
+  @apply flex h-8 min-w-8 items-center justify-center rounded-full bg-[--gold-one] px-1.5 font-bold text-white;
+}
+
+.filter-dialog__close {
+  @apply flex h-9 w-9 items-center justify-center rounded-full transition;
+  @apply text-gray-500 hover:bg-gray-100 hover:text-gray-900;
+  @apply dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-gray-100;
+}
+
+.filter-dialog__close-icon {
+  @apply h-5 w-5;
+}
+
+/* Body */
+.filter-dialog__body {
+  @apply flex-1 space-y-7 overflow-y-auto px-6 py-6;
+}
+
+.filter-dialog__section-label {
+  @apply mb-3 block text-sm font-semibold;
+  @apply text-gray-700 dark:text-gray-300;
+}
+
+.filter-dialog__section-label--no-margin {
+  @apply mb-0;
+}
+
+.filter-dialog__options {
+  @apply flex flex-wrap gap-2;
+}
+
+.filter-dialog__option {
+  @apply flex-1 rounded-full border px-4 py-2 text-sm font-medium transition;
+  @apply border-gray-200 bg-gray-50 text-gray-700 hover:bg-amber-50;
+  @apply dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700;
+}
+
+.filter-dialog__option--active {
+  @apply !bg-[--gold-one] text-white dark:text-gray-700 shadow-sm shadow-amber-200 dark:shadow-amber-900/40;
+}
+
+/* Price */
+.filter-dialog__price-header {
+  @apply mb-4 flex items-center justify-between;
+}
+
+.filter-dialog__price-hint {
+  @apply text-xs font-medium;
+  @apply text-gray-500 dark:text-gray-400;
+}
+
+.filter-dialog__price-values {
+  @apply mb-5 flex items-center justify-between gap-3;
+}
+
+.filter-dialog__price-value {
+  @apply flex-1 rounded-xl px-3 py-2 text-center;
+  @apply bg-gray-50 dark:bg-gray-800;
+}
+
+.filter-dialog__price-value-label {
+  @apply block text-[10px];
+  @apply text-gray-400 dark:text-gray-500;
+}
+
+.filter-dialog__price-value-amount {
+  @apply text-sm font-bold;
+  @apply text-gray-800 dark:text-gray-200;
+}
+
+.filter-dialog__price-separator {
+  @apply text-gray-300 dark:text-gray-600;
+}
+
+/* Slider */
+.filter-dialog__slider {
+  @apply relative h-6;
+}
+
+.filter-dialog__slider-track {
+  @apply absolute top-1/2 h-1.5 w-full -translate-y-1/2 rounded-full;
+  @apply bg-gray-200 dark:bg-gray-700;
+}
+
+.filter-dialog__slider-range {
+  @apply absolute top-1/2 h-1.5 -translate-y-1/2 rounded-full bg-[--gold-one];
+}
+
+.filter-dialog__slider-input {
+  @apply pointer-events-none absolute top-1/2 h-1.5 w-full -translate-y-1/2 appearance-none bg-transparent;
+}
+
+/* Footer */
+.filter-dialog__footer {
+  @apply flex gap-3 border-t px-6 py-5;
+  @apply border-gray-100 dark:border-gray-800;
+}
+
+.filter-dialog__clear-btn {
+  @apply rounded-xl border px-5 py-3 text-sm font-medium transition;
+  @apply border-gray-200 text-gray-600 hover:bg-gray-50;
+  @apply dark:border-gray-700 dark:text-gray-300 dark:hover:bg-gray-800;
+}
+
+.filter-dialog__apply-btn {
+  @apply flex-1 rounded-xl py-3 text-sm font-bold text-white transition active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-25;
+  @apply bg-gray-900 hover:bg-black;
+  @apply dark:bg-gray-100 dark:text-gray-900 dark:hover:bg-white;
+}
+
+/* Transitions */
 .backdrop-fade-enter-active,
 .backdrop-fade-leave-active {
   transition: opacity 0.25s ease;
@@ -365,7 +474,7 @@ function clearFilters() {
 }
 
 /* استایل دستگیره‌های اسلایدر */
-.range-thumb::-webkit-slider-thumb {
+.filter-dialog__slider-input::-webkit-slider-thumb {
   pointer-events: auto;
   appearance: none;
   width: 30px;
@@ -377,7 +486,7 @@ function clearFilters() {
   cursor: pointer;
 }
 
-.range-thumb::-moz-range-thumb {
+.filter-dialog__slider-input::-moz-range-thumb {
   pointer-events: auto;
   width: 18px;
   height: 18px;

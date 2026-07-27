@@ -1,5 +1,11 @@
 <script setup lang="ts">
 const { time, date } = useDateTime();
+const showCartDialog = ref(false);
+const cartStore = useCartStore();
+
+const openCartDialog = (): void => {
+  showCartDialog.value = true;
+};
 </script>
 
 <template>
@@ -61,6 +67,23 @@ const { time, date } = useDateTime();
           <Icon name="tabler:library-filled" class="w-6 h-6" />
         </button>
       </NuxtLink>
+      <button @click="openCartDialog" class="relative md:!hidden">
+        <p>سبد خرید</p>
+        <Icon name="tabler:shopping-cart" class="w-6 h-6" />
+        <span
+          v-animate="{
+            type: 'blurIn',
+            delay: 300,
+            duration: 1000,
+            once: true,
+            threshold: 0,
+          }"
+          v-if="cartStore.totalItems > 0"
+          class="absolute -top-0 -right-3.5 border border-dashed flex h-7 w-7 items-center justify-center rounded-full bg-red-700 font-bold text-white"
+        >
+          {{ cartStore.totalItems }}
+        </span>
+      </button>
       <button>
         <p class="min-w-[55px] tabular-nums">{{ time }}</p>
         |
@@ -72,6 +95,8 @@ const { time, date } = useDateTime();
       </button>
     </section>
   </div>
+
+  <CartDialog v-model="showCartDialog" />
 </template>
 <style scoped>
 .header-one {

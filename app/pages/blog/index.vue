@@ -180,7 +180,7 @@ useBlogListSeo();
 }
 
 .blog-page__filters {
-  @apply flex flex-wrap gap-2 overflow-x-auto md:justify-center  pb-1;
+  @apply flex flex-wrap gap-2  justify-center pb-1;
 }
 
 .blog-page__filter {

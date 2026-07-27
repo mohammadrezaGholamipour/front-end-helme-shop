@@ -74,16 +74,16 @@ onMounted(async () => {
       text-four="سوغات دست نخورده ایران"
       seo="فروشگاه سوهان و گز حلما وفایی طعم اصیل سوهان و گز سوغات دست‌ نخورده‌ی ایران"
     />
-    <div
+    <section
       v-if="isLoading"
       v-animate="{ type: 'blurIn', delay: 700, duration: 1000, once: true }"
       class="flex flex-col items-center gap-5 font-bold text-2xl p-10 w-full"
     >
       <div class="loader"></div>
       <p>در حال دریافت محصولات ...</p>
-    </div>
+    </section>
 
-    <div
+    <section
       class="flex flex-col justify-center items-center gap-3"
       v-animate="{ type: 'blurIn', delay: 700, duration: 1000, once: true }"
       v-else-if="error"
@@ -104,20 +104,19 @@ onMounted(async () => {
       >
         خطا در دریافت اطلاعات
       </p>
-    </div>
-    <div v-else-if="data?.length === 0">
+    </section>
+    <section v-else-if="data?.length === 0">
       <p>هیچ دسته بندی ای وجود ندارد</p>
-    </div>
-    <div class="parent-cards" v-else>
+    </section>
+    <section class="parent-cards" v-else>
       <CardCategory
         v-animate="{ type: 'slideUp', delay: 300, threshold: 0.1 }"
         :category="item"
         v-for="item in data"
         :key="item.id"
       />
-    </div>
+    </section>
 
-    <!-- بخش آخرین مطالب وبلاگ -->
     <section
       v-if="!blogsError"
       class="w-full flex flex-col gap-8 py-14 pt-5 px-4 md:px-10"
@@ -134,7 +133,9 @@ onMounted(async () => {
         >
           آخرین مطالب وبلاگ
         </h2>
-        <p class="text-neutral-500 dark:text-neutral-400 max-w-xl text-wrap text-center">
+        <p
+          class="text-neutral-500 dark:text-neutral-400 max-w-xl text-wrap text-center"
+        >
           نکات، دستور پخت و داستان سوغات اصیل ایرانی را در وبلاگ ما بخوانید
         </p>
       </div>
@@ -151,7 +152,7 @@ onMounted(async () => {
             class="flex flex-col items-center gap-5 font-bold text-2xl p-10 w-full"
           >
             <div class="loader"></div>
-            <p>در حال دریافت اطلاعات ...</p>
+            <p>در حال دریافت وبلاگ ...</p>
           </div>
         </template>
 

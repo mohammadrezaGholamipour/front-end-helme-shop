@@ -46,7 +46,7 @@ html {
 }
 
 body {
-    @apply bg-white w-full dark:bg-black h-screen overflow-x-hidden;
+    @apply bg-white w-full dark:bg-black min-h-[h-screen] overflow-x-hidden;
     position: relative;
 }
 

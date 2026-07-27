@@ -28,3 +28,24 @@ export type CartItem = {
   lineTotal: number;
 };
 
+export type CartStoreItem = {
+  id: number;
+  name: string;
+  slug: string;
+  image: string | null;
+  price: number;
+  quantity: number;
+  variantId?: number;
+};
+
+
+export type AddCartPayload = {
+    id: number;
+    name: string;
+    slug: string;
+    image: string | null;
+    price: number;
+    quantity?: number;
+    variantId?: number;
+};
+

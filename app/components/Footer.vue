@@ -79,10 +79,10 @@ const globalStore = useGlobalStore();
         <Icon name="tabler:info-circle" class="w-6 h-6 text-[--gold-two]" />
         <p>درباره ما</p>
       </nuxt-link>
-      <div>
+      <nuxt-link to="/blog">
         <Icon name="tabler:article" class="w-6 h-6 text-[--gold-two]" />
         <p>وبلاگ</p>
-      </div>
+      </nuxt-link>
     </div>
 
     <div class="parent-footer__contact-us">

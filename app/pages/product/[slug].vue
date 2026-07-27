@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import { TransitionPresets, useTransition } from "@vueuse/core";
-import type { ProductOut, CartItem } from "~/types";
+import type { ProductOut } from "~/types";
+import { useCartStore } from "~/stores/cart";
 
 type ProductVariant = ProductOut["variants"][number];
-
+const showCartDialog = ref(false);
 const route = useRoute();
 const slug = String(route.params.slug);
 
@@ -17,8 +18,8 @@ const product = computed(() => productQuery.data.value);
 useProductSeo(product);
 
 const selectedVariantId = ref<number | null>(null);
+const cartStore = useCartStore();
 const count = ref<number>(1);
-const cartItems = ref<CartItem[]>([]);
 
 watch(
   () => product.value?.variants,
@@ -34,6 +35,7 @@ watch(
   },
   { immediate: true },
 );
+
 
 const selectedVariant = computed<ProductVariant | null>(() => {
   const variants = product.value?.variants;
@@ -87,49 +89,22 @@ const decreaseCount = (): void => {
 const handleAddToCart = (): void => {
   if (!selectedVariant.value || !product.value) return;
 
-  const currentVariant = selectedVariant.value;
-  const currentProduct = product.value;
+  const variant = selectedVariant.value;
 
-  const existingIndex = cartItems.value.findIndex(
-    (item) => item.variant.id === currentVariant.id,
-  );
+  cartStore.addToCart({
+    id: product.value.id,
+    name: product.value.name,
+    slug: product.value.slug,
+    image: product.value.image ?? null,
+    price: variant.price,
+    quantity: count.value,
+    variantId: variant.id,
+  });
 
-  if (existingIndex > -1) {
-    const existingItem = cartItems.value[existingIndex];
-    if (!existingItem) return;
-    const newCount = Math.min(
-      existingItem.count + count.value,
-      currentVariant.stock,
-    );
-
-    cartItems.value[existingIndex] = {
-      ...existingItem,
-      count: newCount,
-      lineTotal: currentVariant.price * newCount,
-    };
-  } else {
-    cartItems.value.push({
-      product: {
-        id: currentProduct.id,
-        name: currentProduct.name,
-        slug: currentProduct.slug,
-        image: currentProduct.image ?? null,
-        description: currentProduct.description ?? null,
-      },
-      variant: {
-        id: currentVariant.id,
-        volume: currentVariant.volume,
-        price: currentVariant.price,
-        stock: currentVariant.stock,
-      },
-      count: count.value,
-      lineTotal: currentVariant.price * count.value,
-    });
-  }
-
-  const firstVariantId = currentProduct.variants?.[0]?.id ?? null;
-  selectedVariantId.value = firstVariantId;
+  selectedVariantId.value = product.value.variants?.[0]?.id ?? null;
   count.value = 1;
+
+  showCartDialog.value = true;
 };
 </script>
 
@@ -138,159 +113,165 @@ const handleAddToCart = (): void => {
     v-animate="{ type: 'blurIn', delay: 300, duration: 1000, once: true }"
     class="product-page"
   >
-    <section class="product-page__image">
-      <img
-        :src="product?.image ? `https://sohangaz.com${product.image}` : ''"
-        :alt="product?.name || 'product'"
-        fetchpriority="high"
-        width="500"
-      />
-    </section>
-
-    <div class="product-page__content">
-      <section class="product-page__text">
-        <h1>{{ product?.name }}</h1>
-        <p>{{ product?.description }}</p>
+      <section class="product-page__image">
+        <img
+          :src="product?.image ? `https://sohangaz.com${product.image}` : ''"
+          :alt="product?.name || 'product'"
+          fetchpriority="high"
+          width="500"
+        />
       </section>
 
-      <section class="product-page__info">
-        <div
-          v-for="text in [
-            'تهیه شده از بهترین مواد اولیه',
-            'بدون مواد نگهدارنده',
-            'طعم سنتی و اصیل',
-            'تازه و باکیفیت',
-          ]"
-          :key="text"
-        >
-          <p>{{ text }}</p>
-          <Icon
-            name="tabler:rosette-discount-check-filled"
-            class="w-8 h-8 text-[--gold-one] cursor-pointer"
-          />
-        </div>
-      </section>
-      <section class="product-page__volume-and-count">
-        <section
-          v-if="Number(product?.variants?.length) > 1"
-          class="product-page__volume"
-        >
-          <p>وزن دلخواه خود را انتخاب کنید :</p>
+      <div class="product-page__content">
+        <section class="product-page__text">
+          <h1>{{ product?.name }}</h1>
+          <p>{{ product?.description }}</p>
+        </section>
 
-          <section>
-            <div
-              v-for="item in product?.variants || []"
-              :key="item.id"
-              @click="selectVariant(item.id)"
-              :class="[
-                {
-                  'product-page__volume--active': isVariantActive(item.id),
-                },
-              ]"
-            >
-              <p>{{ item.volume.toLocaleString("fa-IR") }} گرمی</p>
+        <section class="product-page__info">
+          <div
+            v-for="text in [
+              'تهیه شده از بهترین مواد اولیه',
+              'بدون مواد نگهدارنده',
+              'طعم سنتی و اصیل',
+              'تازه و باکیفیت',
+            ]"
+            :key="text"
+          >
+            <p>{{ text }}</p>
+            <Icon
+              name="tabler:rosette-discount-check-filled"
+              class="w-8 h-8 text-[--gold-one] cursor-pointer"
+            />
+          </div>
+        </section>
+        <section class="product-page__volume-and-count">
+          <section
+            v-if="Number(product?.variants?.length) > 1"
+            class="product-page__volume"
+          >
+            <p>وزن دلخواه خود را انتخاب کنید :</p>
+
+            <section>
+              <div
+                v-for="item in product?.variants || []"
+                :key="item.id"
+                @click="selectVariant(item.id)"
+                :class="[
+                  {
+                    'product-page__volume--active': isVariantActive(item.id),
+                  },
+                ]"
+              >
+                <p>{{ item.volume.toLocaleString("fa-IR") }} گرمی</p>
+
+                <p class="tabular-nums">
+                  {{ item.price.toLocaleString("fa-IR") }} تومان
+                </p>
+
+                <p class="text-xs text-gray-500 tabular-nums">
+                  موجودی: {{ item.stock.toLocaleString("fa-IR") }}
+                </p>
+              </div>
+            </section>
+          </section>
+
+          <section class="product-page__count">
+            <p>
+              چند
+              {{
+                product?.is_packaged || product?.is_packaged === null
+                  ? "بسته"
+                  : "کیلو"
+              }}
+              نیاز دارید؟
+            </p>
+
+            <div>
+              <Icon
+                @click="decreaseCount"
+                name="tabler:square-rounded-minus-filled"
+                class="w-10 h-10 text-[--gold-one] cursor-pointer"
+                :class="{ 'opacity-50 pointer-events-none': count <= 1 }"
+              />
 
               <p class="tabular-nums">
-                {{ item.price.toLocaleString("fa-IR") }} تومان
+                {{ count.toLocaleString("fa-IR") }}
+                {{
+                  product?.is_packaged || product?.is_packaged === null
+                    ? "عدد"
+                    : "کیلو گرم"
+                }}
               </p>
 
-              <p class="text-xs text-gray-500 tabular-nums">
-                موجودی: {{ item.stock.toLocaleString("fa-IR") }}
-              </p>
+              <Icon
+                @click="increaseCount"
+                name="tabler:square-rounded-plus-filled"
+                class="w-10 h-10 text-[--gold-one] cursor-pointer"
+                :class="{
+                  'opacity-50 pointer-events-none':
+                    !!selectedVariant && count >= selectedVariant.stock,
+                }"
+              />
             </div>
           </section>
         </section>
 
-        <section class="product-page__count">
-          <p>
-            چند
+        <section class="product-page__price">
+          <p class="tabular-nums">{{ displayAnimatedTotalPrice }} تومان</p>
+
+          <p v-if="selectedVariant && product" class="tabular-nums">
+            {{ count.toLocaleString("fa-IR") }}
             {{
               product?.is_packaged || product?.is_packaged === null
                 ? "بسته"
-                : "کیلو"
+                : "کیلو گرم"
             }}
-            نیاز دارید؟
+            {{ product.name }}
+            {{
+              product?.is_packaged || product?.is_packaged === null
+                ? `${selectedVariant.volume.toLocaleString("fa-IR")} گرمی`
+                : ""
+            }}
           </p>
+        </section>
 
+        <div class="flex w-full flex-col gap-3">
+          <button
+            class="product-page__Shopping-cart"
+            :disabled="!selectedVariant"
+            @click="handleAddToCart"
+          >
+            <p>افزودن به سبد خرید</p>
+            <Icon name="tabler:shopping-cart-up" class="w-10 h-10" />
+          </button>
+        </div>
+        <section class="product-page__delivery">
+          <div>
+            <Icon name="tabler:lock-check" class="w-10 h-10 cursor-pointer" />
+            <p>پرداخت امن</p>
+          </div>
+          <div>
+            <Icon name="tabler:package" class="w-10 h-10 cursor-pointer" />
+            <p>بسته بندی مناسب</p>
+          </div>
           <div>
             <Icon
-              @click="decreaseCount"
-              name="tabler:square-rounded-minus-filled"
-              class="w-10 h-10 text-[--gold-one] cursor-pointer"
-              :class="{ 'opacity-50 pointer-events-none': count <= 1 }"
+              name="tabler:rosette-discount-check"
+              class="w-10 h-10 cursor-pointer"
             />
-
-            <p class="tabular-nums">
-              {{ count.toLocaleString("fa-IR") }}
-              {{
-                product?.is_packaged || product?.is_packaged === null
-                  ? "عدد"
-                  : "کیلو گرم"
-              }}
-            </p>
-
+            <p>تضمین کیفیت محصول</p>
+          </div>
+          <div>
             <Icon
-              @click="increaseCount"
-              name="tabler:square-rounded-plus-filled"
-              class="w-10 h-10 text-[--gold-one] cursor-pointer"
-              :class="{
-                'opacity-50 pointer-events-none':
-                  !!selectedVariant && count >= selectedVariant.stock,
-              }"
+              name="tabler:truck-delivery"
+              class="w-10 h-10 cursor-pointer"
             />
+            <p>ارسال سریع سراسر کشور</p>
           </div>
         </section>
-      </section>
-
-      <section class="product-page__price">
-        <p class="tabular-nums">{{ displayAnimatedTotalPrice }} تومان</p>
-
-        <p v-if="selectedVariant && product" class="tabular-nums">
-          {{ count.toLocaleString("fa-IR") }}
-          {{
-            product?.is_packaged || product?.is_packaged === null
-              ? "بسته"
-              : "کیلو گرم"
-          }}
-          {{ product.name }}
-           {{
-            product?.is_packaged || product?.is_packaged === null
-              ? `${selectedVariant.volume.toLocaleString("fa-IR")} گرمی`
-              : ""
-          }}
-        </p>
-      </section>
-
-      <button
-        class="product-page__Shopping-cart"
-        :disabled="!selectedVariant"
-        @click="handleAddToCart"
-      >
-        <p>افزودن به سبد خرید</p>
-        <Icon name="tabler:shopping-cart-up" class="w-10 h-10" />
-      </button>
-      <section class="product-page__delivery">
-        <div>
-          <Icon name="tabler:lock-check" class="w-10 h-10 cursor-pointer" />
-          <p>پرداخت امن</p>
-        </div>
-        <div>
-          <Icon name="tabler:package" class="w-10 h-10 cursor-pointer" />
-          <p>بسته بندی مناسب</p>
-        </div>
-        <div>
-          <Icon
-            name="tabler:rosette-discount-check"
-            class="w-10 h-10 cursor-pointer"
-          />
-          <p>تضمین کیفیت محصول</p>
-        </div>
-        <div>
-          <Icon name="tabler:truck-delivery" class="w-10 h-10 cursor-pointer" />
-          <p>ارسال سریع سراسر کشور</p>
-        </div>
-      </section>
-    </div>
+      </div>
+    <CartDialog v-model="showCartDialog" />
   </div>
 </template>
 <style scoped>
