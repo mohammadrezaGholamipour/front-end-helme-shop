@@ -49,9 +49,8 @@ export function useBlogSeo(
 
     twitterCard: "summary_large_image",
 
-    robots: data.value?.status === "PUBLISHED"
-      ? "index, follow"
-      : "noindex, nofollow",
+    robots: "index, follow"
+
   });
 
   useSchemaOrg([
