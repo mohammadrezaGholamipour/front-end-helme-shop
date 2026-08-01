@@ -20,7 +20,7 @@ export default defineNuxtConfig({
           content: '#000000'
         },
         { name: 'robots', content: 'index, follow' },
-        { name: 'enamad', content: '53584465' },
+        { name: 'enamad', content: '22547691' },
       ],
       link: [
         { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
