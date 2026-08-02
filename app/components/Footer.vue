@@ -3,7 +3,13 @@ const globalStore = useGlobalStore();
 </script>
 <template>
   <footer
-    v-animate="{ type: 'blurIn', delay: 300, duration: 1000, once: true }"
+    v-animate="{
+      type: 'blurIn',
+      delay: 700,
+      duration: 1000,
+      once: true,
+      threshold: 0,
+    }"
     class="parent-footer"
   >
     <div class="parent-footer__map">
