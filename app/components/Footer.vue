@@ -26,13 +26,13 @@ const globalStore = useGlobalStore();
       <a
         referrerpolicy="origin"
         target="_blank"
-        href="https://trustseal.enamad.ir/?id=761452&Code=2u8elDP41k6UJxkmFPenbFxf4jVU02bC"
+        href="https://trustseal.enamad.ir/?id=767587&Code=xsR0iZPGyeMmhtj4Ww91Q9We3MJQHraV"
         ><img
           referrerpolicy="origin"
-          src="https://trustseal.enamad.ir/logo.aspx?id=761452&Code=2u8elDP41k6UJxkmFPenbFxf4jVU02bC"
+          src="https://trustseal.enamad.ir/logo.aspx?id=767587&Code=xsR0iZPGyeMmhtj4Ww91Q9We3MJQHraV"
           alt=""
           style="cursor: pointer"
-          code="2u8elDP41k6UJxkmFPenbFxf4jVU02bC"
+          code="xsR0iZPGyeMmhtj4Ww91Q9We3MJQHraV"
       /></a>
     </ClientOnly>
     <section>
