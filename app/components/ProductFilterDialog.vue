@@ -298,7 +298,7 @@ function clearFilters() {
 }
 
 .filter-dialog {
-  @apply fixed inset-y-0 right-0 z-50 flex h-full w-full max-w-md flex-col shadow-2xl;
+  @apply fixed inset-y-0 right-0 z-50 flex h-screen w-full max-w-md flex-col shadow-2xl;
   @apply bg-white dark:bg-gray-900;
 }
 
