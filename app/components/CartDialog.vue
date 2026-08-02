@@ -208,7 +208,7 @@ const handleRemove = (item: (typeof cartStore.cartItems)[number]) => {
 
 /* ===== Drawer shell ===== */
 .cart-drawer {
-  @apply fixed inset-y-0 right-0 z-50 flex h-screen w-full max-w-lg flex-col bg-white shadow-2xl dark:bg-gray-900;
+  @apply fixed inset-y-0 right-0 z-50 flex h-[100dvh] w-full max-w-lg flex-col bg-white shadow-2xl dark:bg-gray-900;
 }
 
 /* ===== Header ===== */
