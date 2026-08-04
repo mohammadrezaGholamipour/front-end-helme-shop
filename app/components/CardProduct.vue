@@ -5,7 +5,7 @@ const props = defineProps<{ product: ProductOut }>();
 </script>
 
 <template>
-  <div class="product-card">
+  <nuxt-link :to="`/product/${props.product.slug}`" class="product-card">
     <div class="product-card__bg"></div>
     <img
       :src="`https://sohangaz.com${props.product.image}`"
@@ -15,19 +15,16 @@ const props = defineProps<{ product: ProductOut }>();
     />
     <h2>{{ props.product.name }}</h2>
     <p class="line-clamp-3">{{ props.product.description }}</p>
-    <nuxt-link
-      class="product-card__button"
-      :to="`/product/${props.product.slug}`"
-    >
+    <button class="product-card__button">
       <p>مشاهده محصول</p>
       <Icon name="tabler:basket-filled" class="w-6 h-6" />
-    </nuxt-link>
-  </div>
+    </button>
+  </nuxt-link>
 </template>
 
 <style scoped>
 .product-card {
-  @apply rounded-2xl relative bg-white  dark:bg-black dark:text-white text-xl p-5 pt-8 border-2 shadow-md border-[var(--gold-two)] flex flex-col justify-between items-center gap-5  !flex-1 max-w-[300px];
+  @apply rounded-2xl cursor-pointer relative bg-white  dark:bg-black dark:text-white text-xl p-5 pt-8 border-2 shadow-md border-[var(--gold-two)] flex flex-col justify-between items-center gap-5  !flex-1 max-w-[300px];
 }
 
 .product-card__bg {
@@ -80,9 +77,13 @@ const props = defineProps<{ product: ProductOut }>();
 }
 
 .product-card > img {
-  @apply rounded-xl  shadow-md;
+  @apply rounded-xl  shadow-md transition duration-300;
   aspect-ratio: 1/1;
   object-fit: cover;
+}
+
+.product-card:hover > img {
+  @apply scale-110;
 }
 
 .product-card > h2 {

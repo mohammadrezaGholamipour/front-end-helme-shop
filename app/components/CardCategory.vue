@@ -3,7 +3,7 @@ import type { CategoryOut } from "~/types";
 const props = defineProps<{ category: CategoryOut }>();
 </script>
 <template>
-  <div class="category-card">
+  <NuxtLink :to="`/categories/${props.category.slug}`" class="category-card">
     <div class="category-card__bg"></div>
     <img
       :src="`https://sohangaz.com${props.category.image}`"
@@ -14,17 +14,14 @@ const props = defineProps<{ category: CategoryOut }>();
       fetchpriority="high"
     />
     <h2>{{ props.category.name }}</h2>
-    <NuxtLink
-      :to="`/categories/${props.category.slug}`"
-      class="category-card__buttom"
-    >
+    <button class="category-card__buttom">
       <span>مشاهده محصولات</span>
-    </NuxtLink>
-  </div>
+    </button>
+  </NuxtLink>
 </template>
 <style scoped>
 .category-card {
-  @apply rounded-2xl relative flex-1 bg-white dark:bg-black dark:text-white text-xl p-5 pt-6 border-2 shadow-md shadow-inner border-[var(--gold-one)] flex flex-col justify-center items-center gap-7 max-w-[300px];
+  @apply rounded-2xl cursor-pointer relative flex-1 bg-white dark:bg-black dark:text-white text-xl p-5 pt-6 border-2 shadow-md shadow-inner border-[var(--gold-one)] flex flex-col justify-center items-center gap-7 max-w-[300px];
 }
 
 .category-card__bg {
@@ -77,9 +74,13 @@ const props = defineProps<{ category: CategoryOut }>();
 }
 
 .category-card > img {
-  @apply rounded-xl shadow-2xl;
+  @apply rounded-xl shadow-2xl transition duration-300;
   aspect-ratio: 4/4;
   object-fit: fill;
+}
+
+.category-card:hover > img {
+  @apply scale-110;
 }
 
 .category-card > h2 {
