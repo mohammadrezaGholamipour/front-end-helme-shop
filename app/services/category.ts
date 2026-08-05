@@ -7,11 +7,19 @@ export const CategoryApi = {
     $api(`/category/${slug}`) as Promise<CategoryOut>,
 
   create: ($api: any, payload: FormData) =>
-    $api.post("/category/create", payload),
+    $api("/category/create", {
+      method: "POST",
+      body: payload,
+    }),
 
   update: ($api: any, id: number, payload: FormData) =>
-    $api.put(`/category/${id}`, payload),
+    $api(`/category/update/${id}`, {
+      method: "PUT",
+      body: payload,
+    }),
 
   delete: ($api: any, id: number) =>
-    $api.delete(`/category/${id}`),
+    $api(`/category/delete/${id}`, {
+      method: "DELETE",
+    }),
 };

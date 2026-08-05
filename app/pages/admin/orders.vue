@@ -13,7 +13,7 @@ definePageMeta({ layout: "admin" });
 
 <style scoped>
 .admin-placeholder {
-  @apply rounded-3xl border border-slate-200 bg-white p-6 shadow-sm;
+  @apply rounded-3xl   border border-slate-200 bg-white p-6 shadow-sm;
 }
 
 .admin-placeholder__title {

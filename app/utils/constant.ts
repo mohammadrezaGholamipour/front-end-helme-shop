@@ -6,3 +6,5 @@ export const SITE = {
 
   logo: "https://sohangaz.com/images/helma-logo-og.jpg",
 };
+
+export const TOKEN_COOKIE = "helma_token";

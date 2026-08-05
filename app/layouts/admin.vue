@@ -4,6 +4,7 @@ import { ref, watch } from "vue";
 
 const isSidebarOpen = ref(false);
 const route = useRoute();
+const { logout } = useAdminAuth();
 
 function closeSidebar() {
   isSidebarOpen.value = false;
@@ -29,7 +30,7 @@ watch(
     >
       <div class="admin-layout__brand">
         <NuxtLink to="/admin" class="admin-layout__brand-link">
-         <img src="/images/helma-logo.webp"/>
+          <img src="/images/helma-logo.webp" />
         </NuxtLink>
         <button
           type="button"
@@ -84,6 +85,11 @@ watch(
           @navigate="closeSidebar"
         />
       </nav>
+
+      <button type="button" class="admin-layout__logout" @click="logout">
+        <Icon name="tabler:logout" class="h-5 w-5" />
+        <span>خروج از حساب</span>
+      </button>
     </aside>
 
     <div class="admin-layout__main">
@@ -97,14 +103,26 @@ watch(
           >
             <Icon name="tabler:menu-2" class="h-5 w-5" />
           </button>
-          <div class="admin-layout__header-title">مدیریت سایت</div>
+          <NuxtLink to="/" class="admin-layout__view-site">
+            <Icon name="tabler:external-link" class="h-4 w-4" />
+            <span>نمایش سایت</span>
+          </NuxtLink>
         </div>
         <div class="admin-layout__header-actions">
-          <span class="admin-layout__header-badge">حالت آزمایشی</span>
+          <ColorMood />
+          <AdminFullscreenButton />
+          <button
+            type="button"
+            class="admin-layout__logout-icon"
+            aria-label="خروج از حساب"
+            @click="logout"
+          >
+            <Icon name="tabler:logout" class="h-5 w-5" />
+          </button>
         </div>
       </header>
-      <main class="admin-layout__content">
-        <slot />
+      <main>
+          <slot />
       </main>
     </div>
   </div>
@@ -112,189 +130,122 @@ watch(
 
 <style scoped>
 .admin-layout {
-  display: flex;
-  min-height: 100vh;
-  background-color: #f8fafc;
-  color: #0f172a;
+  @apply flex min-h-screen bg-slate-50 text-slate-900 dark:bg-black dark:text-slate-100;
 }
 
 .admin-layout__overlay {
-  position: fixed;
-  inset: 0;
-  z-index: 40;
-  background-color: rgba(15, 23, 42, 0.45);
-  backdrop-filter: blur(2px);
-}
-
-@media (min-width: 1024px) {
-  .admin-layout__overlay {
-    display: none;
-  }
+  @apply fixed inset-0 z-40 bg-slate-900/45 backdrop-blur-sm lg:hidden;
 }
 
 .admin-layout__sidebar {
-  position: fixed;
-  inset-inline-start: 0;
-  top: 0;
-  z-index: 50;
-  display: flex;
-  height: 100vh;
-  width: 18rem;
-  min-width: 18rem;
-  transform: translateX(100%);
-  flex-direction: column;
-  border-inline-end: 1px solid #e2e8f0;
-  background-color: #ffffff;
-  padding: 1rem;
-  transition: transform 0.25s ease;
+  @apply fixed  top-0 z-50 flex h-screen w-72 min-w-72
+    translate-x-full flex-col overflow-hidden 
+    border-slate-200 bg-white p-4 transition-transform  ease-in-out
+    dark:border-slate-800 dark:bg-slate-950
+    lg:sticky lg:top-0 lg:translate-x-0;
 }
 
 .admin-layout__sidebar--open {
-  transform: translateX(0);
-}
-
-@media (min-width: 1024px) {
-  .admin-layout__sidebar {
-    position: sticky;
-    top: 0;
-    transform: none;
-  }
+  @apply translate-x-0;
 }
 
 .admin-layout__brand {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  margin-bottom: 2rem;
+  @apply mb-8 flex items-center gap-2;
 }
 
 .admin-layout__brand-link {
-  flex: 1;
-  display: block;
-  border-radius: 1rem;
-  color: #ffffff;
-  padding: 0.75rem 1rem;
-  text-align: center;
-  font-size: 0.875rem;
-  font-weight: 700;
+  @apply flex-1 rounded-2xl px-4 py-3 text-center text-sm font-bold text-white;
 }
 
 .admin-layout__sidebar-close {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 2.5rem;
-  width: 2.5rem;
-  border-radius: 0.75rem;
-  color: #64748b;
-  background-color: #f1f5f9;
-}
-
-@media (min-width: 1024px) {
-  .admin-layout__sidebar-close {
-    display: none;
-  }
+  @apply flex h-10 w-10 items-center justify-center rounded-xl
+    bg-slate-100 text-slate-500
+    dark:bg-slate-900 dark:text-slate-400
+    lg:hidden;
 }
 
 .admin-layout__nav {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  overflow-y: auto;
+  @apply flex flex-1 flex-col gap-2 overflow-y-auto;
+}
+
+.admin-layout__logout {
+  @apply mt-4 flex items-center justify-center gap-2 rounded-2xl border
+    border-red-200 bg-red-50 px-4 py-3 text-sm font-semibold text-red-600
+    transition
+    hover:bg-red-100
+    dark:border-red-900/40 dark:bg-red-950/30 dark:text-red-400
+    dark:hover:bg-red-950/50;
 }
 
 .admin-layout__main {
-  flex: 1;
-  display: flex;
-  min-width: 0;
-  flex-direction: column;
+  @apply flex min-w-0 flex-1 flex-col;
 }
 
 .admin-layout__header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  border-bottom: 1px solid #e2e8f0;
-  background-color: #ffffff;
-  padding: 1rem 1.25rem;
-  position: sticky;
-  top: 0;
-  z-index: 30;
+  @apply sticky top-0 z-30 flex items-center justify-between gap-4
+    border-b border-slate-200 bg-white px-5 py-4
+    dark:border-slate-800 dark:bg-slate-950
+    sm:px-6 sm:py-6;
 }
 
-@media (min-width: 640px) {
-  .admin-layout__header {
-    padding: 1.5rem;
-  }
+.admin-layout__header-right{
+  @apply flex gap-2
 }
 
-.admin-layout__header-right {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  min-width: 0;
+.admin-layout__view-site {
+  @apply flex items-center gap-1.5 truncate whitespace-nowrap rounded-xl
+    px-3 py-2 text-sm font-semibold text-slate-700 transition
+    hover:bg-slate-100
+    dark:text-slate-300 dark:hover:bg-slate-900;
 }
 
 .admin-layout__menu-button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 2.5rem;
-  width: 2.5rem;
-  flex-shrink: 0;
-  border-radius: 0.75rem;
-  background-color: #f1f5f9;
-  color: #334155;
-}
-
-@media (min-width: 1024px) {
-  .admin-layout__menu-button {
-    display: none;
-  }
+  @apply flex h-10 w-10 shrink-0 items-center justify-center rounded-xl
+    bg-slate-100 text-slate-700
+    dark:bg-slate-900 dark:text-slate-300
+    lg:hidden;
 }
 
 .admin-layout__header-title {
-  font-size: 1rem;
-  font-weight: 700;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-@media (min-width: 640px) {
-  .admin-layout__header-title {
-    font-size: 1.125rem;
-  }
+  @apply truncate whitespace-nowrap text-base font-bold text-slate-900
+    dark:text-slate-100
+    sm:text-lg;
 }
 
 .admin-layout__header-actions {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  flex-shrink: 0;
+  @apply flex shrink-0 items-center gap-2;
 }
 
 .admin-layout__header-badge {
-  display: inline-flex;
-  border-radius: 9999px;
-  background-color: #0f172a;
-  padding: 0.25rem 0.75rem;
-  font-size: 0.75rem;
-  font-weight: 600;
-  color: #ffffff;
-  white-space: nowrap;
+  @apply inline-flex whitespace-nowrap rounded-full bg-slate-900 px-3 py-1
+    text-xs font-semibold text-white
+    dark:bg-slate-100 dark:text-slate-900;
+}
+
+.admin-layout__logout-icon {
+  @apply flex h-10 w-10 shrink-0 items-center justify-center rounded-xl
+    bg-slate-100 text-slate-700 transition
+    hover:bg-red-50 hover:text-red-600
+    dark:bg-slate-900 dark:text-slate-300
+    dark:hover:bg-red-950/40 dark:hover:text-red-400;
 }
 
 .admin-layout__content {
-  flex: 1;
-  overflow: auto;
-  padding: 1rem;
+  @apply flex-1 overflow-auto p-4 sm:p-6;
 }
 
-@media (min-width: 640px) {
-  .admin-layout__content {
-    padding: 1.5rem;
-  }
+.page-enter-active,
+.page-leave-active {
+  transition: all 0.35s ease;
+}
+
+.page-enter-from {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.page-leave-to {
+  opacity: 0;
+  transform: translateY(-20px);
 }
 </style>

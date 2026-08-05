@@ -133,7 +133,11 @@ onBeforeUnmount(() => revokeObjectUrl());
       />
 
       <template v-if="previewUrl">
-        <img :src="previewUrl" alt="پیش‌نمایش تصویر" class="admin-image-upload__preview" />
+        <img
+          :src="previewUrl"
+          alt="پیش‌نمایش تصویر"
+          class="admin-image-upload__preview"
+        />
         <div class="admin-image-upload__overlay">
           <span>تغییر تصویر</span>
         </div>
@@ -149,7 +153,9 @@ onBeforeUnmount(() => revokeObjectUrl());
 
       <div v-else class="admin-image-upload__placeholder">
         <Icon name="tabler:cloud-upload" class="admin-image-upload__icon" />
-        <span class="admin-image-upload__cta">برای انتخاب تصویر کلیک کنید یا فایل را رها کنید</span>
+        <span class="admin-image-upload__cta"
+          >برای انتخاب تصویر کلیک کنید یا فایل را رها کنید</span
+        >
       </div>
     </div>
 
@@ -168,27 +174,29 @@ onBeforeUnmount(() => revokeObjectUrl());
 }
 
 .admin-image-upload__label {
-  @apply text-sm font-medium text-slate-700;
+  @apply text-sm font-medium text-slate-700 dark:text-slate-300;
 }
 
 .admin-image-upload__dropzone {
-  @apply relative flex aspect-video w-full cursor-pointer items-center justify-center overflow-hidden rounded-2xl border-2 border-dashed border-slate-300 bg-slate-50 transition;
+  @apply relative flex aspect-video w-full cursor-pointer items-center justify-center
+    overflow-hidden rounded-2xl border-2 border-dashed border-slate-300 bg-slate-50
+    transition
+    dark:border-slate-700 dark:bg-slate-900;
 }
 
-.admin-image-upload__dropzone:hover {
-  @apply border-[--gold-one] bg-amber-50/40;
-}
 
 .admin-image-upload__dropzone--dragging {
-  @apply border-[--gold-one] bg-amber-50 ring-2 ring-[--gold-two];
+  @apply border-[--gold-one] bg-amber-50 ring-2 ring-[--gold-two]
+    dark:bg-[--gold-one];
 }
 
 .admin-image-upload__dropzone--filled {
-  @apply border-solid border-slate-200 bg-white;
+  @apply border-solid border-slate-200 bg-white
+    dark:border-slate-800 dark:bg-slate-950;
 }
 
 .admin-image-upload__dropzone--error {
-  @apply border-red-300 bg-red-50/40;
+  @apply border-red-300 bg-red-50/40 dark:border-red-800 dark:bg-red-950/20;
 }
 
 .admin-image-upload__input {
@@ -196,11 +204,14 @@ onBeforeUnmount(() => revokeObjectUrl());
 }
 
 .admin-image-upload__preview {
-  @apply h-full w-full object-cover;
+  @apply object-fill rounded-md shadow-md transition duration-200 hover:scale-125;
+  aspect-ratio: 4/4;
+  width: 220px;
 }
 
 .admin-image-upload__overlay {
-  @apply pointer-events-none absolute inset-0 flex items-center justify-center bg-black/0 text-sm font-medium text-white opacity-0 transition;
+  @apply pointer-events-none absolute inset-0 flex items-center justify-center
+    bg-black/0 text-sm font-medium text-white opacity-0 transition;
 }
 
 .admin-image-upload__dropzone:hover .admin-image-upload__overlay {
@@ -208,15 +219,19 @@ onBeforeUnmount(() => revokeObjectUrl());
 }
 
 .admin-image-upload__remove {
-  @apply absolute left-2 top-2 flex h-7 w-7 items-center justify-center rounded-full bg-white/90 text-base font-bold text-red-600 shadow transition hover:bg-white;
+  @apply absolute left-2 top-2 flex h-7 w-7 items-center justify-center rounded-full
+    bg-white/90 text-base font-bold text-red-600 shadow transition
+    hover:bg-white
+    dark:bg-slate-900/90 dark:text-red-400 dark:hover:bg-slate-900;
 }
 
 .admin-image-upload__placeholder {
-  @apply flex flex-col items-center gap-2 px-4 text-center text-slate-500;
+  @apply flex flex-col items-center gap-2 px-4 text-center text-slate-500
+    dark:text-slate-400;
 }
 
 .admin-image-upload__icon {
-  @apply h-8 w-8 text-slate-400;
+  @apply h-8 w-8 text-slate-400 dark:text-slate-600;
 }
 
 .admin-image-upload__cta {
@@ -224,10 +239,10 @@ onBeforeUnmount(() => revokeObjectUrl());
 }
 
 .admin-image-upload__hint {
-  @apply text-xs text-slate-400;
+  @apply text-xs text-slate-400 dark:text-slate-500;
 }
 
 .admin-image-upload__error {
-  @apply text-xs font-medium text-red-600;
+  @apply text-xs font-medium text-red-600 dark:text-red-400;
 }
 </style>

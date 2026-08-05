@@ -42,16 +42,28 @@ export const useCreateCategory = () => {
     onSuccess: () => queryClient.invalidateQueries({ queryKey }),
   });
 };
- 
- 
- 
-export const useUpdateCategory = (id: number) => {
+
+
+
+export const useUpdateCategory = () => {
   const { $api } = useNuxtApp();
   const queryClient = useQueryClient();
-  const queryKey = ["category"] as const;
-  return useMutation<CategoryOut, unknown, FormData>({
-    mutationFn: (payload: FormData) => CategoryApi.update($api, id, payload),
-    onSuccess: () => queryClient.invalidateQueries({ queryKey }),
+
+  return useMutation<
+    CategoryOut,
+    unknown,
+    {
+      id: number;
+      payload: FormData;
+    }
+  >({
+    mutationFn: ({ id, payload }) =>
+      CategoryApi.update($api, id, payload),
+
+    onSuccess: () =>
+      queryClient.invalidateQueries({
+        queryKey: ["category"],
+      }),
   });
 };
 
@@ -68,10 +80,13 @@ export const useDeleteCategory = () => {
 
 export function buildCategoryFormData(data: {
   name: string;
+  slug: string;
   image?: File | null;
 }): FormData {
   const formData = new FormData();
   formData.append("name", data.name);
+  formData.append("slug", data.slug);
+
   if (data.image) {
     formData.append("image", data.image);
   }

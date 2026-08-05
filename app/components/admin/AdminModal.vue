@@ -30,10 +30,12 @@ const emit = defineEmits<{
 }>();
 
 function close() {
+  if (props.loading) return;
   emit("update:modelValue", false);
 }
 
 function submit() {
+  if (props.loading) return;
   emit("submit");
 }
 </script>
@@ -49,6 +51,7 @@ function submit() {
             type="button"
             class="admin-modal__close"
             aria-label="بستن"
+            :disabled="props.loading"
             @click="close"
           >
             ×
@@ -58,7 +61,12 @@ function submit() {
           <slot />
         </div>
         <footer class="admin-modal__footer">
-          <button type="button" class="admin-modal__cancel" @click="close">
+          <button
+            type="button"
+            class="admin-modal__cancel"
+            :disabled="props.loading"
+            @click="close"
+          >
             {{ props.cancelLabel }}
           </button>
           <button
@@ -71,6 +79,7 @@ function submit() {
               v-if="props.loading"
               name="tabler:loader-2"
               class="admin-modal__submit-icon"
+              aria-hidden="true"
             />
             {{ props.loading ? "در حال ذخیره..." : props.actionLabel }}
           </button>
@@ -90,7 +99,10 @@ function submit() {
 }
 
 .admin-modal__dialog {
-  @apply relative z-10 flex max-h-[92vh] w-full max-w-2xl flex-col rounded-t-3xl bg-white p-5 shadow-2xl sm:max-h-[88vh] sm:rounded-3xl sm:p-6;
+  @apply relative z-10 flex max-h-[92vh] w-full max-w-2xl flex-col rounded-t-3xl
+    bg-white p-5 shadow-2xl
+    dark:bg-slate-950 dark:shadow-black/50
+    sm:max-h-[88vh] sm:rounded-3xl sm:p-6;
 }
 
 .admin-modal__header {
@@ -98,27 +110,43 @@ function submit() {
 }
 
 .admin-modal__title {
-  @apply text-base font-bold sm:text-lg;
+  @apply text-base font-bold text-slate-900 dark:text-white sm:text-lg;
 }
 
 .admin-modal__close {
-  @apply flex h-8 w-8 items-center justify-center rounded-full bg-slate-100 text-lg font-bold text-slate-600 transition hover:bg-slate-200;
+  @apply flex h-8 w-8 items-center justify-center rounded-full bg-slate-100
+    text-lg font-bold text-slate-600 transition
+    hover:bg-slate-200
+    disabled:cursor-not-allowed disabled:opacity-50
+    dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700;
 }
 
 .admin-modal__body {
-  @apply mb-5 overflow-y-auto;
+  /* رفع باگ: بدون flex-1 و min-h-0، اسکرول داخلی کار نمی‌کند
+     و محتوای بلند از max-height دیالوگ بیرون می‌زند */
+  @apply mb-5 min-h-0 flex-1 overflow-y-auto;
 }
 
 .admin-modal__footer {
-  @apply flex shrink-0 flex-wrap items-center justify-end gap-3 border-t border-slate-100 pt-4;
+  @apply flex shrink-0 flex-wrap items-center justify-center gap-3 border-t
+    border-slate-100 pt-4
+    dark:border-slate-800;
 }
 
 .admin-modal__cancel {
-  @apply rounded-2xl border border-slate-300 bg-white px-4 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-50;
+  @apply rounded-2xl border border-slate-300 bg-white px-5 py-3 text-sm
+    font-semibold text-slate-700 transition
+    hover:bg-slate-50
+    disabled:cursor-not-allowed disabled:opacity-50
+    dark:border-slate-700 dark:bg-slate-900 dark:text-slate-300
+    dark:hover:bg-slate-800;
 }
 
 .admin-modal__submit {
-  @apply flex items-center gap-2 rounded-2xl bg-[--gold-one] px-4 py-2 text-sm font-semibold text-white transition hover:bg-[--gold-two] disabled:cursor-not-allowed disabled:opacity-60;
+  @apply flex items-center gap-2 rounded-2xl flex-1 text-center bg-[--gold-one] justify-center px-5 py-3 text-sm
+    font-semibold text-white transition
+    hover:bg-[--gold-two]
+    disabled:cursor-not-allowed disabled:opacity-60;
 }
 
 .admin-modal__submit-icon {

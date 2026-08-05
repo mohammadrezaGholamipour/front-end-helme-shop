@@ -41,6 +41,7 @@ const openCartDialog = (): void => {
         <Icon name="tabler:shopping-cart" class="w-6 h-6" />
       </button>
       <ColorMood />
+      <AdminFullscreenButton />
     </section>
     <CartDialog v-model="showCartDialog" />
     <ProductFilterDialog v-model="showFilter" />

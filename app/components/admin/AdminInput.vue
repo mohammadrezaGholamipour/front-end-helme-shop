@@ -56,7 +56,7 @@ function updateValue(event: Event) {
 
 <style scoped>
 .admin-input {
-  @apply flex flex-col gap-2 text-slate-700;
+  @apply flex flex-col gap-2 text-slate-700 dark:text-slate-300;
 }
 
 .admin-input__label {
@@ -64,18 +64,28 @@ function updateValue(event: Event) {
 }
 
 .admin-input__field {
-  @apply w-full rounded-2xl border border-slate-300 bg-white px-4 py-3 text-sm text-slate-900 outline-none transition focus:border-[--gold-one] focus:ring-2 focus:ring-[--gold-two];
+  @apply w-full rounded-2xl border border-slate-300 bg-white px-4 py-3 text-sm
+    text-slate-900 outline-none transition
+    focus:border-[--gold-one] focus:ring-2 focus:ring-[--gold-two]
+    dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100
+    dark:focus:border-[--gold-one] dark:focus:ring-[--gold-one];
+}
+
+.admin-input__field::placeholder {
+  @apply text-slate-400 dark:text-slate-500;
 }
 
 .admin-input__field:disabled {
-  @apply cursor-not-allowed bg-slate-100 text-slate-400;
+  @apply cursor-not-allowed bg-slate-100 text-slate-400
+    dark:bg-slate-800 dark:text-slate-600;
 }
 
 .admin-input__field--error {
-  @apply border-red-300 focus:border-red-400 focus:ring-red-200;
+  @apply border-red-300 focus:border-red-400 focus:ring-red-200
+    dark:border-red-800 dark:focus:border-red-700 dark:focus:ring-red-900/40;
 }
 
 .admin-input__error {
-  @apply text-xs font-medium text-red-600;
+  @apply text-xs font-medium text-red-600 dark:text-red-400;
 }
 </style>

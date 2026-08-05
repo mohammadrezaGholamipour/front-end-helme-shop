@@ -248,3 +248,26 @@ export interface CreateBlogBody {
  * ویرایش وبلاگ
  */
 export type UpdateBlogBody = Partial<CreateBlogBody>;
+
+
+
+// types/auth.ts
+
+export interface AdminLoginPayload {
+  username: string;
+  password: string;
+}
+
+export interface AdminLoginResponse {
+  access_token: string;
+  token_type: string;
+}
+
+export interface ApiErrorItem {
+  field: string;
+  message: string;
+}
+
+export interface ApiErrorResponse {
+  error: ApiErrorItem[];
+}
