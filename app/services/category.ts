@@ -22,4 +22,16 @@ export const CategoryApi = {
     $api(`/category/delete/${id}`, {
       method: "DELETE",
     }),
+
+  displayOrder: (
+    $api: any,
+    payload: {
+      id: number;
+      display_order: number;
+    }[],
+  ) =>
+    $api("/category/display-order", {
+      method: "PUT",
+      body: payload,
+    }),
 };

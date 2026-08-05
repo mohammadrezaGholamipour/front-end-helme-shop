@@ -45,7 +45,7 @@ const isActive = computed(() => route.path === props.to);
 
 <style scoped>
 .admin-sidebar-item {
-  @apply relative flex items-center gap-3 rounded-2xl px-4 py-3 text-sm text-slate-600 transition hover:bg-slate-100 hover:text-slate-900;
+  @apply relative flex items-center gap-3 rounded-2xl px-4 py-3 text-sm  transition hover:bg-slate-100 hover:text-slate-900;
 }
 
 .admin-sidebar-item--active {

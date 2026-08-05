@@ -1,4 +1,4 @@
-import type { CategoryOut, CreateAndUpdateCategory } from "~/types";
+import type { CategoryOut } from "~/types";
 import { CategoryApi } from "~/services/category";
 import { onServerPrefetch } from "vue";
 
@@ -13,14 +13,11 @@ export const useAllCategory = () => {
   return useQuery({ queryKey, queryFn });
 };
 
-
-
 export const useCategorySlug = (slug: string) => {
   const { $api } = useNuxtApp();
   const queryClient = useQueryClient();
 
   const queryKey = computed(() => ["category", "slug", slug] as const);
-
   const queryFn = () => CategoryApi.getBySlug($api, slug);
 
   onServerPrefetch(() => queryClient.prefetchQuery({ queryKey: queryKey.value, queryFn }));
@@ -32,7 +29,6 @@ export const useCategorySlug = (slug: string) => {
   });
 };
 
-
 export const useCreateCategory = () => {
   const { $api } = useNuxtApp();
   const queryClient = useQueryClient();
@@ -42,8 +38,6 @@ export const useCreateCategory = () => {
     onSuccess: () => queryClient.invalidateQueries({ queryKey }),
   });
 };
-
-
 
 export const useUpdateCategory = () => {
   const { $api } = useNuxtApp();
@@ -77,11 +71,11 @@ export const useDeleteCategory = () => {
   });
 };
 
-
 export function buildCategoryFormData(data: {
   name: string;
   slug: string;
   image?: File | null;
+  display_order?: number | null;
 }): FormData {
   const formData = new FormData();
   formData.append("name", data.name);
@@ -90,5 +84,33 @@ export function buildCategoryFormData(data: {
   if (data.image) {
     formData.append("image", data.image);
   }
+
+  if (data.display_order !== undefined && data.display_order !== null) {
+    formData.append("display_order", String(data.display_order));
+  }
+
   return formData;
 }
+
+
+
+export const useUpdateCategoryDisplayOrder = () => {
+  const { $api } = useNuxtApp();
+  const queryClient = useQueryClient();
+
+  return useMutation<
+    string,
+    unknown,
+    {
+      id: number;
+      display_order: number;
+    }[]
+  >({
+    mutationFn: (payload) => CategoryApi.displayOrder($api, payload),
+
+    onSuccess: () =>
+      queryClient.invalidateQueries({
+        queryKey: ["category"],
+      }),
+  });
+};

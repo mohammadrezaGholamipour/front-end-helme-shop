@@ -38,7 +38,7 @@ const handleColorMood = () => {
 </script>
 
 <template>
-  <label class="switch">
+  <label title="تغییر تم" class="switch">
     <input
       @click="handleColorMood"
       v-model="colorMoodValue"

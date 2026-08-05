@@ -119,8 +119,12 @@ useBlogListSeo();
         v-else-if="!data?.blogs?.length"
         class="blog-page__state"
       >
-        <Icon name="mdi:file-search-outline" class="blog-page__state-icon" />
-        <p class="blog-page__state-text">مقاله‌ای با این مشخصات پیدا نشد.</p>
+        <img
+          src="/images/helma-logo.webp"
+          alt="مقاله ای پیدا نشد"
+          width="200"
+        />
+        <p class="blog-page__state-text">مقاله‌ای پیدا نشد.</p>
       </div>
 
       <template v-else>
@@ -184,7 +188,7 @@ useBlogListSeo();
 }
 
 .blog-page__filter {
-  @apply whitespace-nowrap rounded-full  px-4 py-2 text-sm font-medium text-gray-600 border border-dashed dark:text-white transition-all ;
+  @apply whitespace-nowrap rounded-full  px-4 py-2 text-sm font-medium text-gray-600 border border-dashed dark:text-white transition-all;
 }
 
 .blog-page__filter--active {

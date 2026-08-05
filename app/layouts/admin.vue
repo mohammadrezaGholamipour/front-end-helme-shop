@@ -1,10 +1,7 @@
 <script setup lang="ts">
-import AdminSidebarItem from "~/components/admin/AdminSidebarItem.vue";
-import { ref, watch } from "vue";
-
+const { logout } = useAdminAuth();
 const isSidebarOpen = ref(false);
 const route = useRoute();
-const { logout } = useAdminAuth();
 
 function closeSidebar() {
   isSidebarOpen.value = false;
@@ -66,10 +63,13 @@ watch(
           icon="tabler:shopping-cart"
           @navigate="closeSidebar"
         />
-        <AdminSidebarItem
-          to="/admin/blog"
+        <AdminSidebarGroup
           label="وبلاگ"
           icon="tabler:article"
+          :children="[
+            { to: '/admin/blog', label: 'مقالات' },
+            { to: '/admin/blog-categories', label: 'دسته‌بندی‌ها' },
+          ]"
           @navigate="closeSidebar"
         />
         <AdminSidebarItem
@@ -122,7 +122,7 @@ watch(
         </div>
       </header>
       <main>
-          <slot />
+        <slot />
       </main>
     </div>
   </div>
@@ -188,8 +188,8 @@ watch(
     sm:px-6 sm:py-6;
 }
 
-.admin-layout__header-right{
-  @apply flex gap-2
+.admin-layout__header-right {
+  @apply flex gap-2;
 }
 
 .admin-layout__view-site {

@@ -39,6 +39,7 @@ export interface CategoryOut {
   meta_title: string;
   application_id: string;
   meta_description: string;
+  display_order: number;
   slug: string;
 }
 
@@ -200,10 +201,8 @@ export type BlogListItem = Omit<BlogOut, "content">;
 export interface BlogListParams {
   page?: number;
   per_page?: number;
-  category_id?: number;
+  category?: string;
   search?: string;
-  status?: BlogStatus;
-  is_featured?: boolean;
 }
 
 /**
@@ -216,6 +215,8 @@ export interface BlogListResponse {
   per_page: number;
   last_page: number;
 }
+
+
 
 /**
  * ایجاد وبلاگ
@@ -248,7 +249,6 @@ export interface CreateBlogBody {
  * ویرایش وبلاگ
  */
 export type UpdateBlogBody = Partial<CreateBlogBody>;
-
 
 
 // types/auth.ts
