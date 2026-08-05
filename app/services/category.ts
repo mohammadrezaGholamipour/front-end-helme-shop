@@ -12,8 +12,8 @@ export const CategoryApi = {
       body: payload,
     }),
 
-  update: ($api: any, id: number, payload: FormData) =>
-    $api(`/category/update/${id}`, {
+  update: ($api: any, payload: FormData) =>
+    $api(`/category/update`, {
       method: "PUT",
       body: payload,
     }),

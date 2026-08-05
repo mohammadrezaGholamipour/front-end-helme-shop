@@ -57,8 +57,8 @@ export const useUpdateCategory = () => {
       payload: FormData;
     }
   >({
-    mutationFn: ({ id, payload }) =>
-      CategoryApi.update($api, id, payload),
+    mutationFn: ({ payload }) =>
+      CategoryApi.update($api, payload),
 
     onSuccess: () =>
       queryClient.invalidateQueries({
