@@ -132,7 +132,7 @@ const submitCategory = () => {
   }
 
   if (!state.selectedId) return;
-  payload.append("id", String(state.selectedId));
+  payload.append("category_id", String(state.selectedId));
   updateCategory({ id: state.selectedId, payload }, { onSuccess, onError });
 };
 
