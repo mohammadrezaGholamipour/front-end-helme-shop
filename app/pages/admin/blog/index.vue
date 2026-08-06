@@ -14,7 +14,7 @@ const filters = reactive({
   page: 1,
   per_page: 12,
   search: "",
-  category: undefined as string | undefined,  
+  category: undefined as string | undefined,
   status: undefined as BlogStatus | undefined,
 });
 
@@ -136,7 +136,6 @@ const isDeleteModalOpen = computed({
         icon="tabler:category-2"
         placeholder="همه دسته‌بندی‌ها"
       />
-
     </section>
 
     <section v-if="isLoading" class="admin-blogs__grid">
@@ -202,14 +201,20 @@ const isDeleteModalOpen = computed({
 
         <div class="admin-blogs__card-body">
           <h3 class="admin-blogs__card-title">{{ blog.title }}</h3>
-          <p v-if="blog.category" class="admin-blogs__card-category">
-            {{ blog.category.name }}
-          </p>
+          <h5 class="text-wrap line-clamp-2 text-sm">{{ blog.summary }}</h5>
+
           <div class="admin-blogs__card-meta">
-            <span><Icon name="tabler:eye" class="h-3.5 w-3.5" /> {{ blog.views }}</span>
+            <span
+              ><Icon name="tabler:eye" class="h-3.5 w-3.5" />
+              {{ blog.views }}</span
+            >
             <span v-if="blog.reading_time">
               <Icon name="tabler:clock" class="h-3.5 w-3.5" />
               {{ blog.reading_time }} دقیقه
+            </span>
+            <span v-if="blog.category" >
+              <Icon name="tabler:category-2" class="h-3.5 w-3.5" />
+              {{ blog.category.name }}
             </span>
           </div>
         </div>
@@ -237,7 +242,10 @@ const isDeleteModalOpen = computed({
       </article>
     </section>
 
-    <section v-if="response && response.last_page > 1" class="admin-blogs__pagination">
+    <section
+      v-if="response && response.last_page > 1"
+      class="admin-blogs__pagination"
+    >
       <button
         type="button"
         class="admin-blogs__page-btn"
@@ -382,7 +390,7 @@ const isDeleteModalOpen = computed({
 }
 
 .admin-blogs__card-title {
-  @apply line-clamp-2 text-sm leading-8 text-wrap font-bold text-slate-900 dark:text-white;
+  @apply line-clamp-2 text-sm leading-6 text-wrap font-bold text-slate-900 dark:text-white;
 }
 
 .admin-blogs__card-category {
