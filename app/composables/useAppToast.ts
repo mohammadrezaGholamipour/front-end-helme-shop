@@ -7,7 +7,8 @@ export interface ToastItem {
   duration: number;
 }
 
-const SERVER_ERROR_MESSAGE = "خطا در ارتباط با سرور . لطفا به تیم فنی اطلاع دهید";
+const SERVER_ERROR_MESSAGE =
+  "خطا در ارتباط با سرور . لطفا به تیم فنی اطلاع دهید";
 
 const toasts = ref<ToastItem[]>([]);
 let counter = 0;
@@ -16,9 +17,19 @@ const removeToast = (id: number) => {
   toasts.value = toasts.value.filter((t) => t.id !== id);
 };
 
-const pushToast = (message: string, type: ToastType, duration = 4000) => {
+const pushToast = (
+  message: string,
+  type: ToastType,
+  duration = 4000
+) => {
   const id = ++counter;
-  toasts.value.push({ id, message, type, duration });
+
+  toasts.value.push({
+    id,
+    message,
+    type,
+    duration,
+  });
 
   if (duration > 0) {
     setTimeout(() => removeToast(id), duration);
@@ -35,21 +46,57 @@ const getErrorStatus = (err: unknown): number | undefined => {
   );
 };
 
-
 const isNetworkError = (err: unknown): boolean => {
   const status = getErrorStatus(err);
+
   if (status !== undefined) return false;
 
   const message = (err as any)?.message ?? "";
+
   return (
     message.includes("Failed to fetch") ||
     message.includes("fetch failed") ||
     message.includes("NetworkError") ||
-    message.includes("Load failed") // Safari
+    message.includes("Load failed")
   );
 };
 
-export const getErrorMessage = (err: unknown, fallback: string): string => {
+/**
+ * همه message ها را از هر عمقی استخراج می‌کند.
+ */
+const extractMessages = (
+  value: any,
+  result: Array<{ field?: string; message: string }> = []
+) => {
+  if (!value) return result;
+
+  if (Array.isArray(value)) {
+    for (const item of value) {
+      extractMessages(item, result);
+    }
+    return result;
+  }
+
+  if (typeof value === "object") {
+    if (typeof value.message === "string") {
+      result.push({
+        field: value.field,
+        message: value.message,
+      });
+    }
+
+    for (const key in value) {
+      extractMessages(value[key], result);
+    }
+  }
+
+  return result;
+};
+
+export const getErrorMessage = (
+  err: unknown,
+  fallback: string
+): string => {
   const status = getErrorStatus(err);
 
   if (status !== undefined && status >= 500) {
@@ -60,14 +107,30 @@ export const getErrorMessage = (err: unknown, fallback: string): string => {
     return SERVER_ERROR_MESSAGE;
   }
 
-  const data = (err as any)?.data ?? (err as any)?.response?._data;
+  const data =
+    (err as any)?.data ??
+    (err as any)?.response?.data ??
+    (err as any)?.response?._data;
 
   if (data) {
-    if (Array.isArray(data.error) && data.error[0]?.message) {
-      return data.error[0].message;
+    // استخراج تمام message ها
+    const messages = extractMessages(data.error);
+
+    if (messages.length) {
+      // اولویت با آخرین general
+      const general = [...messages]
+        .reverse()
+        .find((m) => m.field === "general");
+
+      if (general) {
+        return general.message;
+      }
+
+      // در غیر اینصورت آخرین message
+      return messages.at(-1)!.message;
     }
 
-    if (data.error?.message) {
+    if (typeof data.error?.message === "string") {
       return data.error.message;
     }
 
@@ -75,8 +138,12 @@ export const getErrorMessage = (err: unknown, fallback: string): string => {
       return data.error;
     }
 
-    if (Array.isArray(data.errors) && data.errors[0]?.message) {
-      return data.errors[0].message;
+    if (Array.isArray(data.errors)) {
+      const messages = extractMessages(data.errors);
+
+      if (messages.length) {
+        return messages.at(-1)!.message;
+      }
     }
 
     if (typeof data.message === "string") {
@@ -107,7 +174,11 @@ export const useAppToast = () => {
     warning: (message: string, duration?: number) =>
       pushToast(message, "warning", duration),
 
-    apiError: (err: unknown, fallback: string, duration?: number): string => {
+    apiError: (
+      err: unknown,
+      fallback: string,
+      duration?: number
+    ) => {
       const message = getErrorMessage(err, fallback);
       pushToast(message, "error", duration);
       return message;

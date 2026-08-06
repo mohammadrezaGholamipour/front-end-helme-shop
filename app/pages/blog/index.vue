@@ -133,7 +133,9 @@ useBlogListSeo();
           class="blog-page__grid"
         >
           <BlogCard
-            v-for="(blog, index) in data.blogs"
+            v-for="(blog, index) in data.blogs.filter(
+              (item) => item.status === 'PUBLISHED',
+            )"
             :key="blog.id"
             :blog="blog"
             :priority="index < 3"
