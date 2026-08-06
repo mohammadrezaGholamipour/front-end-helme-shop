@@ -204,7 +204,7 @@ onBeforeUnmount(() => revokeObjectUrl());
 }
 
 .admin-image-upload__preview {
-  @apply object-fill rounded-md shadow-md transition duration-200 hover:scale-125;
+  @apply object-cover rounded-md shadow-md transition duration-200 hover:scale-125;
   aspect-ratio: 4/4;
   width: 220px;
 }

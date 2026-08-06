@@ -11,6 +11,10 @@ watch(
   () => route.path,
   () => closeSidebar(),
 );
+
+useSeoMeta({
+  robots: "noindex, nofollow, noarchive",
+});
 </script>
 
 <template>
