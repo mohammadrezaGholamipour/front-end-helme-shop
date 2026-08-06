@@ -1,18 +1,18 @@
 <script setup lang="ts">
 export interface AdminSelectOption {
   label: string;
-  value: string | number | undefined;
+  value: string | number | boolean | undefined;
 }
 
 const props = defineProps<{
-  modelValue: string | number | undefined;
+  modelValue: string | number | boolean | undefined;
   options: AdminSelectOption[];
   placeholder?: string;
   icon?: string;
 }>();
 
 const emit = defineEmits<{
-  (e: "update:modelValue", value: string | number | undefined): void;
+  (e: "update:modelValue", value: string | number | boolean | undefined): void;
 }>();
 
 const isOpen = ref(false);
@@ -61,13 +61,19 @@ onBeforeUnmount(() => {
       :class="{ 'admin-select__trigger--open': isOpen }"
       @click="toggle"
     >
-      <Icon v-if="icon" :name="icon" class="admin-select__leading-icon h-4 w-4" />
+      <Icon
+        v-if="icon"
+        :name="icon"
+        class="admin-select__leading-icon h-4 w-4"
+      />
 
       <span
         class="admin-select__value"
         :class="{ 'admin-select__value--placeholder': !selectedOption }"
       >
-        {{ selectedOption ? selectedOption.label : (placeholder ?? "انتخاب کنید") }}
+        {{
+          selectedOption ? selectedOption.label : (placeholder ?? "انتخاب کنید")
+        }}
       </span>
 
       <Icon

@@ -26,9 +26,16 @@ export interface CreateProductBody {
   images?: string | null;
 }
 
+
+
 export interface LoginBody {
   username: string;
   password: string;
+}
+export interface VariantOut {
+  volume: number
+  price: number
+  stock: number
 }
 
 export interface CategoryOut {
@@ -115,6 +122,25 @@ export interface StoreUI extends StoreOut {
   logo: string
 }
 
+
+export interface CreateProductBody {
+  name: string;
+  price: number;
+  volume: number;
+  description?: string | null;
+  category_id: number;
+  images?: string | null;
+
+  // فیلدهای اختیاری - در ProductOut موجودند
+  product_type?: string | null;
+  product_model?: string | null;
+  oil_type?: string | null;
+  is_packaged?: boolean | null;
+}
+
+export type UpdateProductBody = Partial<CreateProductBody> & {
+  product_id: number;
+};
 export interface TokenResponse {
   access_token: string;
   token_type: string;

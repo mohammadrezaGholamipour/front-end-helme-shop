@@ -1,15 +1,31 @@
-import type { CreateProductBody, ProductFilters, ProductOut } from "~/types";
+import type { ProductFilters, ProductOut } from "~/types";
 
 export const ProductApi = {
   getAll: ($api: any, params: ProductFilters) =>
     $api("/product/me", {
       params,
     }) as Promise<ProductOut[]>,
+
+  getMine: ($api: any) =>
+    $api("/product/me") as Promise<ProductOut[]>,
+
   getBySlug: ($api: any, slug: string) =>
     $api(`/product/${slug}`) as Promise<ProductOut>,
-  create: ($api: any, payload: CreateProductBody) =>
-    $api.post("/product/create", payload),
-  update: ($api: any, id: number, payload: CreateProductBody) =>
-    $api.put(`/product/${id}`, payload),
-  delete: ($api: any, id: number) => $api.delete(`/product/${id}`),
+
+  create: ($api: any, payload: FormData) =>
+    $api("/product/create", {
+      method: "POST",
+      body: payload,
+    }) as Promise<ProductOut>,
+
+  update: ($api: any, payload: FormData) =>
+    $api("/product/update", {
+      method: "PUT",
+      body: payload,
+    }) as Promise<ProductOut>,
+
+  delete: ($api: any, id: number) =>
+    $api(`/product/delete/${id}`, {
+      method: "DELETE",
+    }) as Promise<void>
 };
