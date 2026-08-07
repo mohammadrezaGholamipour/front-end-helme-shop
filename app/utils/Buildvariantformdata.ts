@@ -4,8 +4,8 @@ export interface VariantFormInput {
   stock?: number | null;
 }
 
-// عکس برای واریانت‌ها فعلا پشتیبانی نمی‌شود؛ اگر بعدا لازم شد
-// یک فیلد image اختیاری اینجا و در فرم واریانت اضافه کنید.
+// عکس برای مدل محصول‌ها فعلا پشتیبانی نمی‌شود؛ اگر بعدا لازم شد
+// یک فیلد image اختیاری اینجا و در فرم مدل محصول اضافه کنید.
 export const buildVariantFormData = (data: VariantFormInput) => {
   const fd = new FormData();
   fd.append("volume", String(data.volume));

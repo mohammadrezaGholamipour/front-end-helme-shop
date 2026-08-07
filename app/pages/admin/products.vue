@@ -10,7 +10,7 @@ const { mutate: createProduct, isPending: isCreating } = useCreateProduct();
 const { mutate: updateProduct, isPending: isUpdating } = useUpdateProduct();
 const { mutate: deleteProduct, isPending: isDeleting } = useDeleteProduct();
 
-// ---------- واریانت (وزن / قیمت / موجودی) ----------
+// ---------- مدل محصول (وزن / قیمت / موجودی) ----------
 const { mutate: createVariant, isPending: isCreatingVariant } =
   useCreateVariant();
 const { mutate: updateVariant, isPending: isUpdatingVariant } =
@@ -110,7 +110,7 @@ const state = reactive({
     is_packaged: false,
   },
 
-  // --- واریانت‌ها ---
+  // --- مدل محصول‌ها ---
   variants: [] as VariantOut[],
   variantFormOpen: false,
   variantMode: "create" as "create" | "edit",
@@ -292,7 +292,7 @@ const submitProduct = () => {
   if (state.mode === "create") {
     createProduct(payload, {
       onSuccess: (created) => {
-        // محصول ساخته شد؛ حالا برای افزودن وزن/قیمت به تب واریانت‌ها می‌رویم
+        // محصول ساخته شد؛ حالا برای افزودن وزن/قیمت به تب مدل محصول‌ها می‌رویم
         state.mode = "edit";
         state.selectedId = created.id;
         state.existingImage = created.image
@@ -353,8 +353,9 @@ const isDeleteModalOpen = computed({
   },
 });
 
+const hasCategories = computed(() => (categories.value?.length ?? 0) > 0);
 // ===================================================================
-// واریانت‌ها: افزودن / ویرایش / حذف
+// مدل محصول‌ها: افزودن / ویرایش / حذف
 // ===================================================================
 
 const isVariantSaving = computed(
@@ -423,7 +424,7 @@ const submitVariantForm = () => {
   });
 
   const onError = (err: unknown) => {
-    toast.apiError(err, "ذخیره‌ی واریانت با خطا مواجه شد.");
+    toast.apiError(err, "ذخیره‌ی ویژگی های محصول با خطا مواجه شد.");
   };
 
   if (state.variantMode === "create") {
@@ -435,7 +436,7 @@ const submitVariantForm = () => {
           state.variants.push(created);
           state.variantFormOpen = false;
           resetVariantForm();
-          toast.success("واریانت اضافه شد.");
+          toast.success("مدل محصول اضافه شد.");
         },
         onError,
       },
@@ -452,7 +453,7 @@ const submitVariantForm = () => {
         if (index !== -1) state.variants[index] = updated;
         state.variantFormOpen = false;
         resetVariantForm();
-        toast.success("واریانت ویرایش شد.");
+        toast.success("مدل محصول ویرایش شد.");
       },
       onError,
     },
@@ -483,10 +484,10 @@ const confirmDeleteVariant = () => {
     onSuccess: () => {
       state.variants = state.variants.filter((v) => v.id !== target.id);
       state.deleteVariantItem = null;
-      toast.success("واریانت حذف شد.");
+      toast.success("مدل محصول حذف شد.");
     },
     onError: (err: unknown) => {
-      toast.apiError(err, "حذف واریانت با خطا مواجه شد.");
+      toast.apiError(err, "حذف ويژگی محصول با خطا مواجه شد.");
     },
   });
 };
@@ -705,20 +706,42 @@ const priceRangeLabel = (product: ProductOut) => {
         <div class="admin-products__select-field">
           <label class="admin-products__select-label"> دسته‌بندی </label>
 
-          <AdminSelect
-            v-model="state.form.category_id"
-            :options="categoryOptions"
-            placeholder="انتخاب دسته‌بندی"
-          />
+          <template v-if="hasCategories">
+            <AdminSelect
+              v-model="state.form.category_id"
+              :options="categoryOptions"
+              placeholder="انتخاب دسته‌بندی"
+            />
 
-          <span
-            v-if="state.errors.category_id"
-            class="admin-products__select-error"
-          >
-            {{ state.errors.category_id }}
-          </span>
+            <span
+              v-if="state.errors.category_id"
+              class="admin-products__select-error"
+            >
+              {{ state.errors.category_id }}
+            </span>
+          </template>
+
+          <div v-else class="admin-products__category-empty">
+            <div class="admin-products__category-empty-content">
+              <Icon name="tabler:folders-off" class="h-8 w-8" />
+
+              <div>
+                <h4>هیچ دسته‌بندی‌ای وجود ندارد</h4>
+                <p>
+                  ابتدا یک دسته‌بندی ایجاد کنید تا بتوانید محصول جدید ثبت کنید.
+                </p>
+              </div>
+            </div>
+
+            <NuxtLink
+              to="/admin/category"
+              class="admin-products__category-link"
+            >
+              <Icon name="tabler:folder-plus" class="h-5 w-5" />
+              مدیریت دسته‌بندی‌ها
+            </NuxtLink>
+          </div>
         </div>
-
         <div class="admin-products__select-field">
           <label class="admin-products__select-label"> نوع محصول </label>
 
@@ -803,7 +826,7 @@ const priceRangeLabel = (product: ProductOut) => {
         />
       </div>
 
-      <!-- تب وزن و قیمت (واریانت‌ها) -->
+      <!-- تب وزن و قیمت (مدل محصول‌ها) -->
       <div
         v-show="state.activeTab === 'variants'"
         class="admin-products__variants"
@@ -821,7 +844,7 @@ const priceRangeLabel = (product: ProductOut) => {
           <Icon name="tabler:scale" class="h-7 w-7" />
           <p>هنوز هیچ وزن/قیمتی برای این محصول ثبت نشده است.</p>
           <AdminButton
-            label="افزودن اولین واریانت"
+            label="افزودن اولین مدل محصول"
             variant="secondary"
             icon="tabler:plus"
             @click="openAddVariant"
@@ -944,17 +967,17 @@ const priceRangeLabel = (product: ProductOut) => {
       </p>
     </AdminModal>
 
-    <!-- مودال حذف واریانت -->
+    <!-- مودال حذف مدل محصول -->
     <AdminModal
       v-model="isDeleteVariantModalOpen"
-      title="حذف واریانت"
+      title="حذف مدل محصول"
       action-label="حذف"
       cancel-label="انصراف"
       :loading="isDeletingVariant"
       @submit="confirmDeleteVariant"
     >
       <p class="admin-products__confirm-text">
-        آیا از حذف واریانت
+        آیا از حذف مدل محصول
         <strong>{{ formatVolume(state.deleteVariantItem?.volume) }}</strong>
         مطمئن هستید؟
       </p>
@@ -1051,7 +1074,7 @@ const priceRangeLabel = (product: ProductOut) => {
 }
 
 .admin-products__card-price {
-  @apply  text-wrap text-sm font-bold text-[--gold-one];
+  @apply text-wrap text-sm font-bold text-[--gold-one];
 }
 
 .admin-products__card-actions {
@@ -1133,7 +1156,7 @@ const priceRangeLabel = (product: ProductOut) => {
   @apply text-xs font-medium text-red-600 dark:text-red-400;
 }
 
-/* ---- تب وزن و قیمت (واریانت‌ها) ---- */
+/* ---- تب وزن و قیمت (مدل محصول‌ها) ---- */
 
 .admin-products__variants {
   @apply flex flex-col gap-4 p-1;
@@ -1223,5 +1246,31 @@ const priceRangeLabel = (product: ProductOut) => {
 
 .admin-products__confirm-text {
   @apply text-sm leading-7 text-slate-600 dark:text-slate-300 text-wrap;
+}
+
+.admin-products__category-empty {
+  @apply flex flex-col gap-5 rounded-2xl border-2 border-dashed
+    border-amber-300 bg-amber-50 p-5
+    dark:border-amber-700/40 dark:bg-amber-950/10;
+}
+
+.admin-products__category-empty-content {
+  @apply flex items-start gap-4 text-amber-700 text-wrap
+    dark:text-amber-400;
+}
+
+.admin-products__category-empty-content h4 {
+  @apply text-sm font-bold;
+}
+
+.admin-products__category-empty-content p {
+  @apply mt-1 text-xs leading-6 opacity-80 text-wrap;
+}
+
+.admin-products__category-link {
+  @apply inline-flex  flex-1 items-center justify-center gap-2 rounded-xl
+    bg-[--gold-one] px-4 py-3 text-sm font-semibold
+    text-white transition-all duration-300
+    hover:-translate-y-0.5 hover:shadow-lg;
 }
 </style>
