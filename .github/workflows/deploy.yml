@@ -31,7 +31,7 @@ jobs:
           tar -czf frontend.tar.gz .output package.json package-lock.json
           ls -lh frontend.tar.gz
 
-      - name: Test SSH Connection
+      - name: Setup SSH Key
         run: |
           mkdir -p ~/.ssh
 
@@ -39,6 +39,8 @@ jobs:
 
           chmod 600 ~/.ssh/id_rsa
 
+      - name: Test SSH Connection
+        run: |
           ssh \
             -o StrictHostKeyChecking=no \
             -p ${{ secrets.PORT }} \
@@ -47,48 +49,56 @@ jobs:
             "echo SSH_CONNECTION_SUCCESS"
 
       - name: Copy archive to VPS
-        uses: appleboy/scp-action@v1.0.0
-        with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
-          key: ${{ secrets.SSH_KEY }}
-          port: ${{ secrets.PORT }}
-          overwrite: true
-          source: "frontend.tar.gz"
-          target: "/root/app/frontend"
-          timeout: 15m
-          command_timeout: 15m
+        run: |
+          scp \
+            -o StrictHostKeyChecking=no \
+            -P ${{ secrets.PORT }} \
+            -i ~/.ssh/id_rsa \
+            frontend.tar.gz \
+            ${{ secrets.USERNAME }}@${{ secrets.HOST }}:/root/app/frontend/frontend.tar.gz
 
       - name: Deploy
-        uses: appleboy/ssh-action@v1.2.0
-        with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
-          key: ${{ secrets.SSH_KEY }}
-          port: ${{ secrets.PORT }}
-          command_timeout: 30m
-          script: |
-            set -e
+        run: |
+          ssh \
+            -o StrictHostKeyChecking=no \
+            -p ${{ secrets.PORT }} \
+            -i ~/.ssh/id_rsa \
+            ${{ secrets.USERNAME }}@${{ secrets.HOST }} << 'EOF'
 
-            echo "Moving to frontend directory..."
-            mkdir -p /root/app/frontend
-            cd /root/app/frontend
+          set -e
 
-            echo "Cleaning old build..."
-            rm -rf .output
-            rm -f package.json package-lock.json
+          echo "Preparing frontend directory..."
 
-            echo "Extracting archive..."
-            tar -xzf frontend.tar.gz
+          mkdir -p /root/app/frontend
 
-            echo "Removing archive..."
-            rm -f frontend.tar.gz
+          cd /root/app/frontend
 
-            echo "Restarting frontend..."
 
-            cd /root/app
+          echo "Cleaning old build..."
 
-            docker-compose build frontend
-            docker-compose up -d frontend
+          rm -rf .output
+          rm -f package.json package-lock.json
 
-            echo "Deployment completed successfully!"
+
+          echo "Extracting archive..."
+
+          tar -xzf frontend.tar.gz
+
+
+          echo "Removing archive..."
+
+          rm -f frontend.tar.gz
+
+
+          echo "Restarting frontend container..."
+
+          cd /root/app
+
+          docker-compose build frontend
+
+          docker-compose up -d frontend
+
+
+          echo "Deployment finished successfully!"
+
+          EOF
