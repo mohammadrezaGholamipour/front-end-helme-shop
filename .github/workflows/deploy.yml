@@ -26,21 +26,11 @@ jobs:
       - name: Build Nuxt
         run: npm run build
 
-      - name: Debug files
+      - name: Compress build
         run: |
-          echo "Current directory:"
-          pwd
+          tar -czf frontend.tar.gz .output package.json package-lock.json
 
-          echo "Root files:"
-          ls -la
-
-          echo ".output exists?"
-          ls -la .output || true
-
-          echo "Find output:"
-          find . -maxdepth 3
-
-      - name: Copy files to VPS
+      - name: Copy archive to VPS
         uses: appleboy/scp-action@v0.1.7
         with:
           host: ${{ secrets.HOST }}
@@ -48,7 +38,7 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           port: ${{ secrets.PORT }}
           overwrite: true
-          source: ".output/**,package.json,package-lock.json"
+          source: "frontend.tar.gz"
           target: "/root/app/frontend"
 
       - name: Deploy
@@ -60,6 +50,22 @@ jobs:
           port: ${{ secrets.PORT }}
           command_timeout: 30m
           script: |
+            set -e
+
+            mkdir -p /root/app/frontend
+            cd /root/app/frontend
+
+            echo "Cleaning old build..."
+            rm -rf .output
+            rm -f package.json package-lock.json
+
+            echo "Extracting archive..."
+            tar -xzf frontend.tar.gz
+
+            echo "Removing archive..."
+            rm -f frontend.tar.gz
+
+            echo "Restarting frontend..."
             cd /root/app
             docker-compose build frontend
             docker-compose up -d frontend
