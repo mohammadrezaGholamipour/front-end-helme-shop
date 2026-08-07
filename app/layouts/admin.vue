@@ -12,6 +12,7 @@ watch(
   () => closeSidebar(),
 );
 
+
 useSeoMeta({
   robots: "noindex, nofollow, noarchive",
 });
