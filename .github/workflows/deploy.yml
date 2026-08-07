@@ -39,7 +39,7 @@ jobs:
 
           chmod 600 ~/.ssh/id_rsa
 
-      - name: Test SSH Connection
+      - name: Test SSH
         run: |
           ssh \
             -o StrictHostKeyChecking=no \
@@ -48,16 +48,21 @@ jobs:
             ${{ secrets.USERNAME }}@${{ secrets.HOST }} \
             "echo SSH_CONNECTION_SUCCESS"
 
-      - name: Copy archive to VPS
+      - name: Copy archive with rsync
         run: |
-          scp \
+          rsync -avz \
+            --progress \
+            --timeout=120 \
+            -e "ssh \
             -o StrictHostKeyChecking=no \
-            -P ${{ secrets.PORT }} \
+            -o ServerAliveInterval=15 \
+            -o ServerAliveCountMax=3 \
             -i ~/.ssh/id_rsa \
+            -p ${{ secrets.PORT }}" \
             frontend.tar.gz \
             ${{ secrets.USERNAME }}@${{ secrets.HOST }}:/root/app/frontend/frontend.tar.gz
 
-      - name: Deploy
+      - name: Deploy on VPS
         run: |
           ssh \
             -o StrictHostKeyChecking=no \
@@ -67,14 +72,9 @@ jobs:
 
           set -e
 
-          echo "Preparing frontend directory..."
-
-          mkdir -p /root/app/frontend
-
           cd /root/app/frontend
 
-
-          echo "Cleaning old build..."
+          echo "Removing old files..."
 
           rm -rf .output
           rm -f package.json package-lock.json
@@ -90,7 +90,7 @@ jobs:
           rm -f frontend.tar.gz
 
 
-          echo "Restarting frontend container..."
+          echo "Restarting frontend..."
 
           cd /root/app
 
@@ -99,6 +99,6 @@ jobs:
           docker-compose up -d frontend
 
 
-          echo "Deployment finished successfully!"
+          echo "Deployment completed!"
 
           EOF
