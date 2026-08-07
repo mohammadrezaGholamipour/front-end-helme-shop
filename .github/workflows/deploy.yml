@@ -29,9 +29,25 @@ jobs:
       - name: Compress build
         run: |
           tar -czf frontend.tar.gz .output package.json package-lock.json
+          ls -lh frontend.tar.gz
+
+      - name: Test SSH Connection
+        run: |
+          mkdir -p ~/.ssh
+
+          echo "${{ secrets.SSH_KEY }}" > ~/.ssh/id_rsa
+
+          chmod 600 ~/.ssh/id_rsa
+
+          ssh \
+            -o StrictHostKeyChecking=no \
+            -p ${{ secrets.PORT }} \
+            -i ~/.ssh/id_rsa \
+            ${{ secrets.USERNAME }}@${{ secrets.HOST }} \
+            "echo SSH_CONNECTION_SUCCESS"
 
       - name: Copy archive to VPS
-        uses: appleboy/scp-action@v0.1.7
+        uses: appleboy/scp-action@v1.0.0
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
@@ -40,6 +56,8 @@ jobs:
           overwrite: true
           source: "frontend.tar.gz"
           target: "/root/app/frontend"
+          timeout: 15m
+          command_timeout: 15m
 
       - name: Deploy
         uses: appleboy/ssh-action@v1.2.0
@@ -52,6 +70,7 @@ jobs:
           script: |
             set -e
 
+            echo "Moving to frontend directory..."
             mkdir -p /root/app/frontend
             cd /root/app/frontend
 
@@ -66,6 +85,10 @@ jobs:
             rm -f frontend.tar.gz
 
             echo "Restarting frontend..."
+
             cd /root/app
+
             docker-compose build frontend
             docker-compose up -d frontend
+
+            echo "Deployment completed successfully!"
