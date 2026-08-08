@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const { logout } = useAdminAuth();
+const { logout } = useAuth();
 const isSidebarOpen = ref(false);
 const route = useRoute();
 
@@ -11,7 +11,6 @@ watch(
   () => route.path,
   () => closeSidebar(),
 );
-
 
 useSeoMeta({
   robots: "noindex, nofollow, noarchive",

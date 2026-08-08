@@ -47,7 +47,6 @@ const {
   error: blogsError,
 } = useAllBlogs({
   per_page: 4,
-  status: BlogStatus.PUBLISHED,
 });
 
 const blogs = computed<BlogListItem[]>(
@@ -152,7 +151,7 @@ onMounted(async () => {
             class="flex flex-col items-center gap-5 font-bold text-2xl p-10 w-full"
           >
             <div class="loader"></div>
-            <p>در حال دریافت وبلاگ ...</p>
+            <p class="text-lg">در حال دریافت وبلاگ ...</p>
           </div>
         </template>
 

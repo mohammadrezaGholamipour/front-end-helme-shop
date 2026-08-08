@@ -1,32 +1,43 @@
 export default defineNuxtPlugin(() => {
   const config = useRuntimeConfig();
 
-  const isServer = import.meta.server;
-  const apiBaseClient = config.public.apiBase;
-  const baseURL = isServer
+  const baseURL = import.meta.server
     ? "http://backend:8000/helma-shop-api/v1"
-    : apiBaseClient;
+    : config.public.apiBase;
 
   const api = $fetch.create({
-    baseURL: baseURL,
+    baseURL,
+
     onRequest({ options }) {
-      const token = useCookie<string | null>(TOKEN_COOKIE).value;
+      const token = useCookie<string | null>(TOKEN_COOKIE);
 
-      if (token) {
-        options.headers = new Headers(options.headers);
-        options.headers.set("Authorization", `Bearer ${token}`);
+      if (!token.value) {
+        return;
       }
-    },
-    onResponseError({ response }) {
-      if (response.status === 401) {
-        const token = useCookie<string | null>(TOKEN_COOKIE);
-        token.value = null;
 
-        // جلوگیری از ری‌دایرکت تکراری اگه از قبل توی صفحه‌ی لاگین هستیم
-        const route = useRoute();
-        if (route.path !== "/admin/login") {
-          navigateTo("/admin/login");
-        }
+      const headers = new Headers(options.headers);
+
+      headers.set(
+        "Authorization",
+        `Bearer ${token.value}`,
+      );
+
+      options.headers = headers;
+    },
+
+    onResponseError({ response }) {
+      if (response.status !== 401) {
+        return;
+      }
+
+      const token = useCookie<string | null>(TOKEN_COOKIE);
+
+      token.value = null;
+
+      const route = useRoute();
+
+      if (route.path !== "/login") {
+        navigateTo("/login");
       }
     },
   });

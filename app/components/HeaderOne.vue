@@ -1,8 +1,8 @@
 <script setup lang="ts">
+const { user, isAdmin, isCustomer } = useAuth();
 const { time, date } = useDateTime();
 const showCartDialog = ref(false);
 const cartStore = useCartStore();
-
 const openCartDialog = (): void => {
   showCartDialog.value = true;
 };
@@ -90,8 +90,13 @@ const openCartDialog = (): void => {
         <p>{{ date }}</p>
       </button>
       <button>
-        <p>ورود | ثبت نام</p>
-        <Icon name="tabler:user-filled" class="w-6 h-6" />
+        <nuxt-link
+          class="flex gap-1 items-center"
+          :to="!user ? '/login' : user.role === 'ADMIN' ? '/admin' : '/'"
+        >
+          <p>{{ user ? user.username : "ورود به فروشگاه" }}</p>
+          <Icon name="tabler:user-filled" class="w-6 h-6" />
+        </nuxt-link>
       </button>
     </section>
   </div>
