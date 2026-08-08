@@ -2,11 +2,11 @@ import type { StoreOut, CreateOrUpdateStoreBody } from "~/types";
 import { StoreApi } from "~/services/store";
 import { onServerPrefetch } from "vue";
 
-export const useAllStore = () => {
+export const useStore = () => {
   const { $api } = useNuxtApp();
   const queryClient = useQueryClient();
   const queryKey = ["store"] as const;
-  const queryFn = () => StoreApi.getAll($api);
+  const queryFn = () => StoreApi.get($api);
 
   onServerPrefetch(() => queryClient.prefetchQuery({ queryKey, queryFn }));
 
@@ -17,21 +17,6 @@ export const useAllStore = () => {
   });
 };
 
-
-
-export const useStore = (id: number) => {
-  const { $api } = useNuxtApp();
-  const queryClient = useQueryClient();
-  const queryKey = ["store", id] as const;
-  const queryFn = () => StoreApi.getById($api, id);
-
-  onServerPrefetch(() => queryClient.prefetchQuery({ queryKey, queryFn }));
-
-  return useQuery<StoreOut>({
-    queryKey,
-    queryFn,
-  });
-};
 
 export const useCreateStore = () => {
   const { $api } = useNuxtApp();

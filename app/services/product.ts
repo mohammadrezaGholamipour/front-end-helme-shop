@@ -2,12 +2,9 @@ import type { ProductFilters, ProductOut } from "~/types";
 
 export const ProductApi = {
   getAll: ($api: any, params: ProductFilters) =>
-    $api("/product/me", {
+    $api("/product", {
       params,
     }) as Promise<ProductOut[]>,
-
-  getMine: ($api: any) =>
-    $api("/product/me") as Promise<ProductOut[]>,
 
   getBySlug: ($api: any, slug: string) =>
     $api(`/product/${slug}`) as Promise<ProductOut>,

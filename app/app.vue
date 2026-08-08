@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import "@/utils/convert-persian-number";
 import type { StoreUI } from "~/types";
-const { data } = useAllStore() as unknown as { data: StoreUI };
+const { data } = useStore() as unknown as { data: StoreUI };
 const globalStore = useGlobalStore();
 globalStore.setStores(data);
 </script>

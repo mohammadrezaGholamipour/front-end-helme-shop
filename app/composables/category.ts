@@ -6,7 +6,7 @@ export const useAllCategory = () => {
   const { $api } = useNuxtApp();
   const queryClient = useQueryClient();
   const queryKey = ["category"] as const;
-  const queryFn = () => CategoryApi.getAll($api);
+  const queryFn = () => CategoryApi.get($api);
 
   onServerPrefetch(() => queryClient.prefetchQuery({ queryKey, queryFn }));
 

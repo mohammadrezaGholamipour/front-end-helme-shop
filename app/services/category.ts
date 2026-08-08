@@ -1,7 +1,7 @@
 import type { CategoryOut } from "~/types";
 
 export const CategoryApi = {
-  getAll: ($api: any) => $api("/category/me") as Promise<CategoryOut[]>,
+  get: ($api: any) => $api("/category") as Promise<CategoryOut[]>,
 
   getBySlug: ($api: any, slug: string) =>
     $api(`/category/${slug}`) as Promise<CategoryOut>,
