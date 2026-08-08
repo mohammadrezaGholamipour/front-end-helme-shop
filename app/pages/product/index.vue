@@ -2,7 +2,7 @@
 import type { LocationQueryValue } from "vue-router";
 const route = useRoute();
 
-const { data: products, isLoading, error } = useProduct();
+const { data: products, isLoading, error } = useAllProduct();
 useSearchSeo(
   () => route.query.q as string | undefined,
   () => products.value?.length,

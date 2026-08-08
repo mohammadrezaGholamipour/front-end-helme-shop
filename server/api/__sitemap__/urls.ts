@@ -10,23 +10,14 @@ export default defineSitemapEventHandler(async () => {
   const applicationId = 1;
 
   const [categories, products, blogs] = await Promise.all([
-    $fetch<CategoryOut[]>(`${config.public.apiBase}/category/me`, {
-      query: {
-        application_id: applicationId,
-      },
-    }),
+    $fetch<CategoryOut[]>(`${config.public.apiBase}/category/me`),
 
-    $fetch<ProductOut[]>(`${config.public.apiBase}/product/me`, {
-      query: {
-        application_id: applicationId,
-      },
-    }),
+    $fetch<ProductOut[]>(`${config.public.apiBase}/product/me`),
 
     $fetch<BlogListResponse>(
       `${config.public.apiBase}/blog/website/blog/list`,
       {
         query: {
-          application_id: applicationId,
           per_page: 100,
           page: 1,
         },

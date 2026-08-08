@@ -9,9 +9,6 @@ export default defineNuxtPlugin(() => {
 
   const api = $fetch.create({
     baseURL: baseURL,
-    query: {
-      application_id: "1",
-    },
     onRequest({ options }) {
       const token = useCookie<string | null>(TOKEN_COOKIE).value;
 

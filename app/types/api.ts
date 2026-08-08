@@ -44,7 +44,6 @@ export interface CategoryOut {
   name: string;
   description?: string | null;
   meta_title: string;
-  application_id: string;
   meta_description: string;
   display_order: number;
   slug: string;
@@ -157,12 +156,10 @@ export interface UserOut {
   id: number;
   mobile: string;
   userName: string;
-  application_id: number;
 }
 
 
 export interface ProductFilters {
-  application_id: string;
   search?: string;
 
   min_price?: number;
