@@ -93,7 +93,11 @@ async function handleSave() {
     <div v-else-if="isError" class="profile-card__error">
       <Icon name="tabler:alert-triangle" class="h-6 w-6" />
       <p>دریافت اطلاعات حساب ممکن نشد.</p>
-      <button type="button" class="profile-card__retry" @click="() => refetch()">
+      <button
+        type="button"
+        class="profile-card__retry"
+        @click="() => refetch()"
+      >
         تلاش دوباره
       </button>
     </div>
@@ -104,11 +108,17 @@ async function handleSave() {
         <SohanSeal :size="56">
           <Icon name="tabler:user-circle" class="h-6 w-6" />
         </SohanSeal>
-        <p class="profile-card__onboarding-title">اطلاعات حساب خود را تکمیل کنید</p>
+        <p class="profile-card__onboarding-title">
+          اطلاعات حساب خود را تکمیل کنید
+        </p>
         <p class="profile-card__onboarding-text">
           هنوز نام و نام‌خانوادگی‌ای برای حساب شما ثبت نشده است.
         </p>
-        <button type="button" class="profile-card__primary-btn" @click="startEditing">
+        <button
+          type="button"
+          class="profile-card__primary-btn"
+          @click="startEditing"
+        >
           <Icon name="tabler:pencil" class="h-4 w-4" />
           تکمیل اطلاعات
         </button>
@@ -116,7 +126,7 @@ async function handleSave() {
 
       <template v-else>
         <div class="profile-card__identity">
-          <SohanSeal :size="56">
+          <SohanSeal class="animate-pulse" :size="56">
             <Icon name="tabler:user-circle" class="h-6 w-6" />
           </SohanSeal>
 
@@ -124,7 +134,10 @@ async function handleSave() {
             <h2 class="profile-card__name">
               {{ fullName || "کاربر گرامی" }}
             </h2>
-            <p class="profile-card__email" :class="{ 'profile-card__email--muted': !profile?.email }">
+            <p
+              class="profile-card__email"
+              :class="{ 'profile-card__email--muted': !profile?.email }"
+            >
               {{ profile?.email || "ایمیلی ثبت نشده است" }}
             </p>
           </div>
@@ -140,87 +153,124 @@ async function handleSave() {
           </button>
         </div>
 
-        <Transition name="profile-fade" mode="out-in">
-          <div v-if="!isEditing" key="view" class="profile-card__grid">
-            <div class="profile-card__field">
-              <span class="profile-card__field-label">نام</span>
-              <span
-                class="profile-card__field-value"
-                :class="{ 'profile-card__field-value--empty': !profile?.first_name }"
-              >
-                {{ profile?.first_name || "ثبت نشده" }}
-              </span>
-            </div>
-            <div class="profile-card__field">
-              <span class="profile-card__field-label">نام خانوادگی</span>
-              <span
-                class="profile-card__field-value"
-                :class="{ 'profile-card__field-value--empty': !profile?.last_name }"
-              >
-                {{ profile?.last_name || "ثبت نشده" }}
-              </span>
-            </div>
+        <div
+          v-animate="{
+            type: 'slideLeft',
+            delay: 300,
+            duration: 1000,
+            once: true,
+            threshold: 0,
+          }"
+          v-if="!isEditing"
+          key="view"
+          class="profile-card__grid"
+        >
+          <div class="profile-card__field">
+            <span class="profile-card__field-label">نام</span>
+            <span
+              class="profile-card__field-value"
+              :class="{
+                'profile-card__field-value--empty': !profile?.first_name,
+              }"
+            >
+              {{ profile?.first_name || "ثبت نشده" }}
+            </span>
+          </div>
+          <div class="profile-card__field">
+            <span class="profile-card__field-label">نام خانوادگی</span>
+            <span
+              class="profile-card__field-value"
+              :class="{
+                'profile-card__field-value--empty': !profile?.last_name,
+              }"
+            >
+              {{ profile?.last_name || "ثبت نشده" }}
+            </span>
+          </div>
+        </div>
+
+        <form
+          v-animate="{
+            type: 'slideLeft',
+            delay: 300,
+            duration: 1000,
+            once: true,
+            threshold: 0,
+          }"
+          v-else
+          key="edit"
+          class="profile-card__form"
+          @submit.prevent="handleSave"
+        >
+          <div class="profile-card__input-group">
+            <label for="profile-first-name" class="profile-card__input-label"
+              >نام</label
+            >
+            <input
+              id="profile-first-name"
+              v-model="form.first_name"
+              type="text"
+              class="profile-card__input"
+              placeholder="نام خود را وارد کنید"
+              :disabled="isSaving"
+              autocomplete="given-name"
+            />
           </div>
 
-          <form v-else key="edit" class="profile-card__form" @submit.prevent="handleSave">
-            <div class="profile-card__input-group">
-              <label for="profile-first-name" class="profile-card__input-label">نام</label>
-              <input
-                id="profile-first-name"
-                v-model="form.first_name"
-                type="text"
-                class="profile-card__input"
-                placeholder="نام خود را وارد کنید"
-                :disabled="isSaving"
-                autocomplete="given-name"
-              />
-            </div>
+          <div class="profile-card__input-group">
+            <label for="profile-last-name" class="profile-card__input-label"
+              >نام خانوادگی</label
+            >
+            <input
+              id="profile-last-name"
+              v-model="form.last_name"
+              type="text"
+              class="profile-card__input"
+              placeholder="نام خانوادگی خود را وارد کنید"
+              :disabled="isSaving"
+              autocomplete="family-name"
+            />
+          </div>
 
-            <div class="profile-card__input-group">
-              <label for="profile-last-name" class="profile-card__input-label">نام خانوادگی</label>
-              <input
-                id="profile-last-name"
-                v-model="form.last_name"
-                type="text"
-                class="profile-card__input"
-                placeholder="نام خانوادگی خود را وارد کنید"
-                :disabled="isSaving"
-                autocomplete="family-name"
-              />
-            </div>
+          <div class="profile-card__input-group">
+            <label for="profile-email" class="profile-card__input-label">
+              ایمیل <span class="profile-card__input-optional">(اختیاری)</span>
+            </label>
+            <input
+              id="profile-email"
+              v-model="form.email"
+              type="email"
+              class="profile-card__input"
+              placeholder="ایمیل خود را وارد کنید"
+              :disabled="isSaving"
+              autocomplete="email"
+            />
+          </div>
 
-            <div class="profile-card__input-group">
-              <label for="profile-email" class="profile-card__input-label">
-                ایمیل <span class="profile-card__input-optional">(اختیاری)</span>
-              </label>
-              <input
-                id="profile-email"
-                v-model="form.email"
-                type="email"
-                class="profile-card__input"
-                placeholder="ایمیل خود را وارد کنید"
-                :disabled="isSaving"
-                autocomplete="email"
+          <div class="profile-card__form-actions">
+            <button
+              type="submit"
+              class="profile-card__save-btn"
+              :disabled="isSaving"
+            >
+              <Icon
+                v-if="isSaving"
+                name="tabler:loader-2"
+                class="h-4 w-4 animate-spin"
               />
-            </div>
-
-            <div class="profile-card__form-actions">
-              <button type="submit" class="profile-card__save-btn" :disabled="isSaving">
-                <Icon v-if="isSaving" name="tabler:loader-2" class="h-4 w-4 animate-spin" />
-                {{ isSaving ? "در حال ذخیره..." : "ذخیره تغییرات" }}
-              </button>
-              <button
-                v-if="hasIdentity"
-                type="button"
-                class="profile-card__cancel-btn"
-                :disabled="isSaving"
-                @click="cancelEditing"
-              >
-                انصراف
-              </button>
-            </div>
-          </form>
-        </Transition>
+              {{ isSaving ? "در حال ذخیره..." : "ذخیره تغییرات" }}
+            </button>
+            <button
+              v-if="hasIdentity"
+              type="button"
+              class="profile-card__cancel-btn"
+              :disabled="isSaving"
+              @click="cancelEditing"
+            >
+              انصراف
+            </button>
+          </div>
+        </form>
       </template>
     </template>
   </section>
@@ -330,7 +380,7 @@ async function handleSave() {
 }
 
 .profile-card__grid {
-  @apply mt-6 grid grid-cols-1 gap-4 border-t pt-6 sm:grid-cols-2;
+  @apply mt-6 grid grid-cols-2 gap-4 border-t pt-6 sm:grid-cols-2;
   border-color: color-mix(in srgb, var(--dash-primary) 14%, transparent);
 }
 

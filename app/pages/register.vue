@@ -210,6 +210,7 @@ onBeforeUnmount(() => {
         >
           ورود به حساب
         </button>
+         <Icon class="text-[--gold-one]" name="tabler:arrow-left" />
       </div>
     </div>
   </main>
@@ -269,8 +270,8 @@ onBeforeUnmount(() => {
 }
 
 .page-register__login {
-  @apply mt-6 flex items-center justify-center gap-2 text-sm
-  text-slate-500 dark:text-slate-400;
+  @apply mt-6 flex items-center justify-center gap-2 text-sm  border-t border-slate-200 pt-5
+    dark:border-slate-800 text-slate-500 dark:text-slate-400;
 }
 
 .page-register__login-button {

@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import SohanSeal from "@/components/dashboard/SohanSeal.vue";
 defineProps<{
   greetingName: string;
   theme: "saffron" | "pistachio";
@@ -12,24 +11,33 @@ const emit = defineEmits<{
 </script>
 
 <template>
-  <header class="dash-header">
+  <header class="dash-header relative">
     <div class="dash-header__bar">
-      <div class="dash-header__brand">
-        <img src="/images/helma-logo.webp" alt="هلما" class="dash-header__logo" />
+      <div class="dash-header__hero-text">
+        <p class="dash-header__hero-eyebrow">خوش آمدید</p>
+        <h1 class="dash-header__hero-title">
+          سلام{{ greetingName ? "، " + greetingName : "" }}
+        </h1>
       </div>
-
+       
       <div class="dash-header__actions">
         <button
           type="button"
           class="dash-header__theme-btn"
-          :title="theme === 'saffron' ? 'رفتن به تم پسته‌ای' : 'رفتن به تم زعفرانی'"
+          :title="
+            theme === 'saffron' ? 'رفتن به تم پسته‌ای' : 'رفتن به تم زعفرانی'
+          "
           @click="emit('toggle-theme')"
         >
           <Icon name="tabler:sparkles" class="h-4 w-4" />
           {{ theme === "saffron" ? "زعفرانی" : "پسته‌ای" }}
         </button>
 
-        <button type="button" class="dash-header__logout-btn" @click="emit('logout')">
+        <button
+          type="button"
+          class="dash-header__logout-btn"
+          @click="emit('logout')"
+        >
           <Icon name="tabler:logout" class="h-4 w-4" />
           خروج
         </button>
@@ -37,26 +45,14 @@ const emit = defineEmits<{
     </div>
 
     <div class="dash-header__hero">
-      <svg class="dash-header__hero-rays" viewBox="0 0 400 160" aria-hidden="true">
-        <line
-          v-for="i in 36"
-          :key="i"
-          x1="60"
-          y1="80"
-          x2="0"
-          y2="80"
-          class="dash-header__ray"
-          :style="{ transform: `rotate(${i * 10}deg)` }"
+     
+
+      <div class="dash-header__brand">
+        <img
+          src="/images/helma-logo.webp"
+          alt="هلما"
+          class="dash-header__logo"
         />
-      </svg>
-
-      <SohanSeal :size="56" class="dash-header__hero-seal">
-        <Icon name="tabler:user-filled" class="h-5 w-5" />
-      </SohanSeal>
-
-      <div class="dash-header__hero-text">
-        <p class="dash-header__hero-eyebrow">خوش آمدید</p>
-        <h1 class="dash-header__hero-title">سلام{{ greetingName ? "، " + greetingName : "" }}</h1>
       </div>
     </div>
   </header>
@@ -78,7 +74,7 @@ const emit = defineEmits<{
 }
 
 .dash-header__logo {
-  @apply h-8 w-auto;
+  @apply h-20 w-auto animate-pulse;
 }
 
 .dash-header__brand-name {
@@ -103,7 +99,7 @@ const emit = defineEmits<{
 }
 
 .dash-header__hero {
-  @apply relative flex items-center gap-4 overflow-hidden px-5 py-6 sm:px-6;
+  @apply relative flex items-center justify-center gap-4 overflow-hidden px-5 py-6 sm:px-6;
   background: linear-gradient(
     135deg,
     var(--dash-surface-2),
@@ -111,15 +107,6 @@ const emit = defineEmits<{
   );
 }
 
-.dash-header__hero-rays {
-  @apply pointer-events-none absolute left-0 top-1/2 h-[220px] w-[220px] -translate-y-1/2 translate-x-5 opacity-40;
-}
-
-.dash-header__ray {
-  stroke: var(--dash-primary);
-  stroke-width: 1;
-  transform-origin: 60px 80px;
-}
 
 .dash-header__hero-seal {
   @apply relative z-10 shrink-0;
