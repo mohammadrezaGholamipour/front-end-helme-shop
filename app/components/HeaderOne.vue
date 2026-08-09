@@ -92,9 +92,9 @@ const openCartDialog = (): void => {
       <button>
         <nuxt-link
           class="flex gap-1 items-center"
-          :to="!user ? '/login' : user.role === 'ADMIN' ? '/admin' : '/'"
+          :to="!user ? '/login' : user.role === 'ADMIN' ? '/admin' : '/dashboard'"
         >
-          <p>{{ user ? user.username : "ورود به فروشگاه" }}</p>
+          <p>{{ user ? 'نمایش پنل' : "ورود به فروشگاه" }}</p>
           <Icon name="tabler:user-filled" class="w-6 h-6" />
         </nuxt-link>
       </button>

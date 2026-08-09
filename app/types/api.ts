@@ -45,13 +45,13 @@ export type CartStoreItem = {
 
 
 export type AddCartPayload = {
-    id: number;
-    name: string;
-    slug: string;
-    image: string | null;
-    price: number;
-    quantity?: number;
-    variantId?: number;
+  id: number;
+  name: string;
+  slug: string;
+  image: string | null;
+  price: number;
+  quantity?: number;
+  variantId?: number;
 };
 
 
@@ -59,7 +59,7 @@ export type AddCartPayload = {
 export interface UserOut {
   id: number;
   mobile: string;
-  username: string;
+  mobile: string;
   role: "ADMIN" | "CUSTOMER";
 }
 
@@ -87,7 +87,7 @@ export interface CreateProductBody {
 
 
 export interface LoginBody {
-  username: string;
+  mobile: string;
   password: string;
 }
 export interface VariantOut {
@@ -204,7 +204,7 @@ export interface TokenResponse {
 }
 
 export interface UserCreate {
-  username: string;
+  mobile: string;
   mobile: string;
   password: string;
   repeat_password: string;
@@ -212,7 +212,7 @@ export interface UserCreate {
 
 
 export interface RegisterBody {
-  username: string;
+  mobile: string;
   mobile: string;
   password: string;
   repeat_password: string;
@@ -221,7 +221,7 @@ export interface RegisterBody {
 export interface UserOut {
   id: number;
   mobile: string;
-  userName: string;
+  mobile: string;
 }
 
 
@@ -343,7 +343,7 @@ export type UpdateBlogBody = Partial<CreateBlogBody>;
 // types/auth.ts
 
 export interface AdminLoginPayload {
-  username: string;
+  mobile: string;
   password: string;
 }
 
@@ -359,4 +359,56 @@ export interface ApiErrorItem {
 
 export interface ApiErrorResponse {
   error: ApiErrorItem[];
+}
+
+export interface CustomerProfileOut {
+  first_name: string;
+  last_name: string;
+  email: string;
+  id: number;
+  user_id: number;
+}
+
+export interface UpdateCustomerProfileBody {
+  first_name: string;
+  last_name: string;
+  email: string;
+}
+
+
+// یوزوان روی مقدار enum واقعی بک‌اند: توی داکیومنت فقط "PENDING" مثال زده شده.
+// بقیه مقادیر رو حدس زدم، لطفاً با مقادیر واقعی enum سمت بک‌اند مقایسه/اصلاح کن.
+// ترفند `string & {}` باعث می‌شه هم autocomplete مقادیر بالا کار کنه، هم هر string دیگه‌ای رد نشه.
+export type OrderStatus =
+  | "PENDING"
+  | "PAID"
+  | "PROCESSING"
+  | "SHIPPED"
+  | "DELIVERED"
+  | "CANCELLED"
+  | (string & {});
+
+// اسکیمای items توی داکیومنت داده نشده (همیشه [] برگشته). فیلدهای رایج رو گذاشتم
+// و همه رو اختیاری کردم تا با اسکیمای واقعی که بعداً می‌فرستی راحت جایگزین بشه.
+export interface OrderItemOut {
+  id?: number;
+  title?: string;
+  product_name?: string;
+  variant_name?: string;
+  quantity?: number;
+  unit_price?: string;
+  total_price?: string;
+  image?: string;
+  [key: string]: unknown;
+}
+
+export interface OrderOut {
+  status: OrderStatus;
+  total_amount: string;
+  discount_amount: string;
+  shipping_amount: string;
+  payable_amount: string;
+  id: number;
+  user_id: number;
+  items: OrderItemOut[];
 }

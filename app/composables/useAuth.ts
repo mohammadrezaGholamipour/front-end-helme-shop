@@ -42,11 +42,11 @@ export function useAuth() {
   // =========================
 
   async function login(
-    username: string,
+    mobile: string,
     password: string
   ) {
     const response = await AuthApi.login($api, {
-      username,
+      mobile,
       password,
     });
 
@@ -62,7 +62,7 @@ export function useAuth() {
     if (user.value.role === "ADMIN") {
       await navigateTo("/admin");
     } else {
-      await navigateTo("/");
+      await navigateTo("/dashboard");
     }
 
     return user.value;
@@ -74,7 +74,7 @@ export function useAuth() {
 
     // بعد از ثبت نام، مستقیماً login
     const user = await login(
-      payload.username,
+      payload.mobile,
       payload.password,
     );
 
@@ -117,17 +117,17 @@ export function useAuth() {
     await navigateTo("/login");
   }
 
-return {
-  token,
-  user,
+  return {
+    token,
+    user,
 
-  isAuthenticated,
-  isAdmin,
-  isCustomer,
+    isAuthenticated,
+    isAdmin,
+    isCustomer,
 
-  login,
-  register,
-  fetchMe,
-  logout,
-};
+    login,
+    register,
+    fetchMe,
+    logout,
+  };
 }

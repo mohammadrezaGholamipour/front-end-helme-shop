@@ -5,7 +5,7 @@ const { login } = useAuth();
 const toast = useAppToast();
 
 const form = reactive({
-  username: "",
+  mobile: "",
   password: "",
 });
 
@@ -14,11 +14,11 @@ const isLoading = ref(false);
 const handleSubmit = async () => {
   if (isLoading.value) return;
 
-  const username = form.username.trim();
+  const mobile = form.mobile.trim();
   const password = form.password;
 
-  if (!username) {
-    toast.error("لطفاً نام و نام خانوادگی خود را وارد کنید.");
+  if (!mobile) {
+    toast.error("لطفاً شماره موبایل خود را وارد کنید.");
     return;
   }
 
@@ -30,11 +30,11 @@ const handleSubmit = async () => {
   isLoading.value = true;
 
   try {
-    await login(username, password);
+    await login(mobile, password);
 
     toast.success("با موفقیت وارد شدید.");
   } catch (error) {
-    toast.apiError(error, "نام کاربری یا رمز عبور اشتباه است.");
+    toast.apiError(error, "شماره موبایل یا رمز عبور اشتباه است.");
   } finally {
     isLoading.value = false;
   }
@@ -44,8 +44,6 @@ const goToRegister = () => {
   navigateTo("/register");
 };
 
-/* ===== پس‌زمینه متحرک Vanta.js (Waves) از طریق CDN ===== */
-// این روش مشکلات باندل‌شدن UMD در Vite/Nuxt رو دور می‌زنه.
 useHead({
   script: [
     {
@@ -100,7 +98,7 @@ onMounted(async () => {
       waveHeight: 18.0,
       waveSpeed: 2,
       zoom: 0.85,
-      backgroundColor:0xc9962e, // پس‌زمینه روشن هماهنگ با تم
+      backgroundColor: 0xc9962e, // پس‌زمینه روشن هماهنگ با تم
     });
   } catch (e) {
     // اگر به هر دلیلی Vanta لود نشد، صفحه بدون افکت (فقط رنگ ساده) نمایش داده می‌شه
@@ -127,19 +125,15 @@ onBeforeUnmount(() => {
         />
 
         <h1 class="page-login__title">سوهان و گز حلما وفایی</h1>
-
-        <p class="page-login__subtitle">
-          برای دسترسی به امکانات فروشگاه اطلاعات خود را وارد کنید
-        </p>
       </div>
 
       <form class="page-login__form" @submit.prevent="handleSubmit">
         <AdminInput
-          v-model="form.username"
-          label="نام و نام خانوادگی"
-          placeholder="نام و نام خانوادگی خود را وارد کنید"
+          v-model="form.mobile"
+          label="شماره موبایل"
+          placeholder="شماره موبایل خود را وارد کنید"
           :disabled="isLoading"
-          autocomplete="username"
+          autocomplete="mobile"
         />
 
         <AdminInput

@@ -10,7 +10,6 @@ const toast = useAppToast();
 const { register } = useAuth();
 
 const form = reactive<RegisterBody>({
-  username: "",
   mobile: "",
   password: "",
   repeat_password: "",
@@ -19,11 +18,6 @@ const form = reactive<RegisterBody>({
 const isLoading = ref(false);
 
 function validateForm() {
-  if (!form.username.trim()) {
-    toast.error("نام و نام خانوادگی را وارد کنید");
-    return false;
-  }
-
   if (!form.mobile.trim()) {
     toast.error("شماره موبایل را وارد کنید");
     return false;
@@ -61,16 +55,12 @@ async function handleSubmit() {
 
   try {
     await register({
-      username: form.username.trim(),
       mobile: form.mobile.trim(),
       password: form.password,
       repeat_password: form.repeat_password,
     });
   } catch (err: unknown) {
-    toast.apiError(
-      err,
-      "ثبت نام انجام نشد. دوباره تلاش کنید.",
-    );
+    toast.apiError(err, "ثبت نام انجام نشد. دوباره تلاش کنید.");
   } finally {
     isLoading.value = false;
   }
@@ -79,17 +69,14 @@ async function handleSubmit() {
 async function goToLogin() {
   await router.push("/login");
 }
-
-/* ===== پس‌زمینه متحرک Vanta.js (CELLS) از طریق CDN =====
-   توجه: افکت CELLS بر خلاف WAVES/NET به p5.js نیاز داره، نه three.js */
 useHead({
   script: [
     {
-      src: "https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js",
+      src: "https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js",
       defer: false,
     },
     {
-      src: "https://cdnjs.cloudflare.com/ajax/libs/vanta/0.5.24/vanta.cells.min.js",
+      src: "https://cdnjs.cloudflare.com/ajax/libs/vanta/0.5.24/vanta.waves.min.js",
       defer: false,
     },
   ],
@@ -98,14 +85,15 @@ useHead({
 const vantaRef = ref<HTMLElement | null>(null);
 let vantaEffect: any = null;
 
+// منتظر می‌مونیم تا اسکریپت‌های سراسری (window.THREE و window.VANTA) لود بشن
 function waitForVanta(retries = 50): Promise<void> {
   return new Promise((resolve, reject) => {
     const check = () => {
       const w = window as any;
-      if (w.p5 && w.VANTA?.CELLS) {
+      if (w.THREE && w.VANTA?.WAVES) {
         resolve();
       } else if (retries <= 0) {
-        reject(new Error("Vanta/p5 did not load"));
+        reject(new Error("Vanta/Three did not load"));
       } else {
         retries--;
         setTimeout(check, 100);
@@ -120,21 +108,25 @@ onMounted(async () => {
     await waitForVanta();
     const w = window as any;
 
-    vantaEffect = w.VANTA.CELLS({
+    vantaEffect = w.VANTA.WAVES({
       el: vantaRef.value,
+      THREE: w.THREE,
       mouseControls: true,
       touchControls: true,
-      gyroControls: false,
+      gyroControls: true,
       minHeight: 200.0,
       minWidth: 200.0,
       scale: 1.0,
       scaleMobile: 1.0,
-      color1: 0xc9962e, // طلایی تیره‌تر (--gold-one)
-      color2: 0xf0d68a, // طلایی روشن‌تر برای کنتراست ملایم بین سلول‌ها
-      size: 1.6,
-      speed: 3.0,
+      color: 0xc9962e, // رنگ طلایی هماهنگ با --gold-one
+      shininess: 45.0,
+      waveHeight: 18.0,
+      waveSpeed: 3,
+      zoom: 1,
+      backgroundColor: 0xc9962e, // پس‌زمینه روشن هماهنگ با تم
     });
   } catch (e) {
+    // اگر به هر دلیلی Vanta لود نشد، صفحه بدون افکت (فقط رنگ ساده) نمایش داده می‌شه
     console.error("Vanta failed to initialize:", e);
   }
 });
@@ -159,22 +151,10 @@ onBeforeUnmount(() => {
         />
 
         <h1 class="page-register__title">سوهان و گز حلما وفایی</h1>
-
-        <p class="page-register__subtitle">
-          برای استفاده از امکانات فروشگاه حساب کاربری خود را ایجاد کنید
-        </p>
       </div>
 
       <!-- Register Form -->
       <form class="page-register__form" @submit.prevent="handleSubmit">
-        <AdminInput
-          v-model="form.username"
-          label="نام و نام خانوادگی"
-          placeholder="نام و نام خانوادگی خود را وارد کنید"
-          :disabled="isLoading"
-          autocomplete="name"
-        />
-
         <AdminInput
           v-model="form.mobile"
           label="شماره موبایل"

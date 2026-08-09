@@ -7,14 +7,9 @@ import type {
 
 export const AuthApi = {
   login: ($api: any, payload: LoginBody) => {
-    const body = new URLSearchParams();
-
-    body.set("username", payload.username);
-    body.set("password", payload.password);
-
     return $api("/auth/login", {
       method: "POST",
-      body,
+      body: payload,
     }) as Promise<TokenResponse>;
   },
 
