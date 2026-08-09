@@ -51,7 +51,7 @@ const title: Record<string, TitleItem> = {
     <div
       v-if="isLoading"
       v-animate="{ type: 'blurIn', delay: 700, duration: 1000, once: true }"
-      class="flex flex-col items-center gap-5 font-bold text-2xl p-10 w-full"
+      class="flex flex-col items-center gap-5 font-bold text-xl p-10 w-full"
     >
       <div class="loader"></div>
       <p>در حال دریافت محصولات ...</p>

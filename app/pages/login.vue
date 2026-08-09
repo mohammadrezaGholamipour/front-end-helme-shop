@@ -109,12 +109,19 @@ onMounted(async () => {
 onBeforeUnmount(() => {
   vantaEffect?.destroy();
 });
+
+const goToHome = () => {
+  navigateTo("/");
+};
 </script>
 
 <template>
   <div class="page-login">
     <!-- پس‌زمینه متحرک -->
     <div ref="vantaRef" class="page-login__bg"></div>
+    <button type="button" class="page-login__home" @click="goToHome">
+      بازگشت به صفحه اصلی
+    </button>
 
     <div class="page-login__card">
       <div class="page-login__brand">
@@ -183,6 +190,15 @@ onBeforeUnmount(() => {
 
 .page-login__bg {
   @apply absolute inset-0 z-0;
+}
+
+.page-login__home {
+  @apply absolute top-4 m-auto z-20 flex items-center gap-2 rounded-full
+    bg-white px-4 py-2.5 text-sm font-bold text-[--gold-one]
+    shadow-lg transition
+    hover:bg-[--gold-one] hover:text-white hover:shadow-xl
+    dark:bg-slate-950 dark:text-[--gold-one]
+    dark:hover:bg-[--gold-one] dark:hover:text-white;
 }
 
 .page-login__card {

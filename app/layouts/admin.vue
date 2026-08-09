@@ -42,7 +42,13 @@ useSeoMeta({
           <Icon name="tabler:x" class="h-5 w-5" />
         </button>
       </div>
-      <nav class="admin-layout__nav" aria-label="منوی مدیریت">
+      <nav v-animate="{
+        type: 'slideLeft',
+        delay: 300,
+        duration: 1000,
+        once: true,
+        threshold: 0,
+      }" class="admin-layout__nav" aria-label="منوی مدیریت">
         <AdminSidebarItem
           to="/admin"
           label="داشبورد"
@@ -97,7 +103,16 @@ useSeoMeta({
     </aside>
 
     <div class="admin-layout__main">
-      <header class="admin-layout__header">
+      <header
+        v-animate="{
+          type: 'slideDown',
+          delay: 300,
+          duration: 1000,
+          once: true,
+          threshold: 0,
+        }"
+        class="admin-layout__header"
+      >
         <div class="admin-layout__header-right">
           <button
             type="button"

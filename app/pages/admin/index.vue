@@ -12,7 +12,16 @@ const cards = [
 
 <template>
   <div class="admin-dashboard">
-    <section class="admin-dashboard__hero">
+    <section
+      v-animate="{
+        type: 'scaleIn',
+        delay: 300,
+        duration: 1000,
+        once: true,
+        threshold: 0,
+      }"
+      class="admin-dashboard__hero"
+    >
       <h1 class="admin-dashboard__title">خوش آمدید به پنل مدیریت</h1>
       <p class="admin-dashboard__subtitle">
         این بخش برای مدیریت محتوا و داده‌های فروشگاه طراحی شده است.
@@ -21,20 +30,23 @@ const cards = [
 
     <section class="admin-dashboard__cards">
       <NuxtLink
-        v-for="card in cards"
+        v-animate="{
+          type: 'slideRight',
+          delay: 300,
+          duration: 1000,
+          once: true,
+          threshold: 0,
+        }"
+        v-for="(card, index) in cards"
         :key="card.to"
         :to="card.to"
         class="admin-dashboard__card"
       >
         <span class="admin-dashboard__card-icon">
           <Icon :name="card.icon" class="h-6 w-6" />
-          
         </span>
         <span class="admin-dashboard__card-label">{{ card.label }}</span>
-        <Icon
-          name="tabler:arrow-left"
-          class="admin-dashboard__card-arrow"
-        />
+        <Icon name="tabler:arrow-left" class="admin-dashboard__card-arrow" />
       </NuxtLink>
     </section>
   </div>
