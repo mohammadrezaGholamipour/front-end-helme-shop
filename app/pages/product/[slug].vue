@@ -321,7 +321,7 @@ const handleAddToCart = (): void => {
 }
 
 .product-page__text h1 {
-  @apply font-bold text-4xl  text-center leading-[4rem];
+  @apply font-bold text-4xl text-wrap text-center leading-[4rem];
 }
 
 .product-page__text p:first-of-type {
