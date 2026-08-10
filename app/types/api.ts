@@ -59,7 +59,6 @@ export type AddCartPayload = {
 export interface UserOut {
   id: number;
   mobile: string;
-  mobile: string;
   role: "ADMIN" | "CUSTOMER";
 }
 
@@ -205,7 +204,6 @@ export interface TokenResponse {
 
 export interface UserCreate {
   mobile: string;
-  mobile: string;
   password: string;
   repeat_password: string;
 }
@@ -213,15 +211,8 @@ export interface UserCreate {
 
 export interface RegisterBody {
   mobile: string;
-  mobile: string;
   password: string;
   repeat_password: string;
-}
-
-export interface UserOut {
-  id: number;
-  mobile: string;
-  mobile: string;
 }
 
 

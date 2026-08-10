@@ -19,7 +19,7 @@ const emit = defineEmits<{
           سلام{{ greetingName ? "، " + greetingName : "" }}
         </h1>
       </div>
-       
+
       <div class="dash-header__actions">
         <button
           type="button"
@@ -45,8 +45,6 @@ const emit = defineEmits<{
     </div>
 
     <div class="dash-header__hero">
-     
-
       <div class="dash-header__brand">
         <img
           src="/images/helma-logo.webp"
@@ -54,6 +52,12 @@ const emit = defineEmits<{
           class="dash-header__logo"
         />
       </div>
+      <nuxt-link to="/">
+        <button type="button" class="dash-header__logout-btn">
+          <Icon name="tabler:home" class="h-4 w-4" />
+          بازگشت به فروشگاه
+        </button>
+      </nuxt-link>
     </div>
   </header>
 </template>
@@ -99,14 +103,13 @@ const emit = defineEmits<{
 }
 
 .dash-header__hero {
-  @apply relative flex items-center justify-center gap-4 overflow-hidden px-5 py-6 sm:px-6;
+  @apply relative flex items-center flex-col justify-center gap-4 overflow-hidden px-5 py-6 sm:px-6;
   background: linear-gradient(
     135deg,
     var(--dash-surface-2),
     color-mix(in srgb, var(--dash-primary) 14%, var(--dash-surface-2))
   );
 }
-
 
 .dash-header__hero-seal {
   @apply relative z-10 shrink-0;

@@ -61,12 +61,15 @@ const openCartDialog = (): void => {
         threshold: 0,
       }"
     >
-      <NuxtLink to="/blog">
+      <nuxt-link
+        class="flex gap-1 items-center"
+        :to="!user ? '/login' : user.role === 'ADMIN' ? '/admin' : '/dashboard'"
+      >
         <button>
-          <p>وبلاگ</p>
-          <Icon name="tabler:library-filled" class="w-6 h-6" />
+          <p>{{ user ? "نمایش پنل" : "ورود به پنل" }}</p>
+          <Icon name="tabler:user-filled" class="w-6 h-6" />
         </button>
-      </NuxtLink>
+      </nuxt-link>
       <button @click="openCartDialog" class="relative md:!hidden">
         <p>سبد خرید</p>
         <Icon name="tabler:shopping-cart" class="w-6 h-6" />
@@ -84,21 +87,17 @@ const openCartDialog = (): void => {
           {{ cartStore.totalItems }}
         </span>
       </button>
+      <NuxtLink to="/blog">
+        <button>
+          <p>وبلاگ</p>
+          <Icon name="tabler:library-filled" class="w-6 h-6" />
+        </button>
+      </NuxtLink>
       <button>
         <p class="min-w-[55px] tabular-nums">{{ time }}</p>
         |
         <p>{{ date }}</p>
       </button>
-
-      <nuxt-link
-        class="flex gap-1 items-center"
-        :to="!user ? '/login' : user.role === 'ADMIN' ? '/admin' : '/dashboard'"
-      >
-        <button>
-          <p>{{ user ? "نمایش پنل" : "ورود به فروشگاه" }}</p>
-          <Icon name="tabler:user-filled" class="w-6 h-6" />
-        </button>
-      </nuxt-link>
     </section>
   </div>
 
