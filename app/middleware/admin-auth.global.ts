@@ -1,9 +1,25 @@
 export default defineNuxtRouteMiddleware((to) => {
-  if (!to.path.startsWith("/admin")) return;
-  if (to.path === "/login") return;
-
   const token = useCookie("helma_token");
-  if (!token.value) {
+
+  const isAuthenticated = !!token.value;
+
+  // صفحات خصوصی
+  const isProtectedRoute =
+    to.path.startsWith("/admin") ||
+    to.path.startsWith("/dashboard");
+
+  // صفحات احراز هویت
+  const isAuthPage =
+    to.path === "/login" ||
+    to.path === "/register";
+
+  // اگر صفحه خصوصی است و توکن نداریم
+  if (isProtectedRoute && !isAuthenticated) {
     return navigateTo("/login");
+  }
+
+  // اگر توکن داریم، ورود به login/register ممنوع
+  if (isAuthPage && isAuthenticated) {
+    return navigateTo("/dashboard");
   }
 });
