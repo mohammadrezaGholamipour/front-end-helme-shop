@@ -42,13 +42,17 @@ useSeoMeta({
           <Icon name="tabler:x" class="h-5 w-5" />
         </button>
       </div>
-      <nav v-animate="{
-        type: 'slideLeft',
-        delay: 300,
-        duration: 1000,
-        once: true,
-        threshold: 0,
-      }" class="admin-layout__nav" aria-label="منوی مدیریت">
+      <nav
+        v-animate="{
+          type: 'slideLeft',
+          delay: 300,
+          duration: 1000,
+          once: true,
+          threshold: 0,
+        }"
+        class="admin-layout__nav"
+        aria-label="منوی مدیریت"
+      >
         <AdminSidebarItem
           to="/admin"
           label="داشبورد"
@@ -82,16 +86,18 @@ useSeoMeta({
           ]"
           @navigate="closeSidebar"
         />
+        <AdminSidebarGroup
+          label="تنظیمات"
+          icon="tabler:settings"
+          :children="[
+            { to: '/admin/slider', label: 'اسلایدر' },
+          ]"
+          @navigate="closeSidebar"
+        />
         <AdminSidebarItem
           to="/admin/users"
           label="کاربران"
           icon="tabler:users"
-          @navigate="closeSidebar"
-        />
-        <AdminSidebarItem
-          to="/admin/settings"
-          label="تنظیمات"
-          icon="tabler:settings"
           @navigate="closeSidebar"
         />
       </nav>

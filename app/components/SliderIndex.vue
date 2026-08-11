@@ -1,5 +1,18 @@
 <script setup lang="ts">
 import { useKeenSlider } from "keen-slider/vue.es";
+import type { SliderOut } from "~/types";
+
+const { data: sliders } = useAllSlider() as {
+  data: Ref<SliderOut[] | undefined>;
+};
+
+const sortedSliders = computed(() => {
+  if (!sliders.value) return [];
+  return [...sliders.value].sort(
+    (a, b) => (a.display_order ?? 0) - (b.display_order ?? 0),
+  );
+});
+
 const [container, slider] = useKeenSlider(
   {
     loop: true,
@@ -48,6 +61,12 @@ const [container, slider] = useKeenSlider(
   ],
 );
 
+// هر بار تعداد اسلایدها تغییر کرد (بعد از لود دیتا از API)، اسلایدر باید بروزرسانی بشه
+watch(sortedSliders, async () => {
+  await nextTick();
+  slider.value?.update();
+});
+
 onMounted(() => {
   if (!container.value) return;
 
@@ -62,57 +81,33 @@ onMounted(() => {
   });
 });
 </script>
+
 <template>
   <div
     ref="container"
-    class="keen-slider slide-in-elliptic-top-fwd sm:!hidden  max-h-[700px] min-h-[100vw]"
+    class="keen-slider slide-in-elliptic-top-fwd sm:!hidden max-h-[700px] min-h-[100vw]"
   >
-    <div class="keen-slider__slide">
+    <div
+      v-for="(item, index) in sortedSliders"
+      :key="item.id"
+      class="keen-slider__slide"
+    >
       <img
+        :src="`https://sohangaz.com${item.image}`"
         alt="حلما شاپ"
         class="w-full h-full object-cover"
-        src="/images/banner-one-small.webp"
-        fetchpriority="high"
+        :fetchpriority="index === 0 ? 'high' : 'auto'"
+        height="500"
+        width="500"
         @load="slider?.update()"
-        height="500"
-        width="500"
-      />
-    </div>
-    <div class="keen-slider__slide">
-      <img
-        alt="حلما شاپ"
-        class="w-full h-full object-cover"
-        src="/images/banner-four-small.webp"
-        fetchpriority="high"
-        height="500"
-        width="500"
-      />
-    </div>
-    <div class="keen-slider__slide">
-      <img
-        class="w-full h-full object-cover"
-        src="/images/banner-three-small.webp"
-        alt="سوهان و گز حلما وفایی"
-        fetchpriority="high"
-        width="500"
-        height="500"
-      />
-    </div>
-    <div class="keen-slider__slide">
-      <img
-        class="w-full h-full object-cover"
-        src="/images/banner-two-small.webp"
-        alt="سوهان و گز حلما وفایی"
-        fetchpriority="high"
-        width="500"
-        height="500"
       />
     </div>
   </div>
 </template>
+
 <style>
 .keen-slider__slide {
-  @apply rounded-lg overflow-hidden ;
+  @apply rounded-lg overflow-hidden;
 }
 
 .slide-in-elliptic-top-fwd {

@@ -416,3 +416,10 @@ export interface OrderOut {
   user_id: number;
   items: OrderItemOut[];
 }
+
+
+export interface SliderOut {
+  id: number;
+  image: string;
+  display_order: number;
+}

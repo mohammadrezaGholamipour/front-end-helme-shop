@@ -6,7 +6,6 @@ const cards = [
   { label: "سفارش‌ها", to: "/admin/orders", icon: "tabler:shopping-cart" },
   { label: "وبلاگ", to: "/admin/blog", icon: "tabler:article" },
   { label: "کاربران", to: "/admin/users", icon: "tabler:users" },
-  { label: "تنظیمات", to: "/admin/settings", icon: "tabler:settings" },
 ];
 </script>
 
