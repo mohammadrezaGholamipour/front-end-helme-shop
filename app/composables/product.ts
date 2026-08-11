@@ -1,4 +1,4 @@
-import type { ProductOut } from "~/types";
+import type { ProductOut, ProductFilters } from "~/types";
 import { ProductApi } from "~/services/product";
 import { onServerPrefetch } from "vue";
 
@@ -62,21 +62,15 @@ export const useProductSlug = (slug: string) => {
 
 export const useCreateProduct = () => {
   const { $api } = useNuxtApp();
-  const qc = useQueryClient();
-
   return useMutation<ProductOut, unknown, FormData>({
-    mutationFn: (payload: FormData) => ProductApi.create($api, payload),
-    onSuccess: () => qc.invalidateQueries({ queryKey: ["product"] }),
+    mutationFn: (payload: FormData) => ProductApi.create($api, payload)
   });
 };
 
 export const useUpdateProduct = () => {
   const { $api } = useNuxtApp();
-  const qc = useQueryClient();
-
   return useMutation<ProductOut, unknown, FormData>({
-    mutationFn: (payload: FormData) => ProductApi.update($api, payload),
-    onSuccess: () => qc.invalidateQueries({ queryKey: ["product"] }),
+    mutationFn: (payload: FormData) => ProductApi.update($api, payload)
   });
 };
 
@@ -86,6 +80,6 @@ export const useDeleteProduct = () => {
 
   return useMutation<void, unknown, number>({
     mutationFn: (id: number) => ProductApi.delete($api, id),
-    onSuccess: () => qc.invalidateQueries({ queryKey: ["product"] }),
+    onSuccess: () => qc.invalidateQueries({ queryKey: ["products"] }),
   });
 };

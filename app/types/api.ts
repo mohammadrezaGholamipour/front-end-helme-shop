@@ -353,17 +353,30 @@ export interface ApiErrorResponse {
 }
 
 export interface CustomerProfileOut {
+  id: number;
+  user_id: number;
+
   first_name: string;
   last_name: string;
   email: string;
-  id: number;
-  user_id: number;
+
+  address: string;
+  postal_code: string;
+
+  latitude: number;
+  longitude: number;
 }
 
 export interface UpdateCustomerProfileBody {
   first_name: string;
   last_name: string;
   email: string;
+
+  address: string;
+  postal_code: string;
+
+  latitude: number;
+  longitude: number;
 }
 
 

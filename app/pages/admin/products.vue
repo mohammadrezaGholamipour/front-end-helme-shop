@@ -20,20 +20,8 @@ const { mutate: deleteVariant, isPending: isDeletingVariant } =
 
 const toast = useAppToast();
 
-const {
-  data: products,
-  isLoading,
-  error,
-} = useAllProduct() as {
-  data: Ref<ProductOut[] | undefined>;
-  isLoading: Ref<boolean>;
-  error: Ref<unknown>;
-};
-
-// برای پرکردن select دسته‌بندی از همان composable صفحه‌ی دسته‌بندی‌ها استفاده می‌کنیم
-const { data: categories } = useAllCategory() as {
-  data: Ref<{ id: number; name: string }[] | undefined>;
-};
+const { data: products, isLoading, error, refetch } = useAllProduct();
+const { data: categories } = useAllCategory();
 
 const productTypeOptions = [
   { label: "سوهان", value: "SOHAN" },
@@ -418,8 +406,10 @@ const submitVariantForm = () => {
   if (hasError) return;
 
   const payload = buildVariantFormData({
-    volume: state.variantForm.volume as number,
-    price: state.variantForm.price as number,
+    volume: Number(
+      String(state.variantForm.volume).replace(/,/g, ""),
+    ) as number,
+    price: Number(String(state.variantForm.price).replace(/,/g, "")) as number,
     stock: state.variantForm.stock,
   });
 
@@ -432,10 +422,11 @@ const submitVariantForm = () => {
     createVariant(
       { productId: state.selectedId, payload },
       {
-        onSuccess: (created) => {
+        onSuccess: async (created) => {
           state.variants.push(created);
           state.variantFormOpen = false;
           resetVariantForm();
+          await refetch();
           toast.success("مدل محصول اضافه شد.");
         },
         onError,
@@ -448,11 +439,12 @@ const submitVariantForm = () => {
   updateVariant(
     { variantId: state.variantForm.id, payload },
     {
-      onSuccess: (updated) => {
+      onSuccess: async (updated) => {
         const index = state.variants.findIndex((v) => v.id === updated.id);
         if (index !== -1) state.variants[index] = updated;
         state.variantFormOpen = false;
         resetVariantForm();
+        await refetch();
         toast.success("مدل محصول ویرایش شد.");
       },
       onError,
