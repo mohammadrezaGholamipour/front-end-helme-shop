@@ -39,6 +39,12 @@ jobs:
 
           chmod 600 ~/.ssh/id_rsa
 
+      - name: Compress build
+        run: |
+          tar -czf frontend.tar.gz .output package.json package-lock.json
+          ls -lh frontend.tar.gz
+          sha256sum frontend.tar.gz
+
       - name: Test SSH
         run: |
           ssh \
@@ -50,15 +56,19 @@ jobs:
 
       - name: Copy archive with rsync
         run: |
-          rsync -avz \
-            --progress \
-            --timeout=120 \
+          rsync -av \
+            --partial \
+            --append-verify \
+            --info=progress2 \
+            --timeout=600 \
+            --contimeout=30 \
             -e "ssh \
-            -o StrictHostKeyChecking=no \
-            -o ServerAliveInterval=15 \
-            -o ServerAliveCountMax=3 \
-            -i ~/.ssh/id_rsa \
-            -p ${{ secrets.PORT }}" \
+              -o StrictHostKeyChecking=no \
+              -o ServerAliveInterval=15 \
+              -o ServerAliveCountMax=10 \
+              -o ConnectTimeout=30 \
+              -i ~/.ssh/id_rsa \
+              -p ${{ secrets.PORT }}" \
             frontend.tar.gz \
             ${{ secrets.USERNAME }}@${{ secrets.HOST }}:/root/app/frontend/frontend.tar.gz
 
