@@ -1,31 +1,32 @@
 <script setup lang="ts">
-const { mutateAsync: updateProfile, isPending: isSaving } = useUpdateProfile();
+const { mutateAsync: updateProfile, isPending: isUpdatingProfile } = useUpdateProfile();
 const { data: profile, isPending, isError, refetch } = useProfile();
-const { user } = useAuth();
+import SohanSeal from "@/components/dashboard/SohanSeal.vue";
+const createOrder = useCreateOrder();
+const cartStore = useCartStore();
 const toast = useAppToast();
+const { user } = useAuth();
+const router = useRouter();
 
+
+const isSaving = computed(
+  () => isUpdatingProfile.value || createOrder.isPending.value
+);
 const isEditing = ref(false);
 
 const form = reactive({
   first_name: "",
   last_name: "",
-  email: "",
   address: "",
   postal_code: "",
-  latitude: 0,
-  longitude: 0,
 });
 
 function syncFormFromProfile() {
   if (!profile.value) return;
-
   form.first_name = profile.value.first_name ?? "";
   form.last_name = profile.value.last_name ?? "";
-  form.email = profile.value.email ?? "";
   form.address = profile.value.address ?? "";
   form.postal_code = profile.value.postal_code ?? "";
-  form.latitude = profile.value.latitude ?? 0;
-  form.longitude = profile.value.longitude ?? 0;
 }
 
 watch(profile, syncFormFromProfile, { immediate: true });
@@ -48,22 +49,17 @@ function startEditing() {
 }
 
 function cancelEditing() {
-  // اگر کاربر هنوز هیچ اطلاعاتی ثبت نکرده، انصراف معنی ندارد
   if (!hasIdentity.value) return;
 
   syncFormFromProfile();
   isEditing.value = false;
 }
 
-const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-const POSTAL_CODE_REGEX = /^\d{10}$/;
-
 async function handleSave() {
   if (isSaving.value) return;
-
+  const POSTAL_CODE_REGEX = /^\d{10}$/;
   const first_name = form.first_name.trim();
   const last_name = form.last_name.trim();
-  const email = form.email.trim();
   const address = form.address.trim();
   const postal_code = form.postal_code.trim();
 
@@ -71,22 +67,14 @@ async function handleSave() {
     toast.error("لطفاً نام و نام خانوادگی را کامل وارد کنید.");
     return;
   }
-
-  if (email && !EMAIL_REGEX.test(email)) {
-    toast.error("ایمیل وارد شده معتبر نیست.");
-    return;
-  }
-
   if (!address) {
     toast.error("لطفاً آدرس خود را وارد کنید.");
     return;
   }
-
   if (!postal_code) {
     toast.error("لطفاً کد پستی را وارد کنید.");
     return;
   }
-
   if (!POSTAL_CODE_REGEX.test(postal_code)) {
     toast.error("کد پستی باید ۱۰ رقم و فقط شامل عدد باشد.");
     return;
@@ -96,16 +84,33 @@ async function handleSave() {
     await updateProfile({
       first_name,
       last_name,
-      email,
       address,
       postal_code,
-      latitude: Number(form.latitude),
-      longitude: Number(form.longitude),
     });
 
     toast.success("اطلاعات حساب با موفقیت به‌روزرسانی شد.");
-
     isEditing.value = false;
+
+    // اگر سبد خرید ثبت‌نشده‌ای در localStorage وجود دارد، سفارش را ثبت کن
+    if (cartStore.cartItems.length) {
+      try {
+        await createOrder.mutateAsync({
+          items: cartStore.cartItems.map((item) => ({
+            product_id: item.id,
+            variant_id: item.variantId,
+            quantity: item.quantity,
+          })),
+        });
+
+        cartStore.clearCart();
+        toast.success("سفارش شما با موفقیت ثبت شد");
+      } catch (orderError: any) {
+        // اگر مشکل مربوط به یکی از محصولات سبد بود، سبد را دست‌نخورده نگه دار
+        toast.apiError(orderError, "ثبت سفارش با خطا مواجه شد");
+      }
+    }
+
+    router.push("/dashboard?tab=orders");
   } catch (error) {
     toast.apiError(error, "به‌روزرسانی اطلاعات با خطا مواجه شد.");
   }
@@ -154,7 +159,7 @@ async function handleSave() {
         </p>
 
         <p class="profile-card__onboarding-text">
-          هنوز نام و نام‌خانوادگی‌ای برای حساب شما ثبت نشده است.
+          برای دریافت محصول باید اطلاعات خود را تکمیل کنید
         </p>
 
         <button
@@ -162,7 +167,6 @@ async function handleSave() {
           class="profile-card__primary-btn"
           @click="startEditing"
         >
-          <Icon name="tabler:pencil" class="h-4 w-4" />
           تکمیل اطلاعات
         </button>
       </div>
@@ -179,12 +183,7 @@ async function handleSave() {
               {{ fullName || "کاربر گرامی" }}
             </h2>
 
-            <p
-              class="profile-card__email"
-              :class="{
-                'profile-card__email--muted': !profile?.email,
-              }"
-            >
+            <p class="profile-card__email profile-card__email--muted">
               {{ user?.mobile }}
             </p>
           </div>
@@ -195,7 +194,6 @@ async function handleSave() {
             class="profile-card__edit-btn"
             @click="startEditing"
           >
-            <Icon name="tabler:pencil" class="h-4 w-4" />
             ویرایش اطلاعات
           </button>
         </div>
@@ -238,20 +236,6 @@ async function handleSave() {
               }"
             >
               {{ profile?.last_name || "ثبت نشده" }}
-            </span>
-          </div>
-
-          <!-- Email -->
-          <div class="profile-card__field">
-            <span class="profile-card__field-label"> ایمیل </span>
-
-            <span
-              class="profile-card__field-value"
-              :class="{
-                'profile-card__field-value--empty': !profile?.email,
-              }"
-            >
-              {{ profile?.email || "ثبت نشده" }}
             </span>
           </div>
 
@@ -329,24 +313,6 @@ async function handleSave() {
               placeholder="نام خانوادگی خود را وارد کنید"
               :disabled="isSaving"
               autocomplete="family-name"
-            />
-          </div>
-
-          <!-- Email -->
-          <div class="profile-card__input-group">
-            <label for="profile-email" class="profile-card__input-label">
-              ایمیل
-              <span class="profile-card__input-optional"> (اختیاری) </span>
-            </label>
-
-            <input
-              id="profile-email"
-              v-model="form.email"
-              type="email"
-              class="profile-card__input"
-              placeholder="ایمیل خود را وارد کنید"
-              :disabled="isSaving"
-              autocomplete="email"
             />
           </div>
 
@@ -492,7 +458,7 @@ async function handleSave() {
 /* --- Identity --- */
 
 .profile-card__identity {
-  @apply flex flex-wrap items-center justify-center gap-4 md:justify-start;
+  @apply flex flex-wrap items-center gap-4 justify-start;
 }
 
 .profile-card__identity-text {
@@ -500,12 +466,12 @@ async function handleSave() {
 }
 
 .profile-card__name {
-  @apply text-center text-lg font-bold sm:text-xl md:text-start;
+  @apply text-lg font-bold sm:text-xl md:text-start;
   color: var(--dash-ink);
 }
 
 .profile-card__email {
-  @apply text-center text-sm opacity-70 md:text-start;
+  @apply text-sm opacity-70 md:text-start;
   color: var(--dash-ink);
 }
 
@@ -514,7 +480,7 @@ async function handleSave() {
 }
 
 .profile-card__edit-btn {
-  @apply flex flex-1 items-center justify-center gap-1.5 rounded-2xl border px-4 py-2 text-sm font-bold transition;
+  @apply flex flex-1 items-center justify-center gap-1.5 rounded-2xl border px-4 py-3 text-sm font-bold transition;
   color: var(--dash-primary-deep);
   border-color: color-mix(in srgb, var(--dash-primary) 35%, transparent);
 }
@@ -605,7 +571,7 @@ async function handleSave() {
 }
 
 .profile-card__save-btn {
-  @apply flex items-center gap-2 rounded-2xl px-5 py-2.5 text-sm font-bold text-white transition disabled:cursor-not-allowed disabled:opacity-60;
+  @apply flex items-center flex-1 text-center justify-center gap-2 rounded-2xl px-5 py-2.5 text-sm font-bold text-white transition disabled:cursor-not-allowed disabled:opacity-60;
   background: var(--dash-primary);
 }
 

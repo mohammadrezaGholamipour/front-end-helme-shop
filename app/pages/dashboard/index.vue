@@ -6,8 +6,8 @@ definePageMeta({ layout: false });
 
 const { data: profile } = useProfile();
 const { logout } = useAuth();
-const route = useRoute();
 const router = useRouter();
+const route = useRoute();
 
 type DashTab = "profile" | "orders";
 type DashTheme = "saffron" | "pistachio";

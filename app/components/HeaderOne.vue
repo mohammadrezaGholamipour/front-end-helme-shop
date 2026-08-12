@@ -1,8 +1,8 @@
 <script setup lang="ts">
-const { user, isAdmin, isCustomer } = useAuth();
 const { time, date } = useDateTime();
 const showCartDialog = ref(false);
 const cartStore = useCartStore();
+const { user } = useAuth();
 const openCartDialog = (): void => {
   showCartDialog.value = true;
 };

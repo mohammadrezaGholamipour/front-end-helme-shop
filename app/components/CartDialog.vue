@@ -53,7 +53,8 @@ const handleCheckout = async () => {
 
     return navigateTo(
       "/login?redirect=" +
-        encodeURIComponent("/dashboard?tab=orders")
+        encodeURIComponent("/dashboard?tab=orders") +
+        "&checkout=1",
     );
   }
 

@@ -1,6 +1,6 @@
 <script setup lang="ts">
-const { logout } = useAuth();
 const isSidebarOpen = ref(false);
+const { logout } = useAuth();
 const route = useRoute();
 
 function closeSidebar() {

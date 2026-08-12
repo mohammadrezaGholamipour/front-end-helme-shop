@@ -5,9 +5,9 @@ definePageMeta({
   layout: false,
 });
 
-const router = useRouter();
-const toast = useAppToast();
 const { register } = useAuth();
+const toast = useAppToast();
+const router = useRouter();
 
 const form = reactive<RegisterBody>({
   mobile: "",
