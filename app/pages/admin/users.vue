@@ -4,7 +4,7 @@ import type { UserListOut, OrderItemOut } from "~/types";
 definePageMeta({
   layout: "admin",
 });
-
+const search = ref("");
 const {
   data: users,
   isLoading,
@@ -15,26 +15,10 @@ const {
   error: Ref<unknown>;
 };
 
-/* ---------------- کمکی‌ها ---------------- */
-
-const roleLabel = (role: string) => (role === "ADMIN" ? "مدیر" : "مشتری");
-
 const fullName = (user: UserListOut) => {
   const p = user.customer_profile;
   if (!p || (!p.first_name && !p.last_name)) return null;
   return `${p.first_name ?? ""} ${p.last_name ?? ""}`.trim();
-};
-
-const initials = (user: UserListOut) => {
-  const name = fullName(user);
-  if (name) {
-    const parts = name.split(" ").filter(Boolean);
-    return parts
-      .slice(0, 2)
-      .map((p) => p[0])
-      .join("");
-  }
-  return user.mobile.slice(-2);
 };
 
 const statusMeta: Record<
@@ -58,9 +42,6 @@ const formatPrice = (value: string | number) =>
 const orderItemLabel = (item: OrderItemOut) => item.product_name;
 
 /* ---------------- جست‌وجو ---------------- */
-
-const search = ref("");
-
 const filteredUsers = computed(() => {
   if (!users.value) return [];
   const q = search.value.trim();
@@ -83,10 +64,6 @@ const toggleExpand = (userId: number) => {
 
 const activeTab = ref<"info" | "orders">("orders");
 
-const openUser = (userId: number, tab: "info" | "orders" = "orders") => {
-  expandedUserId.value = userId;
-  activeTab.value = tab;
-};
 </script>
 
 <template>
@@ -192,14 +169,6 @@ const openUser = (userId: number, tab: "info" | "orders" = "orders") => {
               <div class="user-card__name-row">
                 <span class="user-card__name">
                   {{ fullName(user) ?? "بدون نام" }}
-                </span>
-                <span
-                  class="user-card__role-badge"
-                  :class="{
-                    'user-card__role-badge--admin': user.role === 'ADMIN',
-                  }"
-                >
-                  {{ roleLabel(user.role) }}
                 </span>
               </div>
               <span class="user-card__mobile" dir="ltr">{{ user.mobile }}</span>
@@ -653,7 +622,7 @@ const openUser = (userId: number, tab: "info" | "orders" = "orders") => {
 }
 
 .order-card__payable {
-  @apply  font-bold text-slate-900 dark:text-white;
+  @apply font-bold text-slate-900 dark:text-white;
 }
 
 .order-card__receiver {
@@ -688,7 +657,7 @@ const openUser = (userId: number, tab: "info" | "orders" = "orders") => {
 }
 
 .order-item__name {
-  @apply  font-bold text-slate-800 text-center sm:text-right mb-2 dark:text-slate-100;
+  @apply font-bold text-slate-800 text-center sm:text-right mb-2 dark:text-slate-100;
 }
 
 .order-item__meta {
