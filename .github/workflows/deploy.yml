@@ -61,7 +61,6 @@ jobs:
             --append-verify \
             --info=progress2 \
             --timeout=600 \
-            --contimeout=30 \
             -e "ssh \
               -o StrictHostKeyChecking=no \
               -o ServerAliveInterval=15 \
