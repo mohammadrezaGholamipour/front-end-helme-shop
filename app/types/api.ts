@@ -396,6 +396,7 @@ export type OrderStatus =
 // و همه رو اختیاری کردم تا با اسکیمای واقعی که بعداً می‌فرستی راحت جایگزین بشه.
 export interface OrderItemOut {
   id?: number;
+  product: ProductOut | null;
   title?: string;
   product_name?: string;
   variant_name?: string;
@@ -422,4 +423,13 @@ export interface SliderOut {
   id: number;
   image: string;
   display_order: number;
+}
+
+
+export interface OrderCreate {
+  items: {
+    product_id: number;
+    variant_id: number;
+    quantity: number;
+  }[];
 }

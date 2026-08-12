@@ -1,5 +1,5 @@
+import type { UserOut, UserCreate } from "~/types";
 import { AuthApi } from "~/services/auth";
-import type { UserOut } from "~/types";
 
 const TOKEN_COOKIE = "helma_token";
 
@@ -41,32 +41,22 @@ export function useAuth() {
   // LOGIN
   // =========================
 
-  async function login(
-    mobile: string,
-    password: string
-  ) {
-    const response = await AuthApi.login($api, {
-      mobile,
-      password,
-    });
+ async function login(mobile: string, password: string) {
+  const response = await AuthApi.login($api, { mobile, password });
+  token.value = response.access_token;
+  await nextTick();
+  user.value = await AuthApi.getMe($api);
 
-    // ذخیره توکن
-    token.value = response.access_token;
-
-    await nextTick();
-
-    // دریافت اطلاعات کاربر
-    user.value = await AuthApi.getMe($api);
-
-    // هدایت بر اساس role
-    if (user.value.role === "ADMIN") {
-      await navigateTo("/admin");
-    } else {
-      await navigateTo("/dashboard");
-    }
-
-    return user.value;
+  if (user.value.role === "ADMIN") {
+    await navigateTo("/admin");
+  } else {
+    const route = useRoute();
+    const redirect = route.query.redirect as string | undefined;
+    await navigateTo(redirect || "/dashboard");
   }
+
+  return user.value;
+}
 
 
   async function register(payload: UserCreate) {

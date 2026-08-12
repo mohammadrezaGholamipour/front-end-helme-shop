@@ -1,5 +1,5 @@
+import type { OrderOut, OrderCreate } from "~/types";
 import { OrderApi } from "~/services/order";
-import type { OrderOut } from "~/types";
 import { onServerPrefetch } from "vue";
 import type { MaybeRef } from "vue";
 
@@ -32,5 +32,29 @@ export const useOrder = (orderId: MaybeRef<number>) => {
         queryKey,
         queryFn,
         enabled: computed(() => !!id.value),
+    });
+};
+
+export const useCreateOrder = () => {
+    const { $api } = useNuxtApp();
+    const queryClient = useQueryClient();
+
+    return useMutation({
+        mutationFn: (payload: OrderCreate) => OrderApi.create($api, payload),
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ["orders"] });
+        },
+    });
+};
+
+export const useDeleteOrder = () => {
+    const { $api } = useNuxtApp();
+    const queryClient = useQueryClient();
+
+    return useMutation({
+        mutationFn: (orderId: number) => OrderApi.remove($api, orderId),
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: ["orders"] });
+        },
     });
 };

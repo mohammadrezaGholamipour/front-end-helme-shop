@@ -5,7 +5,19 @@ import { useCartStore } from "~/stores/cart";
 const modelValue = defineProps<{ modelValue: boolean }>();
 const emit = defineEmits(["update:modelValue"]);
 
+const { data: profile } = useProfile();
+const { isAuthenticated } = useAuth();
+const createOrder = useCreateOrder();
+const isCheckingOut = ref(false);
 const cartStore = useCartStore();
+const toast = useAppToast();
+
+const isProfileComplete = computed(
+  () =>
+    !!profile.value?.first_name &&
+    !!profile.value?.last_name &&
+    !!profile.value?.address,
+);
 
 const visible = computed({
   get: () => modelValue.modelValue,
@@ -31,6 +43,63 @@ const handleIncrease = (item: (typeof cartStore.cartItems)[number]) => {
 
 const handleRemove = (item: (typeof cartStore.cartItems)[number]) => {
   cartStore.removeFromCart(item.id, item.variantId);
+};
+
+const handleCheckout = async () => {
+  if (isCheckingOut.value) return;
+
+  if (!isAuthenticated.value) {
+    handleClose();
+
+    return navigateTo(
+      "/login?redirect=" +
+        encodeURIComponent("/dashboard?tab=orders")
+    );
+  }
+
+  if (!isProfileComplete.value) {
+    handleClose();
+
+    toast.error("لطفاً ابتدا اطلاعات کاربری خود را تکمیل کنید");
+
+    return navigateTo("/dashboard?tab=profile");
+  }
+
+  isCheckingOut.value = true;
+
+  try {
+    await createOrder.mutateAsync({
+      items: cartStore.cartItems.map((item) => ({
+        product_id: item.id,
+        variant_id: item.variantId,
+        quantity: item.quantity,
+      })),
+    });
+
+    cartStore.clearCart();
+
+    handleClose();
+
+    toast.success("سفارش شما با موفقیت ثبت شد");
+
+    navigateTo("/dashboard?tab=orders");
+  } catch (error: any) {
+    const field = error?.data?.detail?.field;
+
+    if (field === "profile" || field === "address") {
+      toast.error(error.data.detail.message);
+
+      handleClose();
+
+      navigateTo("/dashboard?tab=profile");
+    } else if (field === "product_id" || field === "variant_id") {
+      toast.error(error.data.detail.message);
+    } else {
+      toast.apiError(error, "ثبت سفارش با خطا مواجه شد");
+    }
+  } finally {
+    isCheckingOut.value = false;
+  }
 };
 </script>
 
@@ -116,9 +185,7 @@ const handleRemove = (item: (typeof cartStore.cartItems)[number]) => {
 
                   <div class="cart-item__prices">
                     <span class="cart-item__total-price">
-                      {{
-                        (item.price * item.quantity).toLocaleString("fa-IR")
-                      }}
+                      {{ (item.price * item.quantity).toLocaleString("fa-IR") }}
                       تومان
                     </span>
                   </div>
@@ -188,8 +255,12 @@ const handleRemove = (item: (typeof cartStore.cartItems)[number]) => {
             </span>
           </div>
 
-          <button class="cart-footer__checkout" @click="handleClose">
-            ادامه فرآیند خرید
+          <button
+            class="cart-footer__checkout"
+            :disabled="isCheckingOut"
+            @click="handleCheckout"
+          >
+            {{ isCheckingOut ? "در حال ثبت سفارش..." : "ادامه فرآیند خرید" }}
           </button>
           <button class="cart-footer__continue" @click="handleClose">
             بازگشت و ادامه خرید

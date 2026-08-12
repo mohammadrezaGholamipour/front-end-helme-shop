@@ -6,17 +6,33 @@ definePageMeta({ layout: false });
 
 const { data: profile } = useProfile();
 const { logout } = useAuth();
+const route = useRoute();
+const router = useRouter();
 
 type DashTab = "profile" | "orders";
 type DashTheme = "saffron" | "pistachio";
 
-const activeTab = ref<DashTab>("profile");
+const activeTab = ref<DashTab>(
+  route.query.tab === "orders" ? "orders" : "profile"
+);
 const theme = ref<DashTheme>("saffron");
 
 const tabs: { id: DashTab; label: string; icon: string }[] = [
   { id: "profile", label: "اطلاعات کاربری", icon: "tabler:user-circle" },
   { id: "orders", label: "سفارشات من", icon: "tabler:package" },
 ];
+
+watch(
+  () => route.query.tab,
+  (t) => {
+    activeTab.value = t === "orders" ? "orders" : "profile";
+  }
+);
+
+function setTab(tab: DashTab) {
+  activeTab.value = tab;
+  router.replace({ query: { ...route.query, tab } });
+}
 
 onMounted(() => {
   const saved = window.localStorage.getItem("dash-theme") as DashTheme | null;
@@ -58,7 +74,7 @@ async function handleLogout() {
           class="dashboard-page__tab"
           :class="{ 'dashboard-page__tab--active': activeTab === tab.id }"
           :aria-selected="activeTab === tab.id"
-          @click="activeTab = tab.id"
+          @click="setTab(tab.id)"
         >
           <Icon :name="tab.icon" class="h-4 w-4" />
           {{ tab.label }}

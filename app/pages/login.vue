@@ -3,6 +3,7 @@ definePageMeta({ layout: false });
 
 const { login } = useAuth();
 const toast = useAppToast();
+const route = useRoute();
 
 const form = reactive({
   mobile: "",
@@ -30,7 +31,7 @@ const handleSubmit = async () => {
   isLoading.value = true;
 
   try {
-    await login(mobile, password);
+     await login(mobile, password, route.query.redirect as string | undefined);
 
     toast.success("با موفقیت وارد شدید.");
   } catch (error) {
