@@ -3,6 +3,7 @@ import { CustomerApi } from "~/services/customer";
 import { useCartStore } from "~/stores/cart";
 import { OrderApi } from "~/services/order";
 import { AuthApi } from "~/services/auth";
+import { UserApi } from "~/services/user";
 
 const TOKEN_COOKIE = "helma_token";
 
@@ -85,7 +86,7 @@ export function useAuth() {
     const response = await AuthApi.login($api, { mobile, password });
     token.value = response.access_token;
     await nextTick();
-    user.value = await AuthApi.getMe($api);
+    user.value = await UserApi.getMe($api);
 
     if (user.value.role === "ADMIN") {
       await navigateTo("/admin");
@@ -123,7 +124,7 @@ export function useAuth() {
     }
 
     try {
-      user.value = await AuthApi.getMe($api);
+      user.value = await UserApi.getMe($api);
       return user.value;
     } catch (error) {
       console.error("GET ME ERROR:", error);

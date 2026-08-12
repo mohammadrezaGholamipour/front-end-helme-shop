@@ -19,10 +19,4 @@ export const AuthApi = {
       body: payload,
     }) as Promise<UserOut>;
   },
-
-  getMe: ($api: any) => {
-    return $api("/user/me", {
-      method: "GET",
-    }) as Promise<UserOut>;
-  },
 };

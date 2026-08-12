@@ -130,7 +130,6 @@ export interface ProductVariantOut {
   price: number;
   stock: number;
   image: string | null;
-  selected: boolean | null;
 }
 
 export interface CategoryForProductOut {
@@ -361,6 +360,22 @@ export interface CustomerProfileOut {
   postal_code: string;
 }
 
+export interface UserListOut {
+  id: number;
+  mobile: string;
+  role: UserRole;
+  customer_profile: CustomerProfileOut | null;
+  orders: OrderOut[];
+}
+
+export type UserRole = "ADMIN" | "CUSTOMER"
+export interface UserAdminOut {
+  id: number;
+  mobile: string;
+  role: UserRole;
+  customer_profile: CustomerProfileOut | null;
+  orders: OrderOut[]; // فرض بر اینه که OrderOut/OrderItemOut از قبل تعریف شده
+}
 export interface UpdateCustomerProfileBody {
   first_name: string;
   last_name: string;
@@ -393,7 +408,6 @@ export interface OrderItemOut {
   unit_price?: string;
   total_price?: string;
   image?: string;
-  [key: string]: unknown;
 }
 
 export interface OrderOut {
