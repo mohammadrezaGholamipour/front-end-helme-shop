@@ -1,16 +1,11 @@
 <script setup lang="ts">
-// این صفحه مقصد FRONTEND_PAYMENT_RESULT_URL هست که بک‌اند بعد از
-// verify کردن تراکنش، کاربر رو با query params بهش ریدایرکت می‌کنه:
-// ?status=success|failed|cancelled|not_found&order_id=..&ref_id=..
 
 const route = useRoute();
-
 const status = computed(() => (route.query.status as string) || "unknown");
 const orderId = computed(() => {
   const raw = route.query.order_id;
   return raw ? Number(raw) : null;
 });
-const refId = computed(() => (route.query.ref_id as string) || null);
 
 const { data: order } = useOrder(computed(() => orderId.value ?? 0));
 
@@ -68,36 +63,15 @@ const canRetry = computed(
   () => status.value === "cancelled" || status.value === "failed",
 );
 
-const isSuccess = computed(() => status.value === "success");
-
-// چند نقطه‌ی رنگی برای جشن کوچیک موقع موفقیت؛ فقط CSS، بدون کتابخانه
-const confettiDots = Array.from({ length: 10 }, (_, i) => i);
 </script>
 
 <template>
   <section class="payresult">
-    <div class="payresult__glow" :class="`payresult__glow--${statusConfig.tone}`" />
-
+  
     <Transition appear name="rise">
       <div class="receipt" :class="`receipt--${statusConfig.tone}`">
         <!-- مهر تاییدیه -->
-        <div class="receipt__seal-wrap">
-          <div class="receipt__seal">
-            <Icon :name="statusConfig.icon" class="receipt__seal-icon" />
-          </div>
-          <span class="receipt__seal-stamp">{{ statusConfig.stamp }}</span>
 
-          <template v-if="isSuccess">
-            <span
-              v-for="dot in confettiDots"
-              :key="dot"
-              class="receipt__confetti"
-              :style="{ '--i': dot }"
-            />
-          </template>
-        </div>
-
-        <p class="receipt__eyebrow">{{ statusConfig.eyebrow }}</p>
         <h1 class="receipt__title">{{ statusConfig.title }}</h1>
         <p class="receipt__text">{{ statusConfig.text }}</p>
 
@@ -105,33 +79,13 @@ const confettiDots = Array.from({ length: 10 }, (_, i) => i);
           <div class="receipt__perf" aria-hidden="true" />
 
           <div class="receipt__row">
-            <span>شماره سفارش</span>
-            <span class="tabular-nums">#{{ order.id }}</span>
-          </div>
-
-          <div class="receipt__row">
             <span>مبلغ</span>
             <span class="tabular-nums receipt__amount">
               {{ formatAmount(order.payable_amount) }}
             </span>
           </div>
-
-          <div v-if="refId" class="receipt__row">
-            <span>کد پیگیری</span>
-            <span class="tabular-nums receipt__code">{{ refId }}</span>
-          </div>
         </div>
 
-        <div class="receipt__actions">
-          <NuxtLink to="/dashboard?tab=orders" class="receipt__btn receipt__btn--primary">
-            <Icon name="tabler:receipt-2" class="h-4 w-4" />
-            مشاهده سفارش‌ها
-          </NuxtLink>
-
-          <NuxtLink v-if="canRetry" to="/dashboard/orders" class="receipt__btn">
-            تلاش دوباره
-          </NuxtLink>
-        </div>
       </div>
     </Transition>
   </section>
@@ -139,37 +93,10 @@ const confettiDots = Array.from({ length: 10 }, (_, i) => i);
 
 <style scoped>
 .payresult {
-  @apply relative flex min-h-[80vh] items-center justify-center overflow-hidden px-4 py-14;
+  @apply relative flex  items-center justify-center overflow-hidden px-4 py-14;
 }
 
-.payresult__glow {
-  @apply pointer-events-none absolute -top-24 left-1/2 h-[420px] w-[420px] -translate-x-1/2 rounded-full blur-3xl;
-  opacity: 0.35;
-}
 
-.payresult__glow--success {
-  background: radial-gradient(
-    circle,
-    color-mix(in srgb, #16a34a 55%, transparent),
-    transparent 70%
-  );
-}
-
-.payresult__glow--warning {
-  background: radial-gradient(
-    circle,
-    color-mix(in srgb, #d97706 55%, transparent),
-    transparent 70%
-  );
-}
-
-.payresult__glow--danger {
-  background: radial-gradient(
-    circle,
-    color-mix(in srgb, #dc2626 55%, transparent),
-    transparent 70%
-  );
-}
 
 /* ===== کارت رسید ===== */
 
@@ -195,9 +122,6 @@ const confettiDots = Array.from({ length: 10 }, (_, i) => i);
 
 /* ===== مهر تاییدیه ===== */
 
-.receipt__seal-wrap {
-  @apply relative  mb-1 flex items-center justify-center;
-}
 
 .receipt__seal {
   @apply relative flex h-20 w-20 items-center justify-center rounded-full;

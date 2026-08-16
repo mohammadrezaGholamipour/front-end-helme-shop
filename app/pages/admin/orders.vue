@@ -412,14 +412,13 @@ const confirmSave = (order: OrderOut) => {
 /* ---- آمار ---- */
 
 .admin-orders__stats {
-  @apply grid grid-cols-1 gap-3 sm:grid-cols-2
+  @apply grid grid-cols-1 gap-3 sm:grid-cols-2;
 }
 
 .stat-card {
   @apply flex flex-1 flex-col gap-1 rounded-2xl border border-slate-200 bg-white p-4
     dark:border-slate-800 dark:bg-slate-950;
 }
-
 
 .stat-card__label {
   @apply text-xs text-slate-500 dark:text-slate-400;
@@ -482,11 +481,11 @@ const confirmSave = (order: OrderOut) => {
 /* ---- لیست سفارشات ---- */
 
 .admin-orders__list {
-  @apply flex flex-col gap-3;
+  @apply flex  flex-wrap gap-3;
 }
 
 .order-card {
-  @apply overflow-hidden rounded-2xl border-2 border-transparent bg-white shadow-sm
+  @apply overflow-hidden text-center w-full rounded-2xl border-2 border-transparent bg-white shadow-sm
     transition duration-200 dark:bg-slate-950;
   border-color: theme(colors.slate.200);
 }
@@ -521,15 +520,15 @@ const confirmSave = (order: OrderOut) => {
 }
 
 .order-card__customer {
-  @apply text-sm font-bold text-slate-900 dark:text-white;
+  @apply font-bold text-center md:text-right text-slate-900 dark:text-white;
 }
 
 .order-card__mobile {
-  @apply text-xs text-slate-500 dark:text-slate-400;
+  @apply text-center md:text-right text-slate-500 dark:text-slate-400;
 }
 
 .order-card__summary {
-  @apply flex flex-wrap items-center gap-3 text-xs;
+  @apply flex flex-wrap items-center gap-3;
 }
 
 .order-card__status-badge {
@@ -567,7 +566,7 @@ const confirmSave = (order: OrderOut) => {
 /* ---- بدنه‌ی باز شده ---- */
 
 .order-card__body {
-  @apply flex flex-col gap-4 border-t border-slate-100 p-4 dark:border-slate-900;
+  @apply flex flex-col  gap-4 border-t border-slate-100 p-4 dark:border-slate-900;
 }
 
 /* ---- پنل تغییر وضعیت ---- */
@@ -581,11 +580,11 @@ const confirmSave = (order: OrderOut) => {
 }
 
 .status-panel__controls {
-  @apply flex flex-col gap-3  sm:flex-row sm:items-center sm:justify-center;
+  @apply flex flex-col gap-3  sm:items-stretch sm:justify-center;
 }
 
 .status-panel__actions {
-  @apply flex items-center flex-1 gap-2 w-full;
+  @apply flex items-center justify-center  gap-2;
 }
 
 /* ---- آیتم‌های سفارش ---- */

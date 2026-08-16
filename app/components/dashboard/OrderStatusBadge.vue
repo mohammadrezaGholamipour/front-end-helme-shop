@@ -45,14 +45,14 @@ const tone = computed(() => {
 }
 
 .status-badge[data-tone="positive"] {
-  @apply bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400;
+  @apply bg-emerald-100 text-emerald-700;
 }
 .status-badge[data-tone="positive"] .status-badge__dot {
   @apply bg-emerald-500;
 }
 
 .status-badge[data-tone="negative"] {
-  @apply bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400;
+  @apply bg-red-100 text-red-700 ;
 }
 .status-badge[data-tone="negative"] .status-badge__dot {
   @apply bg-red-500;
