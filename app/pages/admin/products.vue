@@ -30,7 +30,7 @@ const productTypeOptions = [
 
 const productModelOptions = [
   { label: "حبه", value: "HOBEH" },
-  { label: "بقلوایی", value: "BAGHLAVAEI" },
+  { label: "باقلوایی", value: "BAGHLAVAEI" },
   { label: "گل", value: "GOL" },
   { label: "سکه‌ای", value: "SEKKEI" },
   { label: "لقمه", value: "LOGHMEH" },

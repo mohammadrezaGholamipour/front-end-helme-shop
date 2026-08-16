@@ -436,14 +436,31 @@ export interface PaymentOut {
   ref_id: string | null;
   card_pan: string | null;
 }
+
+export interface OrderUserOut {
+  first_name: string | null;
+  last_name: string | null;
+  mobile: string;
+}
 export interface OrderOut {
+  id: number;
+  user_id: number;
+  user: OrderUserOut | null;
+
   status: OrderStatus;
+  created_at: string;
+
   total_amount: string;
   discount_amount: string;
   shipping_amount: string;
   payable_amount: string;
-  id: number;
-  user_id: number;
+
+  receiver_first_name: string;
+  receiver_last_name: string;
+  receiver_mobile: string;
+  receiver_address: string;
+  receiver_postal_code: string | null;
+
   items: OrderItemOut[];
 }
 

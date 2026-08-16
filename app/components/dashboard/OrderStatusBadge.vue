@@ -59,7 +59,7 @@ const tone = computed(() => {
 }
 
 .status-badge[data-tone="info"] {
-  @apply bg-sky-100 text-sky-700 dark:bg-sky-900/30 dark:text-sky-400;
+  @apply bg-sky-100 text-sky-700;
 }
 .status-badge[data-tone="info"] .status-badge__dot {
   @apply bg-sky-500;
