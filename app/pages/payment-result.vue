@@ -1,14 +1,6 @@
 <script setup lang="ts">
-
 const route = useRoute();
 const status = computed(() => (route.query.status as string) || "unknown");
-const orderId = computed(() => {
-  const raw = route.query.order_id;
-  return raw ? Number(raw) : null;
-});
-
-const { data: order } = useOrder(computed(() => orderId.value ?? 0));
-
 const statusConfig = computed(() => {
   switch (status.value) {
     case "success":
@@ -16,7 +8,7 @@ const statusConfig = computed(() => {
         icon: "tabler:check",
         eyebrow: "پرداخت تایید شد",
         title: "سفارش شما ثبت شد",
-        text: "رسید زیر مهر تاییدیه‌ی پرداخت شماست؛ سفارش در حال آماده‌سازیه.",
+        text: "سفارش شما ثبت شد و در حال آماده سازی میباشد",
         tone: "success" as const,
         stamp: "پرداخت شد",
       };
@@ -59,33 +51,14 @@ const statusConfig = computed(() => {
   }
 });
 
-const canRetry = computed(
-  () => status.value === "cancelled" || status.value === "failed",
-);
-
 </script>
 
 <template>
   <section class="payresult">
-  
     <Transition appear name="rise">
       <div class="receipt" :class="`receipt--${statusConfig.tone}`">
-        <!-- مهر تاییدیه -->
-
         <h1 class="receipt__title">{{ statusConfig.title }}</h1>
         <p class="receipt__text">{{ statusConfig.text }}</p>
-
-        <div v-if="order" class="receipt__body">
-          <div class="receipt__perf" aria-hidden="true" />
-
-          <div class="receipt__row">
-            <span>مبلغ</span>
-            <span class="tabular-nums receipt__amount">
-              {{ formatAmount(order.payable_amount) }}
-            </span>
-          </div>
-        </div>
-
       </div>
     </Transition>
   </section>
@@ -97,9 +70,6 @@ const canRetry = computed(
 }
 
 
-
-/* ===== کارت رسید ===== */
-
 .receipt {
   @apply relative z-10 flex w-full max-w-sm flex-col items-center gap-2 px-7 pb-8 pt-14 text-center;
   background: var(--dash-surface);
@@ -109,19 +79,25 @@ const canRetry = computed(
     0 24px 48px -20px color-mix(in srgb, var(--dash-ink) 25%, transparent),
     0 2px 0 color-mix(in srgb, var(--dash-primary) 10%, transparent);
   /* لبه‌ی دندانه‌دار پایین کارت، مثل ته رسیدهای چاپی */
-  mask-image: radial-gradient(
+  mask-image:
+    radial-gradient(
       circle 7px at 14px calc(100% - 6px),
       transparent 7px,
       #000 7.5px
     ),
-    radial-gradient(circle 7px at calc(100% - 14px) calc(100% - 6px), transparent 7px, #000 7.5px);
+    radial-gradient(
+      circle 7px at calc(100% - 14px) calc(100% - 6px),
+      transparent 7px,
+      #000 7.5px
+    );
   mask-composite: intersect;
   mask-repeat: repeat-x;
-  mask-size: 28px 100%, 28px 100%;
+  mask-size:
+    28px 100%,
+    28px 100%;
 }
 
 /* ===== مهر تاییدیه ===== */
-
 
 .receipt__seal {
   @apply relative flex h-20 w-20 items-center justify-center rounded-full;
@@ -294,7 +270,9 @@ const canRetry = computed(
 /* ===== ورود صفحه ===== */
 
 .rise-enter-active {
-  transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+  transition:
+    opacity 0.5s ease,
+    transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .rise-enter-from {
