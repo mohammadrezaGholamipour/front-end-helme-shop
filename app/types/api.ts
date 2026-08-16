@@ -410,6 +410,32 @@ export interface OrderItemOut {
   image?: string;
 }
 
+
+
+export type PaymentStatus =
+  | "PENDING"
+  | "INITIATED"
+  | "SUCCESS"
+  | "VERIFIED"
+  | "FAILED"
+  | "CANCELLED";
+
+// پاسخ POST /payment/request/{order_id}
+export interface PaymentRequestOut {
+  payment_id: number;
+  authority: string;
+  payment_url: string;
+}
+
+// پاسخ GET /payment/{payment_id}
+export interface PaymentOut {
+  id: number;
+  order_id: number;
+  amount: number;
+  status: PaymentStatus;
+  ref_id: string | null;
+  card_pan: string | null;
+}
 export interface OrderOut {
   status: OrderStatus;
   total_amount: string;

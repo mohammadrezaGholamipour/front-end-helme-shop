@@ -63,7 +63,6 @@ const toggleExpand = (userId: number) => {
 /* ---------------- تب‌های داخل هر کارت (اطلاعات / سفارشات) ---------------- */
 
 const activeTab = ref<"info" | "orders">("orders");
-
 </script>
 
 <template>
@@ -90,17 +89,10 @@ const activeTab = ref<"info" | "orders">("orders");
     <!-- آمار خلاصه -->
     <section v-if="users?.length" class="admin-users__stats">
       <div class="stat-card">
-        <span class="stat-card__label">کل کاربران</span>
+        <span class="stat-card__label">تعداد کاربران :</span>
         <span class="stat-card__value">{{
           users.filter((item) => item.role !== "ADMIN").length
         }}</span>
-      </div>
-      <div class="stat-card">
-        <span class="stat-card__label">کل سفارشات</span>
-
-        <span class="stat-card__value">
-          {{ users.reduce((sum, u) => sum + u.orders?.length, 0) }}
-        </span>
       </div>
     </section>
 
@@ -152,10 +144,18 @@ const activeTab = ref<"info" | "orders">("orders");
         :class="{ 'user-card--open': expandedUserId === user.id }"
       >
         <!-- هدر کارت -->
-        <button
-          type="button"
+        <!--
+          توجه: از button به div با role="button" تغییر کرد چون داخلش یه
+          لینک تماس (<a>) داریم و نمی‌شه <a> داخل <button> اعتبارسنجی HTML
+          رو رد کنه. رفتار کلیک/کیبورد دستی شبیه‌سازی شده.
+        -->
+        <div
           class="user-card__header"
+          role="button"
+          tabindex="0"
           @click="toggleExpand(user.id)"
+          @keydown.enter="toggleExpand(user.id)"
+          @keydown.space.prevent="toggleExpand(user.id)"
         >
           <div class="user-card__identity">
             <div
@@ -170,8 +170,18 @@ const activeTab = ref<"info" | "orders">("orders");
                 <span class="user-card__name">
                   {{ fullName(user) ?? "بدون نام" }}
                 </span>
+
+                <a
+                  :href="`tel:${user.mobile}`"
+                  class="call-btn"
+                  title="تماس با کاربر"
+                  aria-label="تماس با کاربر"
+                  @click.stop
+                >
+                
+                  <Icon name="tabler:phone-call" class="h-5 w-5" />
+                </a>
               </div>
-              <span class="user-card__mobile" dir="ltr">{{ user.mobile }}</span>
             </div>
           </div>
 
@@ -185,7 +195,7 @@ const activeTab = ref<"info" | "orders">("orders");
               class="h-4 w-4 user-card__chevron"
             />
           </div>
-        </button>
+        </div>
 
         <!-- بدنه کارت -->
         <div v-if="expandedUserId === user.id" class="user-card__body">
@@ -397,20 +407,20 @@ const activeTab = ref<"info" | "orders">("orders");
 /* ---- آمار ---- */
 
 .admin-users__stats {
-  @apply grid grid-cols-2 gap-3;
+  @apply w-full;
 }
 
 .stat-card {
-  @apply flex flex-col gap-1 flex-1 rounded-2xl border border-slate-200 bg-white p-4
+  @apply flex items-center justify-center gap-2 flex-1 rounded-2xl border border-slate-200 bg-white p-4
     dark:border-slate-800 dark:bg-slate-950;
 }
 
 .stat-card__label {
-  @apply text-xs text-slate-500 dark:text-slate-400;
+  @apply font-bold text-xl text-slate-500 dark:text-slate-400;
 }
 
 .stat-card__value {
-  @apply text-xl font-bold text-slate-900 dark:text-white;
+  @apply text-xl font-bold text-slate-500 dark:text-slate-400;
 }
 
 /* ---- وضعیت‌ها ---- */
@@ -449,12 +459,12 @@ const activeTab = ref<"info" | "orders">("orders");
 }
 
 .user-card__header {
-  @apply flex w-full items-center justify-between gap-4 px-4 py-4 text-right
+  @apply flex w-full cursor-pointer items-center justify-between gap-4 px-4 py-4 text-right
     transition hover:bg-slate-50 dark:hover:bg-slate-900/50;
 }
 
 .user-card__identity {
-  @apply flex items-center gap-3;
+  @apply flex w-full items-center gap-3;
 }
 
 .user-card__avatar {
@@ -468,11 +478,11 @@ const activeTab = ref<"info" | "orders">("orders");
 }
 
 .user-card__identity-text {
-  @apply flex flex-col gap-0.5;
+  @apply flex w-full flex-col gap-0.5;
 }
 
 .user-card__name-row {
-  @apply flex items-center gap-2;
+  @apply flex items-center justify-between gap-2 w-full;
 }
 
 .user-card__name {
@@ -507,6 +517,14 @@ const activeTab = ref<"info" | "orders">("orders");
 
 .user-card--open .user-card__chevron {
   @apply rotate-180 text-[--gold-one];
+}
+
+/* ---- دکمه‌ی تماس ---- */
+
+.call-btn {
+  @apply flex p-3 animate-pulse shrink-0 items-center justify-center rounded-full
+    bg-green-50 text-green-600 transition hover:bg-green-100
+    dark:bg-green-950/40 dark:text-green-400 dark:hover:bg-green-950/70;
 }
 
 /* ---- بدنه کارت ---- */

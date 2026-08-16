@@ -4,11 +4,21 @@ import SohanSeal from "@/components/dashboard/SohanSeal.vue";
 
 const { data: orders, isPending, isError, refetch } = useOrders();
 const deleteOrder = useDeleteOrder();
+const { payNow, isPending: isPaying } = useCreatePaymentRequest();
 const toast = useAppToast();
 const expandedId = ref<number | null>(null);
 
+// جلوگیری از دوبار کلیک روی چند سفارش هم‌زمان
+const payingOrderId = ref<number | null>(null);
+
 function toggle(id: number) {
   expandedId.value = expandedId.value === id ? null : id;
+}
+
+async function handlePay(orderId: number) {
+  payingOrderId.value = orderId;
+  await payNow(orderId);
+  payingOrderId.value = null;
 }
 
 /* ---------------- حذف سفارش ---------------- */
@@ -185,7 +195,7 @@ async function confirmDelete() {
                 <span>جمع سبد</span>
                 <span>{{ formatAmount(order.total_amount) }}</span>
               </div>
-              
+
               <div class="order-item__receipt-row">
                 <span>هزینه ارسال</span>
                 <span>{{ formatAmount(order.shipping_amount) }}</span>
@@ -205,10 +215,26 @@ async function confirmDelete() {
               <button
                 type="button"
                 class="order-item__delete"
+                :disabled="payingOrderId === order.id"
                 @click.stop="askDelete(order.id)"
               >
                 <Icon name="tabler:trash" class="h-4 w-4" />
                 حذف سفارش
+              </button>
+
+              <button
+                type="button"
+                class="order-item__pay"
+                :disabled="payingOrderId === order.id"
+                @click.stop="handlePay(order.id)"
+              >
+                <Icon
+                  v-if="payingOrderId === order.id"
+                  name="tabler:loader-2"
+                  class="h-4 w-4 animate-spin"
+                />
+                <Icon v-else name="tabler:credit-card" class="h-4 w-4" />
+                {{ payingOrderId === order.id ? "در حال انتقال..." : "پرداخت" }}
               </button>
             </div>
           </div>
@@ -445,15 +471,24 @@ async function confirmDelete() {
 /* ===== اکشن‌ها ===== */
 
 .order-item__actions {
-  @apply flex justify-end;
+  @apply flex gap-2;
 }
 
 .order-item__delete {
-  @apply flex items-center flex-1 border border-dashed border-red-600 justify-center gap-1.5 rounded-xl px-3 py-3 text-xs font-bold text-red-600 transition;
+  @apply flex items-center flex-1 border border-dashed border-red-600 justify-center gap-1.5 rounded-xl px-3 py-3 text-xs font-bold text-red-600 transition disabled:opacity-50;
 }
 
 .order-item__delete:hover {
   @apply bg-red-50;
+}
+
+.order-item__pay {
+  @apply flex items-center flex-1 justify-center gap-1.5 rounded-xl px-3 py-3 text-xs font-bold text-white transition disabled:opacity-60;
+  background: var(--dash-primary);
+}
+
+.order-item__pay:hover:not(:disabled) {
+  background: var(--dash-primary-deep);
 }
 
 .order-expand-enter-active,

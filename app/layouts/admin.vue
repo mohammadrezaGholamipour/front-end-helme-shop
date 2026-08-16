@@ -130,7 +130,7 @@ useSeoMeta({
           </button>
           <NuxtLink to="/" class="admin-layout__view-site">
             <Icon name="tabler:external-link" class="h-4 w-4" />
-            <span>نمایش سایت</span>
+            <span>نمایش فروشگاه</span>
           </NuxtLink>
         </div>
         <div class="admin-layout__header-actions">
