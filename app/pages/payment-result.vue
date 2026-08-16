@@ -1,6 +1,13 @@
 <script setup lang="ts">
+definePageMeta({ layout: false });
+
 const route = useRoute();
+
+
+const supportPhone = "09036266494";
+
 const status = computed(() => (route.query.status as string) || "unknown");
+
 const statusConfig = computed(() => {
   switch (status.value) {
     case "success":
@@ -8,9 +15,10 @@ const statusConfig = computed(() => {
         icon: "tabler:check",
         eyebrow: "پرداخت تایید شد",
         title: "سفارش شما ثبت شد",
-        text: "سفارش شما ثبت شد و در حال آماده سازی میباشد",
+        text: "سفارش شما ثبت شد و در حال آماده‌سازی می‌باشد",
         tone: "success" as const,
         stamp: "پرداخت شد",
+        vanta: 0x10b981,
       };
     case "cancelled":
       return {
@@ -20,6 +28,7 @@ const statusConfig = computed(() => {
         text: "خبری نیست، هیچ مبلغی کم نشده. هر وقت آماده بودید دوباره اقدام کنید.",
         tone: "warning" as const,
         stamp: "لغو شد",
+        vanta: 0xc9962e,
       };
     case "failed":
       return {
@@ -29,6 +38,7 @@ const statusConfig = computed(() => {
         text: "مشکلی توی مسیر پرداخت پیش اومد. اگه مبلغی کسر شده، تا ۷۲ ساعت آینده به حسابتون برمی‌گرده.",
         tone: "danger" as const,
         stamp: "ناموفق",
+        vanta: 0xef4444,
       };
     case "not_found":
       return {
@@ -38,6 +48,7 @@ const statusConfig = computed(() => {
         text: "لطفاً با پشتیبانی تماس بگیرید تا وضعیت پرداختتون رو بررسی کنیم.",
         tone: "danger" as const,
         stamp: "نامشخص",
+        vanta: 0xef4444,
       };
     default:
       return {
@@ -47,37 +58,164 @@ const statusConfig = computed(() => {
         text: "برای اطمینان، وضعیت سفارشتون رو از صفحه‌ی سفارش‌ها چک کنید.",
         tone: "warning" as const,
         stamp: "بررسی لازم",
+        vanta: 0xc9962e,
       };
   }
 });
 
+useHead({
+  script: [
+    {
+      src: "https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js",
+      defer: false,
+    },
+    {
+      src: "https://cdnjs.cloudflare.com/ajax/libs/vanta/0.5.24/vanta.waves.min.js",
+      defer: false,
+    },
+  ],
+});
+
+const vantaRef = ref<HTMLElement | null>(null);
+let vantaEffect: any = null;
+
+// منتظر می‌مونیم تا اسکریپت‌های سراسری (window.THREE و window.VANTA) لود بشن
+function waitForVanta(retries = 50): Promise<void> {
+  return new Promise((resolve, reject) => {
+    const check = () => {
+      const w = window as any;
+      if (w.THREE && w.VANTA?.WAVES) {
+        resolve();
+      } else if (retries <= 0) {
+        reject(new Error("Vanta/Three did not load"));
+      } else {
+        retries--;
+        setTimeout(check, 100);
+      }
+    };
+    check();
+  });
+}
+
+onMounted(async () => {
+  try {
+    await waitForVanta();
+    const w = window as any;
+
+    vantaEffect = w.VANTA.WAVES({
+      el: vantaRef.value,
+      THREE: w.THREE,
+      mouseControls: true,
+      touchControls: true,
+      gyroControls: false,
+      minHeight: 200.0,
+      minWidth: 200.0,
+      scale: 1.0,
+      scaleMobile: 1.0,
+      color: statusConfig.value.vanta, // رنگ متناسب با وضعیت پرداخت
+      shininess: 45.0,
+      waveHeight: 18.0,
+      waveSpeed: 2,
+      zoom: 0.85,
+      backgroundColor: statusConfig.value.vanta,
+    });
+  } catch (e) {
+    // اگر به هر دلیلی Vanta لود نشد، صفحه بدون افکت (فقط رنگ ساده) نمایش داده می‌شه
+    console.error("Vanta failed to initialize:", e);
+  }
+});
+
+onBeforeUnmount(() => {
+  vantaEffect?.destroy();
+});
+
+const goToHome = () => {
+  navigateTo("/");
+};
 </script>
 
 <template>
-  <section class="payresult">
+  <div class="page-payresult">
+    <!-- پس‌زمینه متحرک -->
+    <div ref="vantaRef" class="page-payresult__bg"></div>
+
+    <button type="button" class="page-payresult__home" @click="goToHome">
+      بازگشت به صفحه اصلی
+    </button>
+
     <Transition appear name="rise">
-      <div class="receipt" :class="`receipt--${statusConfig.tone}`">
+      <div
+        class="page-payresult__card"
+        :class="`page-payresult__card--${statusConfig.tone}`"
+      >
+        <!-- مهر تاییدیه -->
+        <div class="receipt__seal">
+          <Icon :name="statusConfig.icon" class="receipt__seal-icon" />
+          <span class="receipt__seal-stamp">{{ statusConfig.stamp }}</span>
+        </div>
+
+        <!-- کانفتی، فقط برای موفقیت -->
+        <template v-if="statusConfig.tone === 'success'">
+          <span
+            v-for="i in 8"
+            :key="i"
+            class="receipt__confetti"
+            :style="{ '--i': i }"
+          />
+        </template>
+
+        <span class="receipt__eyebrow">{{ statusConfig.eyebrow }}</span>
         <h1 class="receipt__title">{{ statusConfig.title }}</h1>
         <p class="receipt__text">{{ statusConfig.text }}</p>
+
+        <div class="receipt__perf" />
+
+        <!-- پشتیبانی -->
+        <a :href="`tel:${supportPhone}`" class="receipt__support">
+          <span class="receipt__support-icon">
+            <Icon name="tabler:headset" class="h-5 w-5" />
+          </span>
+          <span class="receipt__support-text">
+            <span class="receipt__support-label">سوالی دارید؟ با پشتیبانی تماس بگیرید</span>
+            <span class="receipt__support-phone" dir="ltr">{{ supportPhone }}</span>
+          </span>
+        </a>
+
+        <!-- اکشن -->
+        <NuxtLink to="/" class="receipt__btn">
+          <Icon name="tabler:shopping-bag" class="h-4 w-4" />
+          ادامه‌ی خرید
+        </NuxtLink>
       </div>
     </Transition>
-  </section>
+  </div>
 </template>
 
 <style scoped>
-.payresult {
-  @apply relative flex  items-center justify-center overflow-hidden px-4 py-14;
+.page-payresult {
+  @apply relative flex w-screen h-screen items-center justify-center overflow-hidden
+    bg-slate-50 p-4
+    dark:bg-black;
 }
 
+.page-payresult__bg {
+  @apply absolute inset-0 z-0;
+}
 
-.receipt {
-  @apply relative z-10 flex w-full max-w-sm flex-col items-center gap-2 px-7 pb-8 pt-14 text-center;
-  background: var(--dash-surface);
-  border: 1px solid color-mix(in srgb, var(--dash-primary) 14%, transparent);
-  border-radius: 26px;
-  box-shadow:
-    0 24px 48px -20px color-mix(in srgb, var(--dash-ink) 25%, transparent),
-    0 2px 0 color-mix(in srgb, var(--dash-primary) 10%, transparent);
+.page-payresult__home {
+  @apply absolute top-4 m-auto z-20 flex items-center gap-2 rounded-full
+    bg-white px-4 py-2.5 text-sm font-bold text-[--gold-one]
+    shadow-lg transition
+    hover:bg-[--gold-one] hover:text-white hover:shadow-xl
+    dark:bg-slate-950 dark:text-[--gold-one]
+    dark:hover:bg-[--gold-one] dark:hover:text-white;
+}
+
+.page-payresult__card {
+  @apply relative z-10 flex w-full max-w-sm flex-col items-center gap-2
+    rounded-3xl border border-slate-200 bg-white/90 px-7 pb-8 pt-14 text-center
+    shadow-xl backdrop-blur-sm
+    dark:border-slate-800 dark:bg-slate-950/90;
   /* لبه‌ی دندانه‌دار پایین کارت، مثل ته رسیدهای چاپی */
   mask-image:
     radial-gradient(
@@ -100,29 +238,21 @@ const statusConfig = computed(() => {
 /* ===== مهر تاییدیه ===== */
 
 .receipt__seal {
-  @apply relative flex h-20 w-20 items-center justify-center rounded-full;
-  background: var(--dash-primary);
-  box-shadow:
-    0 0 0 6px var(--dash-surface),
-    0 0 0 8px color-mix(in srgb, var(--dash-primary) 30%, transparent),
-    0 14px 26px -10px color-mix(in srgb, var(--dash-primary) 55%, transparent);
+  @apply relative flex h-20 w-20 items-center justify-center rounded-full
+    bg-[--gold-one] shadow-lg ring-8 ring-white dark:ring-slate-950;
   animation: seal-drop 0.55s cubic-bezier(0.34, 1.56, 0.64, 1) both;
 }
 
-.receipt--danger .receipt__seal {
-  background: #dc2626;
-  box-shadow:
-    0 0 0 6px var(--dash-surface),
-    0 0 0 8px color-mix(in srgb, #dc2626 30%, transparent),
-    0 14px 26px -10px color-mix(in srgb, #dc2626 55%, transparent);
+.page-payresult__card--success .receipt__seal {
+  @apply bg-emerald-500;
 }
 
-.receipt--warning .receipt__seal {
-  background: #d97706;
-  box-shadow:
-    0 0 0 6px var(--dash-surface),
-    0 0 0 8px color-mix(in srgb, #d97706 30%, transparent),
-    0 14px 26px -10px color-mix(in srgb, #d97706 55%, transparent);
+.page-payresult__card--danger .receipt__seal {
+  @apply bg-red-500;
+}
+
+.page-payresult__card--warning .receipt__seal {
+  @apply bg-[--gold-one];
 }
 
 .receipt__seal-icon {
@@ -131,21 +261,19 @@ const statusConfig = computed(() => {
 }
 
 .receipt__seal-stamp {
-  @apply absolute z-[999] -bottom-2 left-1/2 -translate-x-1/2 rotate-[-6deg] whitespace-nowrap rounded-full px-3 py-0.5 text-[10px] font-black tracking-wide;
-  background: var(--dash-surface);
-  border: 1.5px solid var(--dash-primary);
-  color: var(--dash-primary-deep);
+  @apply absolute -bottom-2 left-1/2 z-[999] -translate-x-1/2 -rotate-6 whitespace-nowrap
+    rounded-full border border-[--gold-one] bg-white px-3 py-0.5 text-[10px]
+    font-black tracking-wide text-[--gold-two]
+    dark:bg-slate-950;
   animation: stamp-in 0.4s 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) both;
 }
 
-.receipt--danger .receipt__seal-stamp {
-  border-color: #dc2626;
-  color: #dc2626;
+.page-payresult__card--success .receipt__seal-stamp {
+  @apply border-emerald-500 text-emerald-600 dark:text-emerald-400;
 }
 
-.receipt--warning .receipt__seal-stamp {
-  border-color: #d97706;
-  color: #d97706;
+.page-payresult__card--danger .receipt__seal-stamp {
+  @apply border-red-500 text-red-600 dark:text-red-400;
 }
 
 @keyframes seal-drop {
@@ -174,8 +302,7 @@ const statusConfig = computed(() => {
 
 .receipt__confetti {
   --angle: calc(var(--i) * 36deg);
-  @apply absolute left-1/2 top-1/2 h-1.5 w-1.5 rounded-full;
-  background: color-mix(in srgb, var(--dash-primary) 70%, #fbbf24);
+  @apply absolute left-1/2 top-1/2 h-1.5 w-1.5 rounded-full bg-emerald-400;
   transform: rotate(var(--angle)) translateY(0);
   opacity: 0;
   animation: confetti-burst 0.7s 0.5s ease-out both;
@@ -195,76 +322,59 @@ const statusConfig = computed(() => {
 /* ===== متن ===== */
 
 .receipt__eyebrow {
-  @apply mt-2 text-[11px] font-bold tracking-wide opacity-60;
-  color: var(--dash-primary-deep);
+  @apply mt-2  font-bold tracking-wide text-[--gold-two];
 }
 
 .receipt__title {
-  @apply text-xl font-black;
-  color: var(--dash-ink);
+  @apply text-2xl font-bold text-slate-900 dark:text-white sm:text-2xl;
 }
 
 .receipt__text {
-  @apply mt-0.5 max-w-xs text-wrap text-sm leading-7 opacity-65;
-  color: var(--dash-ink);
+  @apply mt-0.5 max-w-xs text-wrap text-sm leading-7 text-slate-500 dark:text-slate-400;
 }
 
-/* ===== بدنه‌ی رسید ===== */
-
-.receipt__body {
-  @apply mt-4 flex w-full flex-col gap-2 pt-4 text-sm;
-}
+/* ===== خط چین ته رسید ===== */
 
 .receipt__perf {
-  @apply absolute right-0 left-0 -mt-4 border-t border-dashed;
-  border-color: color-mix(in srgb, var(--dash-primary) 25%, transparent);
+  @apply w-full border-t border-dashed border-slate-200 pt-2 dark:border-slate-800;
 }
 
-.receipt__row {
-  @apply flex items-center justify-between opacity-75;
-  color: var(--dash-ink);
+/* ===== پشتیبانی ===== */
+
+.receipt__support {
+  @apply mt-2 flex w-full items-center gap-3 rounded-2xl border border-dashed
+    border-slate-200 bg-slate-50 px-4 py-3 text-right transition-colors
+    hover:bg-slate-100
+    dark:border-slate-800 dark:bg-slate-900 dark:hover:bg-slate-800;
 }
 
-.receipt__amount {
-  @apply font-bold;
-  color: var(--dash-primary-deep);
+.receipt__support-icon {
+  @apply flex h-9 w-9 shrink-0 items-center justify-center rounded-full
+    bg-white text-[--gold-two] shadow-sm dark:bg-slate-950;
 }
 
-.receipt__code {
-  @apply rounded-md px-2 py-0.5 text-xs;
-  background: color-mix(in srgb, var(--dash-primary) 8%, transparent);
-  letter-spacing: 0.04em;
+.receipt__support-text {
+  @apply flex flex-col items-start gap-0.5;
 }
 
-/* ===== اکشن‌ها ===== */
-
-.receipt__actions {
-  @apply mt-6 flex w-full gap-2;
+.receipt__support-label {
+  @apply text-[11px] text-slate-400 dark:text-slate-500;
 }
+
+.receipt__support-phone {
+  @apply  text-2xl  text-slate-900 dark:text-white;
+}
+
+/* ===== اکشن ===== */
 
 .receipt__btn {
-  @apply flex flex-1 items-center justify-center gap-1.5 rounded-xl px-4 py-3 text-sm font-bold transition;
-  border: 1px solid color-mix(in srgb, var(--dash-primary) 30%, transparent);
-  color: var(--dash-primary-deep);
-}
-
-.receipt__btn:hover {
-  background: color-mix(in srgb, var(--dash-primary) 8%, transparent);
+  @apply mt-3 flex w-full items-center justify-center gap-2 rounded-2xl
+    bg-[--gold-one] px-4 py-3 text-sm font-bold text-white transition
+    hover:bg-[--gold-two];
 }
 
 .receipt__btn:focus-visible {
-  outline: 2px solid var(--dash-primary);
-  outline-offset: 2px;
-}
-
-.receipt__btn--primary {
-  color: #fff;
-  background: var(--dash-primary);
-  border-color: transparent;
-}
-
-.receipt__btn--primary:hover {
-  background: var(--dash-primary-deep);
+  @apply outline outline-2 outline-offset-2 outline-[--gold-one];
 }
 
 /* ===== ورود صفحه ===== */
